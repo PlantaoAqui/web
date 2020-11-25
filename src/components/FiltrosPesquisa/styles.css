@@ -1,0 +1,95 @@
+.filtrospesquisa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 24%;
+    max-width: 350px;
+}
+
+.filtrospesquisa .cabecalho {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.filtrospesquisa .cabecalho p {
+    font: 400 1.2rem Roboto;
+    color: var(--cor-texto-claro);
+    max-width: 60%;
+}
+
+.filtrospesquisa .cabecalho button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    font-size: 1.2rem;
+    color: var(--cor-texto-claro);
+}
+
+.filtrospesquisa .basepesquisa {
+    width: 100%;
+    padding: 13px;
+    background: var(--cor-fundo-card);
+    border-radius: 8px;
+}
+
+.filtrospesquisa .basepesquisa > p {
+    margin-top: 1.2rem;
+    font: 400 1.6rem Roboto;
+    color: var(--cor-texto-escuro);
+}
+
+.filtrospesquisa p {
+    font: 400 1.8rem Roboto;
+    color: var(--cor-texto-claro);
+}
+
+.filtrospesquisa .dptoemergencia,
+.filtrospesquisa .pacientes,
+.filtrospesquisa .transporte,
+.filtrospesquisa .ambulancia {
+    width: 100%;
+    margin-top: 1.3rem;
+    padding: 13px;
+    background: var(--cor-fundo-card);
+    border-radius: 8px;
+}
+
+.filtrospesquisa .detalhesfiltro {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-top: 1.2rem;
+}
+
+.filtrospesquisa .detalhesfiltro img {
+    width: 4.2rem;
+    height: auto;
+    margin-right: 1rem;
+}
+
+.filtrospesquisa .detalhesfiltro .informacoesfiltro {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.filtrospesquisa .detalhesfiltro .informacoesfiltro p.nomefiltro {
+    color: var(--cor-texto-escuro);
+    font: 400 1.2rem Roboto;
+}
+
+.filtrospesquisa .detalhesfiltro .informacoesfiltro p.numeroderesultados {
+    color: var(--cor-texto-claro);
+    font: 400 1.2rem Roboto;
+}
+
+.filtrospesquisa .propaganda {
+    width: 100%;
+    height: 180px;
+    margin-top: 2.6rem;
+    background: var(--cor-texto-claro);
+    border-radius: 6px;
+}

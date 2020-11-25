@@ -1,0 +1,93 @@
+.cardhospital {
+    width: 24%;
+    max-width: 350px;
+    height: 12vh;
+    min-height: 120px;
+    max-height: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--cor-fundo-card);
+    border-radius: 12px;
+    padding: 12px;
+    transition: 0.4s;
+}
+
+.cardhospital:hover {
+    background: var(--cor-fundo-card-hover);
+}
+
+.cardhospital .partesuperior {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.cardhospital .partesuperior h5 {
+    font: 400 1.4rem Roboto;
+    color: var(--cor-texto-escuro);
+    max-width: 60%;
+}
+
+.cardhospital .partesuperior button {
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background: none;
+    font-size: 1.2rem;
+    color: var(--cor-texto-claro);
+}
+
+.cardhospital .parteinferior {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cardhospital .parteinferior img {
+    width: 4.2rem;
+    height: auto;
+    margin-right: 2rem;
+}
+
+.cardhospital .parteinferior .dadoshospital {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    height: 100%;
+}
+
+.cardhospital .parteinferior .dadoshospital .nota {
+    flex: 1;
+    margin-right: 1.6rem;
+}
+
+.cardhospital .parteinferior .dadoshospital .mediasalarial {
+    flex: 2;
+}
+
+.cardhospital .parteinferior .dadoshospital .nota,
+.cardhospital .parteinferior .dadoshospital .mediasalarial {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.cardhospital .parteinferior .dadoshospital p.descricao {
+    font: 400 1.2rem Roboto;
+    color: var(--cor-texto-claro);
+}
+
+.cardhospital .parteinferior .dadoshospital p.valor {
+    font: 400 1.2rem Roboto;
+    color: var(--cor-texto-escuro);
+}
