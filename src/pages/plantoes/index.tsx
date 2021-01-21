@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CardHospital from '../../components/CardHospital';
 import FiltrosPesquisa from '../../components/FiltrosPesquisa';
 import NavBar from '../../components/NavBar';
@@ -8,7 +8,16 @@ import SpringGrid from '../../components/Stonecutter/SpringGrid';
 import api from '../../services/api';
 import './styles.css';
 
+interface Hospital {
+    id: number;
+    nome: string;
+    tipo: number;
+    nota: number;
+    salario: number;
+}
+
 function Plantoes () {
+    const [hospitais, setHospitais] = useState<Hospital[]>();
     const array = Array.from(Array(10).keys());
 
     const Grid = makeResponsive(measureItems(SpringGrid), {
@@ -21,7 +30,7 @@ function Plantoes () {
         try {
             const response = await api.get('hospitais');
 
-            console.log(response);            
+            setHospitais(response.data);            
         } catch (error) {
             console.log(error);
         }
@@ -30,6 +39,10 @@ function Plantoes () {
     useEffect(() => {
         listarHospitais();
     }, []);
+
+    useEffect(() => {
+        console.log(hospitais);
+    }, [hospitais]);
 
     return (
         <div className="page-plantoes">
@@ -47,14 +60,14 @@ function Plantoes () {
                         gutterHeight={13}
                         springConfig={{stiffness: 170, damping: 26}}
                     >
-                        {array.map(item => {
+                        {hospitais !== undefined && hospitais.map(cardHospital => {
                             return(
-                            <li key={item}>
+                            <li key={cardHospital.id}>
                                 <CardHospital
-                                    nomeHospital="Hospital Guaianazes"
-                                    tipoHospital={1}
-                                    notaHospital={4.63}
-                                    mediaSalarialHospital={1245.60}
+                                    nomeHospital={cardHospital.nome}
+                                    tipoHospital={cardHospital.tipo}
+                                    notaHospital={cardHospital.nota}
+                                    mediaSalarialHospital={cardHospital.salario}
                                 />
                             </li>
 

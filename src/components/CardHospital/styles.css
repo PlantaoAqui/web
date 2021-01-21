@@ -1,5 +1,5 @@
 .cardhospital {
-    max-width: 350px;
+    width: 230px;
     min-height: 120px;
     max-height: 170px;
     display: flex;
