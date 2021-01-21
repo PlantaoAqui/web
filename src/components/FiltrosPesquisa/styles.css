@@ -2,8 +2,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 24%;
+    width: 27%;
     max-width: 350px;
+    min-width: 200px;
+    margin-right: 1.2rem;
 }
 
 .filtrospesquisa .cabecalho {
@@ -92,4 +94,22 @@
     margin-top: 2.6rem;
     background: var(--cor-texto-claro);
     border-radius: 6px;
+}
+
+@media(max-width: 1300px) {
+    .filtrospesquisa {
+        width: 24%;
+    }
+}
+
+@media(max-width: 1225px) {
+    .filtrospesquisa {
+        width: 45%;
+    }
+}
+
+@media(max-width: 836px) {
+    .filtrospesquisa {
+        width: 60%;
+    }
 }
