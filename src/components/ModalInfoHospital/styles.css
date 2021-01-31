@@ -1,0 +1,162 @@
+.modalinfohospital .informacoes {
+    width: 100%;
+    max-height: 475px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.modalinfohospital .informacoes .detalhes {
+    background:var(--cor-fundo-card);
+    max-height: 475px;
+    max-width: 350px;
+    border-radius: 8px;
+    width: calc((100% - 30px)/3);
+    padding: 1.3rem;
+    padding-top: 1.8rem;
+}
+
+.modalinfohospital .informacoes .detalhes .secao {
+    color: var(--cor-texto-escuro);
+    font: 500 1.4rem Roboto;
+    margin-bottom: 4px;
+}
+
+.modalinfohospital .informacoes .detalhes .descricao {
+    font: 400 1.2rem Roboto;
+    margin-bottom: 1.2rem;
+}
+
+.modalinfohospital .informacoes .detalhes .nome {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.modalinfohospital .informacoes .detalhes .nome img {
+    width: 4.2rem;
+    height: auto;
+}
+
+.modalinfohospital .informacoes .detalhes .icones {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1.2rem;
+}
+
+.modalinfohospital .informacoes .detalhes .icones .icone {
+    background: var(--cor-fundo-campos);
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 8px;
+    margin-right: 0.4rem;
+}
+
+.modalinfohospital .informacoes .detalhes .icones img {
+    width: 3.2rem;
+    height: auto;
+    margin-right: 0.4rem;
+}
+
+.modalinfohospital .informacoes .detalhes .dadosavaliados {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.modalinfohospital .informacoes .detalhes .avaliacao .nota {
+    font: 500 3.6rem Roboto;
+}
+
+.modalinfohospital .informacoes .sobre {
+    background: var(--cor-fundo-card);
+    max-height: 475px;
+    max-width: 350px;
+    border-radius: 8px;
+    width: calc((100% - 30px)/3);
+    padding: 1.3rem;
+    padding-top: 1.8rem;
+}
+
+.modalinfohospital .informacoes .sobre .sumario {
+    color: var(--cor-texto-escuro);
+    font: 500 1.4rem Roboto;
+    height: 4.2rem;
+}
+
+.modalinfohospital .informacoes .sobre .item {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1.3rem;
+}
+
+.modalinfohospital .informacoes .sobre .item .rotulo {
+    color: var(--cor-texto-escuro);
+    font: 500 1.4rem Roboto;
+}
+
+.modalinfohospital .informacoes .sobre .item .avaliacao {
+    color: var(--cor-texto-claro);
+    font: 400 1.4rem Roboto;
+    position: absolute;
+    left: 17rem;
+}
+
+.modalinfohospital .secaocomentarios {
+    margin-top: 1.6rem;
+    padding: 2.4rem 2.2rem 1.6rem 2.2rem;
+    background: var(--cor-fundo-card);
+    border-radius: 8px;
+}
+
+.modalinfohospital .secaocomentarios .sumario {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modalinfohospital .secaocomentarios .comentarios {
+    margin-top: 2.6rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.modalinfohospital .secaocomentarios .comentarios .comentario {
+    width: calc((100% - 2.2rem)/2);
+    margin-bottom: 1.6rem;
+}
+
+.modalinfohospital .secaocomentarios .comentarios .comentario .sumario {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.6rem;
+}
+
+.modalinfohospital .secaocomentarios .comentarios .comentario .sumario .pessoa {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--cor-texto-escuro);
+}
+
+.modalinfohospital .secaocomentarios .comentarios .comentario .sumario .pessoa .MuiAvatar-root {
+    height: 2.2rem;
+    width: 2.2rem;
+    margin-right: 1rem;
+}
+
+.modalinfohospital .secaocomentarios .comentarios .comentario .textocomentario {
+    text-align: justify;
+    margin-bottom: 1.2rem;
+    color: var(--cor-texto-escuro);
+}

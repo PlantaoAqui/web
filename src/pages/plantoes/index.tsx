@@ -8,7 +8,7 @@ import SpringGrid from '../../components/Stonecutter/SpringGrid';
 import api from '../../services/api';
 import './styles.css';
 
-interface Hospital {
+export interface Hospital {
     id: number;
     nome: string;
     tipo: number;
@@ -18,13 +18,24 @@ interface Hospital {
 
 function Plantoes () {
     const [hospitais, setHospitais] = useState<Hospital[]>();
-    const array = Array.from(Array(10).keys());
 
     const Grid = makeResponsive(measureItems(SpringGrid), {
         maxWidth: 3840,
         minPadding: 50,
         widthCoef: 1.6
     });
+
+    async function pesquisarHospitais(params: string) {
+        try {
+            const response = await api.get('hospitais', {
+                params,
+            });
+
+            setHospitais(response.data);            
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     async function listarHospitais() {
         try {
@@ -40,15 +51,11 @@ function Plantoes () {
         listarHospitais();
     }, []);
 
-    useEffect(() => {
-        console.log(hospitais);
-    }, [hospitais]);
-
     return (
         <div className="page-plantoes">
             <NavBar aba={1}/>
             <div className="pesquisaplantoes">
-                <FiltrosPesquisa />
+                <FiltrosPesquisa hospitais={hospitais}/>
                 <span className="gridcontainer">
                     <Grid
                         className="grid"

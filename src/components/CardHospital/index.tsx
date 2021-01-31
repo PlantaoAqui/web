@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './styles.css';
 
 import iconeDptoEmergencia from "../../assets/images/icones/tipoplantao/dptoemergencia.svg";
 import iconePacientesInternados from "../../assets/images/icones/tipoplantao/pacientesinternados.svg";
 import iconeTransporteInterhospitalar from "../../assets/images/icones/tipoplantao/transporteinterhospitalar.svg";
 import iconeAmbulancia from "../../assets/images/icones/tipoplantao/ambulancia.svg";
+import { Dialog, DialogContent, DialogContentText } from '@material-ui/core';
+import ModalInfoHospital from '../ModalInfoHospital';
 
 interface InterfaceCardHospital {
     nomeHospital: string;
@@ -15,6 +17,8 @@ interface InterfaceCardHospital {
 
 function CardHospital ({nomeHospital, tipoHospital, notaHospital, mediaSalarialHospital}: InterfaceCardHospital) {
     const [iconeHospital, setIconeHospital] = useState('');
+    const [modalInfoCardAberto, setModalInfoCardAberto] = useState(false);
+    const refInfoCardHospital = useRef<HTMLElement>(null);
 
     useEffect(() => {
         switch (tipoHospital) {
@@ -35,12 +39,21 @@ function CardHospital ({nomeHospital, tipoHospital, notaHospital, mediaSalarialH
         }
         
     }, [tipoHospital]);
+
+    useEffect(() => {
+        if (modalInfoCardAberto) {
+            const { current: descriptionElement } = refInfoCardHospital;
+            if (descriptionElement !== null) {
+                descriptionElement.focus();
+            }
+        }
+    }, [modalInfoCardAberto])
     
     return (
         <div className="cardhospital">
             <div className="partesuperior">
                 <h5>{nomeHospital}</h5>
-                <button>Mostrar mais +</button>
+                <button onClick={() => {setModalInfoCardAberto(true)}}>Mostrar mais +</button>
             </div>
             <div className="parteinferior">
                 <img src={iconeHospital} alt={nomeHospital}/>
@@ -55,6 +68,33 @@ function CardHospital ({nomeHospital, tipoHospital, notaHospital, mediaSalarialH
                     </div>
                 </div>
             </div>
+            <Dialog
+                open={modalInfoCardAberto}
+                onClose={() => {setModalInfoCardAberto(false)}}
+                scroll="body"
+                aria-labelledby="scroll-dialog-title"
+                aria-describedby="scroll-dialog-description"
+                PaperProps={{
+                style: {
+                    backgroundColor: 'transparent',
+                    boxShadow: 'none',
+                    maxWidth: '1080px',
+                    width: '60%',
+                    outline: '0'
+                },
+                }}
+            >
+                <DialogContent style={{padding: '10rem 0 0 0'}}>
+                    <DialogContentText
+                        id="scroll-dialog-description"
+                        ref={refInfoCardHospital}
+                        tabIndex={-1}
+                        style={{outline: 'none'}}
+                    >
+                        <ModalInfoHospital />
+                    </DialogContentText>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }

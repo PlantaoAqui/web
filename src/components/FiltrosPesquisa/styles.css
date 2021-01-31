@@ -8,6 +8,35 @@
     margin-right: 1.2rem;
 }
 
+.filtrospesquisa .MuiPaper-root {
+    background-color: unset;
+}
+
+.filtrospesquisa .MuiAccordionSummary-content {
+    margin: 0;
+    display: unset;
+}
+
+.filtrospesquisa .basepesquisa .MuiAccordionSummary-root:hover:not(.Mui-disabled) {
+    cursor: unset;
+}
+
+.filtrospesquisa .MuiAccordionSummary-root.Mui-expanded {
+    min-height: unset;
+}
+
+.filtrospesquisa .MuiAccordionSummary-content.Mui-expanded {
+    margin: unset;
+}
+
+.filtrospesquisa .MuiAccordionSummary-root {
+    padding: unset;
+}
+
+.filtrospesquisa .MuiPaper-elevation1 {
+    box-shadow: none;
+}
+
 .filtrospesquisa .cabecalho {
     display: flex;
     flex-direction: row;
@@ -30,6 +59,12 @@
     color: var(--cor-texto-claro);
 }
 
+.filtrospesquisa .cabecalho + p {
+    margin-top: 1.2rem;
+    font: 400 2.4rem Roboto;
+    color: var(--cor-texto-escuro);
+}
+
 .filtrospesquisa .basepesquisa {
     width: 100%;
     padding: 13px;
@@ -37,9 +72,15 @@
     border-radius: 8px;
 }
 
-.filtrospesquisa .basepesquisa > p {
+.filtrospesquisa .tipostitulo {
+    width: 100%;
+    padding: 0 13px;
     margin-top: 1.2rem;
-    font: 400 1.6rem Roboto;
+}
+
+.filtrospesquisa .tipostitulo h3 {
+    margin-top: 1.2rem;
+    font: 400 2.2rem Roboto;
     color: var(--cor-texto-escuro);
 }
 
@@ -56,34 +97,45 @@
     margin-top: 1.3rem;
     padding: 13px;
     background: var(--cor-fundo-card);
+    border: 1px solid var(--cor-fundo-card);
     border-radius: 8px;
+    transition: 0.6s;
 }
 
-.filtrospesquisa .detalhesfiltro {
+.filtrospesquisa .dptoemergencia-collapsed:hover,
+.filtrospesquisa .pacientes-collapsed:hover,
+.filtrospesquisa .transporte-collapsed:hover,
+.filtrospesquisa .ambulancia-collapsed:hover {
+    background: var(--cor-fundo-card-hover);
+    border: 1px solid var(--cor-texto-claro);
+}
+
+.filtrospesquisa .sumariofiltro {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    margin-top: 1.2rem;
 }
 
-.filtrospesquisa .detalhesfiltro img {
-    width: 4.2rem;
-    height: auto;
+.filtrospesquisa .sumariofiltro img {
+    height: 4.2rem;
+    width: auto;
     margin-right: 1rem;
 }
 
-.filtrospesquisa .detalhesfiltro .informacoesfiltro {
+.filtrospesquisa .sumariofiltro .informacoesfiltro {
+    height: 4.2rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: space-evenly;
 }
 
-.filtrospesquisa .detalhesfiltro .informacoesfiltro p.nomefiltro {
+.filtrospesquisa .sumariofiltro .informacoesfiltro p.nomefiltro {
     color: var(--cor-texto-escuro);
     font: 400 1.2rem Roboto;
 }
 
-.filtrospesquisa .detalhesfiltro .informacoesfiltro p.numeroderesultados {
+.filtrospesquisa .sumariofiltro .informacoesfiltro p.numeroderesultados {
     color: var(--cor-texto-claro);
     font: 400 1.2rem Roboto;
 }
@@ -94,6 +146,38 @@
     margin-top: 2.6rem;
     background: var(--cor-texto-claro);
     border-radius: 6px;
+}
+
+.filtrospesquisa .dptoemergencia .MuiAccordionDetails-root,
+.filtrospesquisa .pacientes .MuiAccordionDetails-root,
+.filtrospesquisa .transporte .MuiAccordionDetails-root,
+.filtrospesquisa .ambulancia .MuiAccordionDetails-root {
+    display: unset;
+    padding: unset;
+}
+
+.filtrospesquisa .subfiltros {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1.6rem;
+    border-top: 1px solid var(--cor-texto-claro);
+    padding-top: 0.6rem;
+}
+
+.filtrospesquisa .subfiltros .opcao {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 0.4rem;
+    font: 500 1.4rem Roboto;
+}
+
+.filtrospesquisa .subfiltros .opcao p {
+    font: 400 1.6rem Roboto;
+    cursor: pointer;
 }
 
 @media(max-width: 1300px) {
