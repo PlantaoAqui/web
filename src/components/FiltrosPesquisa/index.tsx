@@ -49,20 +49,22 @@ function FiltrosPesquisa ({hospitais}: HospitaisPesquisados) {
                     <AccordionDetails>
                         <div className="detalhespesquisa">
                             <div className="local">
-                                <h4>LOCAL</h4>
-                                <h6>Cidade</h6>
-                                <h6>Bairro</h6>
+                                <p className="descricao">Local</p>
+                                <div className="seletor">
+                                    <p>Cidade v</p>
+                                    <p>Bairro v</p>
+                                </div>
                             </div>
-                            <hr/>
                             <div className="subfiltros">
+                                <div className="opcao">Avaliação</div>
                                 <div className="opcao">
-                                    <p>Porta</p>24
+                                    <p>0 {'>'} 2</p>24
                                 </div>
                                 <div className="opcao">
-                                    <p>Sala de Emergência</p>12
+                                    <p>2 {'>'} 4</p>12
                                 </div>
                                 <div className="opcao">
-                                    <p>Observação</p>18
+                                    <p>4 {'>'} 5</p>18
                                 </div>
                             </div>
                         </div>
