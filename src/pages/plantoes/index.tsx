@@ -9,6 +9,7 @@ import api from '../../services/api';
 import './styles.css';
 
 export interface Hospital {
+    id_card: number;
     id: number;
     nome: string;
     tipo: number;
@@ -25,10 +26,12 @@ function Plantoes () {
         widthCoef: 1.6
     });
 
-    async function pesquisarHospitais(params: string) {
+    async function pesquisarHospitais(filtro: number) {
         try {
             const response = await api.get('hospitais', {
-                params,
+                params: {
+                    filtro
+                }
             });
 
             setHospitais(response.data);            
@@ -55,7 +58,7 @@ function Plantoes () {
         <div className="page-plantoes">
             <NavBar aba={1}/>
             <div className="pesquisaplantoes">
-                <FiltrosPesquisa hospitais={hospitais}/>
+                <FiltrosPesquisa hospitais={hospitais} pesquisa={pesquisarHospitais}/>
                 <span className="gridcontainer">
                     <Grid
                         className="grid"
@@ -69,7 +72,7 @@ function Plantoes () {
                     >
                         {hospitais !== undefined && hospitais.map(cardHospital => {
                             return(
-                            <li key={cardHospital.id}>
+                            <li key={cardHospital.id_card}>
                                 <CardHospital
                                     nomeHospital={cardHospital.nome}
                                     tipoHospital={cardHospital.tipo}

@@ -10,10 +10,10 @@ import { Hospital } from "../../pages/plantoes";
 
 export interface HospitaisPesquisados {
     hospitais: Array<Hospital> | undefined;
-    // setHospitais: (p: DadosEquipe) => void;
+    pesquisa: (p: number) => void;
 }
 
-function FiltrosPesquisa ({hospitais}: HospitaisPesquisados) {
+function FiltrosPesquisa ({hospitais, pesquisa}: HospitaisPesquisados) {
     const [pesquisaBasicaExpanded, setPesquisaBasicaExpanded] = useState(false);
     const [filtrosExpanded, setFiltrosExpanded] = useState<number | false>(false);
     
@@ -21,8 +21,9 @@ function FiltrosPesquisa ({hospitais}: HospitaisPesquisados) {
         setPesquisaBasicaExpanded(isExpanded);
     };
     
-    const handleChangeAccordionFiltros = (filtro: number) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
-        setFiltrosExpanded(isExpanded ? filtro : false);
+    const handleChangeAccordionFiltros = (tipo: number) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
+        setFiltrosExpanded(isExpanded ? tipo : false);
+        pesquisa(isExpanded ? tipo : 0);
     };
 
     return (
@@ -74,8 +75,8 @@ function FiltrosPesquisa ({hospitais}: HospitaisPesquisados) {
             <div className="tipostitulo">
                 <h3>Tipos de plantão</h3>
             </div>
-            <div className={filtrosExpanded === 0 ? "dptoemergencia" :"dptoemergencia dptoemergencia-collapsed"}>
-                <Accordion expanded={filtrosExpanded === 0} onChange={handleChangeAccordionFiltros(0)}>
+            <div className={filtrosExpanded === 1 ? "dptoemergencia" :"dptoemergencia dptoemergencia-collapsed"}>
+                <Accordion expanded={filtrosExpanded === 1} onChange={handleChangeAccordionFiltros(1)}>
                     <AccordionSummary>
                         <div className="sumariofiltro">
                             <img src={iconeDptoEmergencia} alt="Departamento de Emergência"/>
@@ -103,8 +104,8 @@ function FiltrosPesquisa ({hospitais}: HospitaisPesquisados) {
                     </AccordionDetails>
                 </Accordion>
             </div>
-            <div className={filtrosExpanded === 1 ? "pacientes" : "pacientes pacientes-collapsed"}>
-                <Accordion expanded={filtrosExpanded === 1} onChange={handleChangeAccordionFiltros(1)}>
+            <div className={filtrosExpanded === 2 ? "pacientes" : "pacientes pacientes-collapsed"}>
+                <Accordion expanded={filtrosExpanded === 2} onChange={handleChangeAccordionFiltros(2)}>
                     <AccordionSummary>
                         <div className="sumariofiltro">
                             <img src={iconePacientesInternados} alt="Pacientes internados"/>
@@ -126,8 +127,8 @@ function FiltrosPesquisa ({hospitais}: HospitaisPesquisados) {
                     </AccordionDetails>
                 </Accordion>
             </div>
-            <div className={filtrosExpanded === 2 ? "transporte" : "transporte transporte-collapsed"}>
-                <Accordion expanded={filtrosExpanded === 2} onChange={handleChangeAccordionFiltros(2)}>
+            <div className={filtrosExpanded === 3 ? "transporte" : "transporte transporte-collapsed"}>
+                <Accordion expanded={filtrosExpanded === 3} onChange={handleChangeAccordionFiltros(3)}>
                     <AccordionSummary>
                         <div className="sumariofiltro">
                             <img src={iconeTransporteInterhospitalar} alt="Transporte Interhospitalar"/>
@@ -155,8 +156,8 @@ function FiltrosPesquisa ({hospitais}: HospitaisPesquisados) {
                     </AccordionDetails>
                 </Accordion>
             </div>
-            <div className={filtrosExpanded === 3 ? "ambulancia" : "ambulancia ambulancia-collapsed"}>
-                <Accordion expanded={filtrosExpanded === 3} onChange={handleChangeAccordionFiltros(3)}>
+            <div className={filtrosExpanded === 4 ? "ambulancia" : "ambulancia ambulancia-collapsed"}>
+                <Accordion expanded={filtrosExpanded === 4} onChange={handleChangeAccordionFiltros(4)}>
                     <AccordionSummary>
                         <div className="sumariofiltro">
                             <img src={iconeAmbulancia} alt="Ambulância"/>

@@ -16,6 +16,7 @@ interface InterfaceCardHospital {
 }
 
 function CardHospital ({nomeHospital, tipoHospital, notaHospital, mediaSalarialHospital}: InterfaceCardHospital) {
+    const [nomeHospitalCard, setNomeHospitalCard] = useState(nomeHospital);
     const [iconeHospital, setIconeHospital] = useState('');
     const [modalInfoCardAberto, setModalInfoCardAberto] = useState(false);
     const refInfoCardHospital = useRef<HTMLElement>(null);
@@ -47,12 +48,23 @@ function CardHospital ({nomeHospital, tipoHospital, notaHospital, mediaSalarialH
                 descriptionElement.focus();
             }
         }
-    }, [modalInfoCardAberto])
+    }, [modalInfoCardAberto]);
+
+    useEffect(() => {
+        if (nomeHospitalCard.length > 40) {
+            let nome = nomeHospitalCard;
+            while (nome.length > 40) {
+                nome = nome.substring(0, nome.lastIndexOf(" "));
+            }
+            nome = nome.concat(" ...");
+            setNomeHospitalCard(nome);
+        }
+    }, [nomeHospitalCard])
     
     return (
         <div className="cardhospital">
             <div className="partesuperior">
-                <h5>{nomeHospital}</h5>
+                <h5>{nomeHospitalCard}</h5>
                 <button onClick={() => {setModalInfoCardAberto(true)}}>Mostrar mais +</button>
             </div>
             <div className="parteinferior">
