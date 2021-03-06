@@ -17,14 +17,15 @@ export interface Hospital {
     salario: number;
 }
 
+const Grid = makeResponsive(measureItems(SpringGrid), {
+    maxWidth: 3840,
+    minPadding: 50,
+    widthCoef: 1.6
+});
+
 function Plantoes () {
     const [hospitais, setHospitais] = useState<Hospital[]>();
 
-    const Grid = makeResponsive(measureItems(SpringGrid), {
-        maxWidth: 3840,
-        minPadding: 50,
-        widthCoef: 1.6
-    });
 
     async function pesquisarHospitais(filtro: number) {
         try {
@@ -34,7 +35,7 @@ function Plantoes () {
                 }
             });
 
-            setHospitais(response.data);            
+            setHospitais(response.data);
         } catch (error) {
             console.log(error);
         }
@@ -44,7 +45,7 @@ function Plantoes () {
         try {
             const response = await api.get('hospitais');
 
-            setHospitais(response.data);            
+            setHospitais(response.data);
         } catch (error) {
             console.log(error);
         }
@@ -74,6 +75,7 @@ function Plantoes () {
                             return(
                             <li key={cardHospital.id_card}>
                                 <CardHospital
+                                    idHospital={cardHospital.id}
                                     nomeHospital={cardHospital.nome}
                                     tipoHospital={cardHospital.tipo}
                                     notaHospital={cardHospital.nota}

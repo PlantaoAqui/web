@@ -8,14 +8,15 @@ import iconeAmbulancia from "../../assets/images/icones/tipoplantao/ambulancia.s
 import { Dialog, DialogContent, DialogContentText } from '@material-ui/core';
 import ModalInfoHospital from '../ModalInfoHospital';
 
-interface InterfaceCardHospital {
+export interface InterfaceCardHospital {
+    idHospital: number;
     nomeHospital: string;
     tipoHospital: number;
     notaHospital: number;
     mediaSalarialHospital: number;
 }
 
-function CardHospital ({nomeHospital, tipoHospital, notaHospital, mediaSalarialHospital}: InterfaceCardHospital) {
+function CardHospital ({idHospital, nomeHospital, tipoHospital, notaHospital, mediaSalarialHospital}: InterfaceCardHospital) {
     const [nomeHospitalCard, setNomeHospitalCard] = useState(nomeHospital);
     const [iconeHospital, setIconeHospital] = useState('');
     const [modalInfoCardAberto, setModalInfoCardAberto] = useState(false);
@@ -38,7 +39,7 @@ function CardHospital ({nomeHospital, tipoHospital, notaHospital, mediaSalarialH
             default:
                 break;
         }
-        
+
     }, [tipoHospital]);
 
     useEffect(() => {
@@ -59,8 +60,8 @@ function CardHospital ({nomeHospital, tipoHospital, notaHospital, mediaSalarialH
             nome = nome.concat(" ...");
             setNomeHospitalCard(nome);
         }
-    }, [nomeHospitalCard])
-    
+    }, [nomeHospitalCard]);
+
     return (
         <div className="cardhospital">
             <div className="partesuperior">
@@ -91,19 +92,28 @@ function CardHospital ({nomeHospital, tipoHospital, notaHospital, mediaSalarialH
                     backgroundColor: 'transparent',
                     boxShadow: 'none',
                     maxWidth: '1080px',
-                    width: '60%',
+                    minWidth: '720px',
+                    width: '53vw',
+                    marginLeft: '22%',
+                    marginTop: '13rem',
                     outline: '0'
                 },
                 }}
             >
-                <DialogContent style={{padding: '10rem 0 0 0'}}>
+                <DialogContent style={{padding: '0'}}>
                     <DialogContentText
                         id="scroll-dialog-description"
                         ref={refInfoCardHospital}
                         tabIndex={-1}
                         style={{outline: 'none'}}
                     >
-                        <ModalInfoHospital />
+                        <ModalInfoHospital
+                            idHospital={idHospital}
+                            nomeHospital={nomeHospital}
+                            tipoHospital={tipoHospital}
+                            notaHospital={notaHospital}
+                            mediaSalarialHospital={mediaSalarialHospital}
+                        />
                     </DialogContentText>
                 </DialogContent>
             </Dialog>

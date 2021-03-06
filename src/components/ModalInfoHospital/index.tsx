@@ -1,31 +1,66 @@
 import { Avatar } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles.css';
+
+import { InterfaceCardHospital } from '../CardHospital';
 
 import iconeDptoEmergencia from "../../assets/images/icones/tipoplantao/dptoemergencia.svg";
 import iconePacientesInternados from "../../assets/images/icones/tipoplantao/pacientesinternados.svg";
 import iconeTransporteInterhospitalar from "../../assets/images/icones/tipoplantao/transporteinterhospitalar.svg";
+import api from '../../services/api';
 
-function ModalInfoHospital () {
+interface DetalhesHospital {
+    idHospital: number;
+    nome: string;
+    endereco: string;
+    cnpj: string;
+    responsavel: string;
+    uti: boolean;
+}
+
+function ModalInfoHospital ({idHospital, nomeHospital, tipoHospital, notaHospital, mediaSalarialHospital}: InterfaceCardHospital) {
+    const [informacoes, setInformacoes] = useState<DetalhesHospital>({
+        idHospital: idHospital,
+        nome: nomeHospital,
+        endereco: '',
+        cnpj: '',
+        responsavel: '',
+        uti: false
+    });
+
+    async function loadInfo() {
+        try {
+            const response = await api.get(`hospitais/${idHospital}`);
+
+            setInformacoes({ idHospital, ...response.data[0] });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        loadInfo();
+    }, []);
+
     return (
         <div className="modalinfohospital">
             <div className="informacoes">
                 <div className="detalhes">
                     <div className="nome">
-                        <p className="secao">Hospital Guaianazes</p>
+                        <p className="secao">{nomeHospital}</p>
                         <img src={iconeDptoEmergencia} alt="Hospital"/>
                     </div>
                     <div className="endereco">
                         <p className="secao">Endereço</p>
-                        <p className="descricao">Av. Josá Marinho, 453</p>
+                        <p className="descricao">{informacoes.endereco}</p>
                     </div>
                     <div className="cnpj">
                         <div className="secao">CNPJ</div>
-                        <div className="descricao">112029002-02</div>
+                        <div className="descricao">{informacoes.cnpj}</div>
                     </div>
                     <div className="administrador">
                         <div className="secao">Administrador do Plantão</div>
-                        <div className="descricao">Carlos Alberto Prado</div>
+                        <div className="descricao">{informacoes.responsavel}</div>
                     </div>
                     <div className="acreditacoes">
                         <div className="secao">Acreditações</div>
@@ -46,11 +81,11 @@ function ModalInfoHospital () {
                     <div className="dadosavaliados">
                         <div className="mediasalarial">
                             <div className="secao">Média Salarial</div>
-                            <div className="descricao">R$ 1245,60 / 12H</div>
+                            <div className="descricao">R$ {mediaSalarialHospital}/12H</div>
                         </div>
                         <div className="avaliacao">
                             <div className="secao">Avaliação</div>
-                            <div className="nota">4.63/5</div>
+                            <div className="nota">{notaHospital}/5</div>
                         </div>
                     </div>
                 </div>
@@ -66,7 +101,7 @@ function ModalInfoHospital () {
                     </div>
                     <div className="item">
                         <div className="rotulo">UTI</div>
-                        <div className="avaliacao">Sim</div>
+                        <div className="avaliacao">{informacoes.uti ? 'Sim' : 'Não'}</div>
                     </div>
                     <div className="item">
                         <div className="rotulo">Tipo de sistema</div>
@@ -164,9 +199,9 @@ function ModalInfoHospital () {
                             <p className="datacomentarios">2 de Novembro</p>
                         </div>
                         <div className="textocomentario">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum rem 
-                            doloribus omnis. Recusandae exercitationem ullam vero soluta explicabo 
-                            quia reprehenderit a, accusamus deserunt. Tempora commodi obcaecati 
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum rem
+                            doloribus omnis. Recusandae exercitationem ullam vero soluta explicabo
+                            quia reprehenderit a, accusamus deserunt. Tempora commodi obcaecati
                             consequatur sit, odit eligendi?
                         </div>
                         <div className="numrespostas">
@@ -182,9 +217,9 @@ function ModalInfoHospital () {
                             <p className="datacomentarios">2 de Novembro</p>
                         </div>
                         <div className="textocomentario">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum rem 
-                            doloribus omnis. Recusandae exercitationem ullam vero soluta explicabo 
-                            quia reprehenderit a, accusamus deserunt. Tempora commodi obcaecati 
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum rem
+                            doloribus omnis. Recusandae exercitationem ullam vero soluta explicabo
+                            quia reprehenderit a, accusamus deserunt. Tempora commodi obcaecati
                             consequatur sit, odit eligendi?
                         </div>
                         <div className="numrespostas">
@@ -200,9 +235,9 @@ function ModalInfoHospital () {
                             <p className="datacomentarios">2 de Novembro</p>
                         </div>
                         <div className="textocomentario">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum rem 
-                            doloribus omnis. Recusandae exercitationem ullam vero soluta explicabo 
-                            quia reprehenderit a, accusamus deserunt. Tempora commodi obcaecati 
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum rem
+                            doloribus omnis. Recusandae exercitationem ullam vero soluta explicabo
+                            quia reprehenderit a, accusamus deserunt. Tempora commodi obcaecati
                             consequatur sit, odit eligendi?
                         </div>
                         <div className="numrespostas">
@@ -218,9 +253,9 @@ function ModalInfoHospital () {
                             <p className="datacomentarios">2 de Novembro</p>
                         </div>
                         <div className="textocomentario">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum rem 
-                            doloribus omnis. Recusandae exercitationem ullam vero soluta explicabo 
-                            quia reprehenderit a, accusamus deserunt. Tempora commodi obcaecati 
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum rem
+                            doloribus omnis. Recusandae exercitationem ullam vero soluta explicabo
+                            quia reprehenderit a, accusamus deserunt. Tempora commodi obcaecati
                             consequatur sit, odit eligendi?
                         </div>
                         <div className="numrespostas">
@@ -236,9 +271,9 @@ function ModalInfoHospital () {
                             <p className="datacomentarios">2 de Novembro</p>
                         </div>
                         <div className="textocomentario">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum rem 
-                            doloribus omnis. Recusandae exercitationem ullam vero soluta explicabo 
-                            quia reprehenderit a, accusamus deserunt. Tempora commodi obcaecati 
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum rem
+                            doloribus omnis. Recusandae exercitationem ullam vero soluta explicabo
+                            quia reprehenderit a, accusamus deserunt. Tempora commodi obcaecati
                             consequatur sit, odit eligendi?
                         </div>
                         <div className="numrespostas">
@@ -254,9 +289,9 @@ function ModalInfoHospital () {
                             <p className="datacomentarios">2 de Novembro</p>
                         </div>
                         <div className="textocomentario">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum rem 
-                            doloribus omnis. Recusandae exercitationem ullam vero soluta explicabo 
-                            quia reprehenderit a, accusamus deserunt. Tempora commodi obcaecati 
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum rem
+                            doloribus omnis. Recusandae exercitationem ullam vero soluta explicabo
+                            quia reprehenderit a, accusamus deserunt. Tempora commodi obcaecati
                             consequatur sit, odit eligendi?
                         </div>
                         <div className="numrespostas">
