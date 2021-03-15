@@ -16,11 +16,11 @@ export interface HospitaisPesquisados {
 function FiltrosPesquisa ({hospitais, pesquisa}: HospitaisPesquisados) {
     const [pesquisaBasicaExpanded, setPesquisaBasicaExpanded] = useState(false);
     const [filtrosExpanded, setFiltrosExpanded] = useState<number | false>(false);
-    
+
     const handleChangeAccordionPesquisaBasica = () => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
         setPesquisaBasicaExpanded(isExpanded);
     };
-    
+
     const handleChangeAccordionFiltros = (tipo: number) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
         setFiltrosExpanded(isExpanded ? tipo : false);
         pesquisa(isExpanded ? tipo : 0);
@@ -44,7 +44,8 @@ function FiltrosPesquisa ({hospitais, pesquisa}: HospitaisPesquisados) {
                                     : "Mostrar filtros"}
                                 </button>
                             </div>
-                            <p>{hospitais === undefined ? 0 : hospitais.length} plantões</p>
+                            <p>{hospitais === undefined || !Array.isArray(hospitais)
+                                ? 0 : hospitais.length} plantões</p>
                         </div>
                     </AccordionSummary>
                     <AccordionDetails>
@@ -82,7 +83,7 @@ function FiltrosPesquisa ({hospitais, pesquisa}: HospitaisPesquisados) {
                             <img src={iconeDptoEmergencia} alt="Departamento de Emergência"/>
                             <div className="informacoesfiltro">
                                 <p className="nomefiltro">Departamento de Emergência</p>
-                                <p className="numeroderesultados">23 plantões encontrados</p>
+                                {filtrosExpanded === 1 && <p className="numeroderesultados">{hospitais?.length} plantões encontrados</p>}
                             </div>
                         </div>
                     </AccordionSummary>
@@ -111,7 +112,7 @@ function FiltrosPesquisa ({hospitais, pesquisa}: HospitaisPesquisados) {
                             <img src={iconePacientesInternados} alt="Pacientes internados"/>
                             <div className="informacoesfiltro">
                                 <p className="nomefiltro">Pacientes internados</p>
-                                <p className="numeroderesultados">21 plantões encontrados</p>
+                                {filtrosExpanded === 2 && <p className="numeroderesultados">{hospitais?.length} plantões encontrados</p>}
                             </div>
                         </div>
                     </AccordionSummary>
@@ -134,7 +135,7 @@ function FiltrosPesquisa ({hospitais, pesquisa}: HospitaisPesquisados) {
                             <img src={iconeTransporteInterhospitalar} alt="Transporte Interhospitalar"/>
                             <div className="informacoesfiltro">
                                 <p className="nomefiltro">Transporte Interhospitalar</p>
-                                <p className="numeroderesultados">11 plantões encontrados</p>
+                                {filtrosExpanded === 3 && <p className="numeroderesultados">{hospitais?.length} plantões encontrados</p>}
                             </div>
                         </div>
                     </AccordionSummary>
@@ -163,7 +164,7 @@ function FiltrosPesquisa ({hospitais, pesquisa}: HospitaisPesquisados) {
                             <img src={iconeAmbulancia} alt="Ambulância"/>
                             <div className="informacoesfiltro">
                                 <p className="nomefiltro">Postos fixos de ambulância</p>
-                                <p className="numeroderesultados">11 plantões encontrados</p>
+                                {filtrosExpanded === 4 && <p className="numeroderesultados">{hospitais?.length} plantões encontrados</p>}
                             </div>
                         </div>
                     </AccordionSummary>
@@ -179,9 +180,7 @@ function FiltrosPesquisa ({hospitais, pesquisa}: HospitaisPesquisados) {
                     </AccordionDetails>
                 </Accordion>
             </div>
-            <div className="propaganda">
-                
-            </div>
+            <div className="propaganda" />
         </div>
     );
 }

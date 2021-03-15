@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useAsync } from 'react-async-hook';
 import CardHospital from '../../components/CardHospital';
 import FiltrosPesquisa from '../../components/FiltrosPesquisa';
 import NavBar from '../../components/NavBar';
@@ -46,6 +47,8 @@ function Plantoes () {
             const response = await api.get('hospitais');
 
             setHospitais(response.data);
+            console.log(response.data);
+
         } catch (error) {
             console.log(error);
         }
@@ -71,7 +74,7 @@ function Plantoes () {
                         gutterHeight={13}
                         springConfig={{stiffness: 170, damping: 26}}
                     >
-                        {hospitais !== undefined && hospitais.map(cardHospital => {
+                        {Array.isArray(hospitais) && hospitais.map(cardHospital => {
                             return(
                             <li key={cardHospital.id_card}>
                                 <CardHospital
