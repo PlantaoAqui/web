@@ -1,0 +1,93 @@
+import { Formik, useFormik } from 'formik';
+import React, { useState } from 'react';
+import FormCadastro from '../../components/FormCadastro';
+import NavBar from '../../components/NavBar';
+import './styles.css';
+
+function Cadastro () {
+    const [etapa, setEtapa] = useState(0)
+    const formik = useFormik({
+        initialValues: {
+            usuario: {
+                nome: '',
+                sobrenome: '',
+                email: '',
+                senha: '',
+            },
+            informacoesUsuario: {
+                crm: '',
+                status: '',
+                estado: '',
+                cidade: '',
+                instituicaoDeEnsino: '',
+                dataDeNascimento: ''
+            },
+            arquivo: ''
+        },
+        onSubmit: values => {
+            alert(JSON.stringify(values, null, 2));
+        }
+    })
+
+    function ProximaEtapa(e: React.ChangeEvent<HTMLFormElement>) {
+        if(etapa < 3){
+            setEtapa(etapa + 1)
+        } else {
+            formik.handleSubmit(e)
+            setEtapa(0)
+        }
+    }
+
+    return (
+        <div className="page-cadastro">
+            <NavBar aba={2} />
+            {etapa === 0 && (
+                <FormCadastro
+                    titulo="Seja bem-vindo!"
+                    subtitulo="Forneça alguns dados para criar a sua conta."
+                    etapa={0}
+                    rodape="Digite uma senha com min 6 caracteres"
+                    textoBotao="Quero me cadastrar"
+                    values={formik.values}
+                    handleChange={formik.handleChange}
+                    proximaEtapa={ProximaEtapa}
+                />
+            )}
+            {etapa === 1 && (
+                <FormCadastro
+                    titulo="Como somos uma comunidade de médicos, vamos precisar de mais alguns dados..."
+                    etapa={1}
+                    textoBotao="Prosseguir"
+                    values={formik.values}
+                    handleChange={formik.handleChange}
+                    proximaEtapa={ProximaEtapa}
+                />
+            )}
+            {etapa === 2 && (
+                <FormCadastro
+                    titulo="Termos e Políticas Todeplantão.com"
+                    etapa={2}
+                    termos="1. Os serviços fornecidosNossa missão é proporcionar às pessoas o poder de criar "
+                    textoBotao="Concordar e Prosseguir"
+                    values={formik.values}
+                    handleChange={formik.handleChange}
+                    proximaEtapa={ProximaEtapa}
+                />
+            )}
+            {etapa === 3 && (
+                <FormCadastro
+                    titulo="Confirmação dos documentos"
+                    etapa={3}
+                    textoDocumento="obrigado por ter chegado até aqui e fazer parte da nossa comunidade! Porém ainda falta um ultimo passo para que possa usufruir 100% da nossa plataforma. Precisamos que tire uma foto junto com o seu CRM, comprovando a sua identidade."
+                    placeholderDocumento="Clique aqui ou arraste o seu arquivo"
+                    textoBotao="Upload do arquivo"
+                    values={formik.values}
+                    handleChange={formik.handleChange}
+                    proximaEtapa={ProximaEtapa}
+                />
+            )}
+        </div>
+    );
+}
+
+export default Cadastro;

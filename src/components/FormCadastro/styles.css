@@ -1,0 +1,150 @@
+.modal-cadastro {
+    position: absolute;
+    background: var(--cor-fundo-card);
+    width: fit-content;
+    height: fit-content;
+    padding: 1.3rem;
+    border-radius: 8px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+}
+
+.modal-cadastro form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.modal-cadastro form .titulo {
+    max-width: 50rem;
+}
+
+.modal-cadastro form .titulo h1{
+    font: 500 2.4rem Roboto;
+    color: var(--cor-texto-escuro);
+}
+
+.modal-cadastro form .subtitulo h3 {
+    font: 400 1.7rem Roboto;
+    color: var(--cor-texto-claro);
+    margin-top: 0.8rem;
+}
+
+.modal-cadastro form .conteudo {
+    margin-top: 2.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-around;
+}
+
+.modal-cadastro form .conteudo .nome {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-cadastro form .conteudo .nome input:first-child{
+    margin-right: 2.4rem;
+}
+
+.modal-cadastro form .conteudo .linha {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-cadastro form .conteudo .linha input {
+    flex: 1;
+}
+
+.modal-cadastro form .conteudo .linha input:first-child {
+    margin-right: 2.4rem;
+}
+
+.modal-cadastro form .conteudo input {
+    background: transparent;
+    border: 1px solid var(--cor-borda-campos);
+    border-radius: 0.8rem;
+    margin-bottom: 1.3rem;
+    padding-left: 1.3rem;
+    height: 4rem;
+    outline: none;
+    font: 400 1.7rem Roboto;
+    color: var(--cor-texto-claro);
+}
+
+.modal-cadastro form .conteudo .termos {
+    height: 25rem;
+    padding: 0.9rem 1.2rem;
+    border: 1px solid var(--cor-borda-campos);
+    border-radius: 0.8rem;
+}
+
+.modal-cadastro form .conteudo .termos p{
+    font: 400 1.7rem Roboto;
+    color: var(--cor-texto-claro);
+    max-width: 50rem;
+}
+
+.modal-cadastro form .conteudo .confirmacao-documento {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.modal-cadastro form .conteudo .confirmacao-documento p {
+    font: 400 1.7rem Roboto;
+    color: var(--cor-texto-claro);
+}
+
+.modal-cadastro form .conteudo .confirmacao-documento .descricao {
+    padding: 0.9rem 1.2rem;
+    border: 1px solid var(--cor-borda-campos);
+    border-radius: 0.8rem;
+    max-width: 24rem;
+    margin-right: 2.4rem;
+    text-align: justify;
+}
+
+.modal-cadastro form .conteudo .confirmacao-documento .arquivo {
+    padding: 0.9rem 1.2rem;
+    text-align: center;
+    border: 1px solid var(--cor-borda-campos);
+    border-radius: 0.8rem;
+    max-width: 24rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.modal-cadastro form .rodape {
+    font: 400 1.2rem Roboto;
+    color: var(--cor-texto-claro);
+}
+
+.modal-cadastro form button {
+    position: absolute;
+    height: 4rem;
+    bottom: -5rem;
+    left: 0;
+    width: -webkit-fill-available;
+    border: none;
+    border-radius: 0.8rem;
+    outline: none;
+    text-align: start;
+    padding-left: 1.3rem;
+    font: 400 2.4rem Roboto;
+    color: var(--cor-texto-escuro);
+}
+
+.modal-cadastro form button:hover {
+    cursor: pointer;
+}

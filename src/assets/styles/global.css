@@ -5,7 +5,7 @@
     --cor-texto-claro: #707070;
     --cor-texto-escuro: #3E3E3E;
     --cor-texto-campos: #256C14;
-    --cor-borda-campos: #256C14;
+    --cor-borda-campos: #707070;
     --cor-fundo-campos: #FFFFFF;
     --cor-fundo-card: #E9EAEA;
     --cor-fundo-card-hover: #DDDDDD;
@@ -22,7 +22,7 @@
 body{
     background: var(--cor-fundo-principal);
   }
-  
+
 #root{
     display: flex;
     justify-content: center;
