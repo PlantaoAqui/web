@@ -5,7 +5,8 @@ import NavBar from '../../components/NavBar';
 import './styles.css';
 
 function Cadastro () {
-    const [etapa, setEtapa] = useState(0)
+    const [etapa, setEtapa] = useState(0);
+    const [arquivoFotoDocumento, setArquivoFotoDocumento] = useState<File>();
     const formik = useFormik({
         initialValues: {
             usuario: {
@@ -28,6 +29,12 @@ function Cadastro () {
             alert(JSON.stringify(values, null, 2));
         }
     })
+
+    function ResetCidade(reset: boolean){
+        if (reset){
+            formik.setFieldValue('informacoesUsuario.cidade', '');
+        }
+    }
 
     function ProximaEtapa(e: React.ChangeEvent<HTMLFormElement>) {
         if(etapa < 3){
@@ -61,6 +68,7 @@ function Cadastro () {
                     values={formik.values}
                     handleChange={formik.handleChange}
                     proximaEtapa={ProximaEtapa}
+                    resetCidade={ResetCidade}
                 />
             )}
             {etapa === 2 && (
@@ -84,6 +92,8 @@ function Cadastro () {
                     values={formik.values}
                     handleChange={formik.handleChange}
                     proximaEtapa={ProximaEtapa}
+                    setFotoDocumento={(url) => formik.setFieldValue('arquivo', url)}
+                    setArquivoDocumento={setArquivoFotoDocumento}
                 />
             )}
         </div>
