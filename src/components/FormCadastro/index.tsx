@@ -255,9 +255,6 @@ function FormCadastro (props: FormCadastroProps) {
                                 <div className="descricao">
                                     <p>{props.textoDocumento}</p>
                                 </div>
-                                {/* <div className="arquivo">
-                                    <p>{props.placeholderDocumento}</p>
-                                </div> */}
                                 <div className="arquivo">
                                     {fotoDocumento && <img src={fotoDocumento} alt="Foto do seu documento"/>}
                                     <label htmlFor="selecionar-foto">
