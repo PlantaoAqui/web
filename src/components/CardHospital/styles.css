@@ -1,5 +1,5 @@
 .cardhospital {
-    width: 230px;
+    width: 250px;
     min-height: 120px;
     max-height: 170px;
     display: flex;
@@ -88,4 +88,8 @@
 .cardhospital .parteinferior .dadoshospital p.valor {
     font: 400 1.2rem Roboto;
     color: var(--cor-texto-escuro);
+}
+
+#scroll-dialog-description {
+    margin: 0;
 }

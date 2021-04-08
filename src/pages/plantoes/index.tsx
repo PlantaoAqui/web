@@ -26,7 +26,7 @@ const Grid = makeResponsive(measureItems(SpringGrid), {
 
 function Plantoes () {
     const [hospitais, setHospitais] = useState<Hospital[]>();
-
+    const [blurBackground, setBlurBackground] = useState(false);
 
     async function pesquisarHospitais(filtro: number) {
         try {
@@ -47,7 +47,6 @@ function Plantoes () {
             const response = await api.get('hospitais');
 
             setHospitais(response.data);
-            console.log(response.data);
 
         } catch (error) {
             console.log(error);
@@ -59,7 +58,7 @@ function Plantoes () {
     }, []);
 
     return (
-        <div className="page-plantoes">
+        <div className="page-plantoes" style={blurBackground ? {filter: 'blur(3px)'} : {}}>
             <NavBar aba={1}/>
             <div className="pesquisaplantoes">
                 <FiltrosPesquisa hospitais={hospitais} pesquisa={pesquisarHospitais}/>
@@ -68,7 +67,7 @@ function Plantoes () {
                         className="grid"
                         component="ul"
                         columns={2}
-                        columnWidth={230}
+                        columnWidth={250}
                         itemHeight={120}
                         gutterWidth={13}
                         gutterHeight={13}
@@ -83,6 +82,7 @@ function Plantoes () {
                                     tipoHospital={cardHospital.tipo}
                                     notaHospital={cardHospital.nota}
                                     mediaSalarialHospital={cardHospital.salario}
+                                    blurBackground={setBlurBackground}
                                 />
                             </li>
 

@@ -13,18 +13,21 @@
     max-width: 350px;
     border-radius: 8px;
     width: calc((100% - 30px)/3);
-    padding: 1.3rem;
-    padding-top: 1.8rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .modalinfohospital .informacoes .detalhes .secao {
     color: var(--cor-texto-escuro);
-    font: 500 1.4rem Roboto;
+    font: 500 1.2rem Roboto;
     margin-bottom: 4px;
 }
 
 .modalinfohospital .informacoes .detalhes .descricao {
-    font: 400 1.4rem Roboto;
+    font: 400 1.2rem Roboto;
     margin-bottom: 1.2rem;
 }
 
@@ -32,11 +35,44 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.modalinfohospital .informacoes .detalhes .nome p {
+    font: 400 2rem Roboto;
+    color: var(--cor-texto-escuro);
+    max-width: 80%;
 }
 
 .modalinfohospital .informacoes .detalhes .nome img {
     width: 4.2rem;
     height: auto;
+}
+
+.modalinfohospital .informacoes .detalhes .endereco {
+    margin-top: 2.8rem;
+    align-self: flex-start;
+}
+
+.modalinfohospital .informacoes .detalhes .inferior {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.modalinfohospital .informacoes .detalhes .subdados {
+    flex: 1;
+    margin-right: 2rem;
+}
+
+.modalinfohospital .informacoes .detalhes .linkicones {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
 .modalinfohospital .informacoes .detalhes .icones {
@@ -60,6 +96,16 @@
     margin-right: 0.4rem;
 }
 
+.modalinfohospital .informacoes .detalhes button {
+    width: 100%;
+    background: var(--cor-fundo-card-hover);
+    outline: none;
+    border-radius: 0.8rem;
+    border: none;
+    height: 4rem;
+    cursor: pointer;
+}
+
 .modalinfohospital .informacoes .detalhes .dadosavaliados {
     display: flex;
     flex-direction: row;
@@ -77,34 +123,114 @@
     max-width: 350px;
     border-radius: 8px;
     width: calc((100% - 30px)/3);
-    padding: 1.3rem;
-    padding-top: 1.8rem;
+    padding: 1rem;
 }
 
 .modalinfohospital .informacoes .sobre .sumario {
     color: var(--cor-texto-escuro);
-    font: 500 1.4rem Roboto;
-    height: 4.2rem;
+    font: 500 1.2rem Roboto;
+    margin-bottom: 1.6rem;
+}
+
+.modalinfohospital .informacoes .sobre .numeroavaliacoes {
+    color: var(--cor-texto-claro);
+    font: 400 1.2rem Roboto;
+    margin-bottom: 1.2rem;
 }
 
 .modalinfohospital .informacoes .sobre .item {
-    position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 1.3rem;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.modalinfohospital .informacoes .sobre .item:last-child {
+    margin-top: 3.6rem;
 }
 
 .modalinfohospital .informacoes .sobre .item .rotulo {
+    flex: 1;
     color: var(--cor-texto-escuro);
-    font: 500 1.4rem Roboto;
+    font: 400 1.2rem Roboto;
+    margin-right: 1rem;
 }
 
 .modalinfohospital .informacoes .sobre .item .avaliacao {
+    flex: 1;
     color: var(--cor-texto-claro);
-    font: 400 1.4rem Roboto;
-    position: absolute;
+    font: 400 1.2rem Roboto;
     left: 17rem;
+}
+
+.modalinfohospital .informacoes .sobre .avaliacao-hospital {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.modalinfohospital .informacoes .sobre .avaliacao-hospital .rotulo {
+    color: var(--cor-texto-escuro);
+    font: 400 1.2rem Roboto;
+}
+
+.modalinfohospital .informacoes .sobre .avaliacao-hospital .nota {
+    color: var(--cor-texto-escuro);
+    font: 400 4.4rem Roboto;
+}
+
+.modalinfohospital .informacoes .analise-salarial {
+    background: var(--cor-fundo-card);
+    max-height: 475px;
+    max-width: 350px;
+    border-radius: 8px;
+    width: calc((100% - 30px)/3);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.modalinfohospital .informacoes .analise-salarial .sumario {
+    color: var(--cor-texto-escuro);
+    font: 500 1.2rem Roboto;
+    margin-bottom: 1.6rem;
+}
+
+.modalinfohospital .informacoes .analise-salarial .media {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modalinfohospital .informacoes .analise-salarial .media .rotulo {
+    font: 400 1.2rem Roboto;
+    color: var(--cor-texto-escuro);
+}
+
+.modalinfohospital .informacoes .analise-salarial .media .avaliacao {
+    font: 400 1.2rem Roboto;
+    color: var(--cor-texto-claro);
+}
+
+.modalinfohospital .informacoes .analise-salarial canvas {
+    height: 100%;
+    width: 100%;
+}
+
+.modalinfohospital .informacoes .analise-salarial .salario-mes {
+    margin-top: 1.6rem;
+}
+
+.modalinfohospital .informacoes .analise-salarial .salario-dia-semana {
+    margin-top: 1.6rem;
+    flex: 1;
 }
 
 .modalinfohospital .secaocomentarios {
@@ -160,3 +286,4 @@
     margin-bottom: 1.2rem;
     color: var(--cor-texto-escuro);
 }
+

@@ -9,6 +9,7 @@
     --cor-fundo-campos: #FFFFFF;
     --cor-fundo-card: #E9EAEA;
     --cor-fundo-card-hover: #DDDDDD;
+    --cor-vermelha-warning: #f44336;
 
     font-size: 60%;
 }
@@ -32,4 +33,11 @@ body{
     :root{
         font-size: 62.5%;
     }
+}
+
+@font-face {
+    font-family: "SFProText";
+    src: local("SFProText"),
+        url('../../fonts/SFProText-Regular.ttf') format("truetype");
+    font-weight: normal;
 }

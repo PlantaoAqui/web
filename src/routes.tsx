@@ -1,15 +1,17 @@
 import React from 'react';
-import { BrowserRouter, Redirect, Route } from "react-router-dom";
+import { Router, Redirect, Route } from "react-router-dom";
 import Cadastro from './pages/cadastro';
+import Login from './pages/login';
 import Plantoes from './pages/plantoes';
+import history from './services/history';
 
 function Routes () {
     return (
-        <BrowserRouter >
-            <Route path="/" exact><Redirect to="/plantoes" /></Route>
+        <Router history={history} >
+            <Route path="/" exact component={Login}></Route>
             <Route path="/plantoes" component={Plantoes} />
             <Route path="/cadastro" component={Cadastro} />
-        </BrowserRouter>
+        </Router>
     );
 }
 

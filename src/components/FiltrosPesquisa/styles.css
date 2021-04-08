@@ -60,14 +60,14 @@
 }
 
 .filtrospesquisa .cabecalho + p {
-    margin-top: 1.2rem;
-    font: 400 2.4rem Roboto;
+    margin-top: 1rem;
+    font: 500 1.2rem Roboto;
     color: var(--cor-texto-escuro);
 }
 
 .filtrospesquisa .basepesquisa {
     width: 100%;
-    padding: 13px;
+    padding: 0.7rem 1.3rem;
     background: var(--cor-fundo-card);
     border-radius: 8px;
 }
@@ -80,10 +80,10 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    padding-top: 0.8rem;    
+    padding-top: 0.8rem;
 }
 
-.filtrospesquisa .basepesquisa .detalhespesquisa .local .descricao{ 
+.filtrospesquisa .basepesquisa .detalhespesquisa .local .descricao{
     margin-top: 0.4rem;
     font: 500 1.4rem Roboto;
     color: var(--cor-texto-escuro);
@@ -102,21 +102,13 @@
     color: var(--cor-texto-claro);
 }
 
-.filtrospesquisa .tipostitulo {
-    width: 100%;
-    padding: 0 13px;
-    margin-top: 1.2rem;
-}
-
-.filtrospesquisa .tipostitulo h3 {
-    margin-top: 1.2rem;
-    font: 400 2.2rem Roboto;
-    color: var(--cor-texto-escuro);
-}
-
 .filtrospesquisa p {
     font: 400 1.8rem Roboto;
     color: var(--cor-texto-claro);
+}
+
+.filtrospesquisa .filtro {
+    cursor: initial;
 }
 
 .filtrospesquisa .dptoemergencia,
@@ -125,25 +117,18 @@
 .filtrospesquisa .ambulancia {
     width: 100%;
     margin-top: 1.3rem;
-    padding: 13px;
+    padding: 0.7rem 1.3rem;
     background: var(--cor-fundo-card);
     border: 1px solid var(--cor-fundo-card);
     border-radius: 8px;
     transition: 0.6s;
 }
 
-.filtrospesquisa .dptoemergencia-collapsed:hover,
-.filtrospesquisa .pacientes-collapsed:hover,
-.filtrospesquisa .transporte-collapsed:hover,
-.filtrospesquisa .ambulancia-collapsed:hover {
-    background: var(--cor-fundo-card-hover);
-    border: 1px solid var(--cor-texto-claro);
-}
-
 .filtrospesquisa .sumariofiltro {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    margin-top: 1.3rem;
 }
 
 .filtrospesquisa .sumariofiltro img {

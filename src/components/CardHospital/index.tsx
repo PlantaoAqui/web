@@ -14,9 +14,10 @@ export interface InterfaceCardHospital {
     tipoHospital: number;
     notaHospital: number;
     mediaSalarialHospital: number;
+    blurBackground: (e: boolean) => void
 }
 
-function CardHospital ({idHospital, nomeHospital, tipoHospital, notaHospital, mediaSalarialHospital}: InterfaceCardHospital) {
+function CardHospital ({idHospital, nomeHospital, tipoHospital, notaHospital, mediaSalarialHospital, blurBackground}: InterfaceCardHospital) {
     const [nomeHospitalCard, setNomeHospitalCard] = useState(nomeHospital);
     const [iconeHospital, setIconeHospital] = useState('');
     const [modalInfoCardAberto, setModalInfoCardAberto] = useState(false);
@@ -49,6 +50,7 @@ function CardHospital ({idHospital, nomeHospital, tipoHospital, notaHospital, me
                 descriptionElement.focus();
             }
         }
+        blurBackground(modalInfoCardAberto);
     }, [modalInfoCardAberto]);
 
     useEffect(() => {
@@ -90,13 +92,13 @@ function CardHospital ({idHospital, nomeHospital, tipoHospital, notaHospital, me
                 PaperProps={{
                 style: {
                     backgroundColor: 'transparent',
-                    boxShadow: 'none',
                     maxWidth: '1080px',
                     minWidth: '720px',
-                    width: '53vw',
+                    width: '57vw',
                     marginLeft: '22%',
-                    marginTop: '13rem',
-                    outline: '0'
+                    marginTop: '11rem',
+                    outline: '0',
+                    boxShadow: 'none',
                 },
                 }}
             >
@@ -113,6 +115,7 @@ function CardHospital ({idHospital, nomeHospital, tipoHospital, notaHospital, me
                             tipoHospital={tipoHospital}
                             notaHospital={notaHospital}
                             mediaSalarialHospital={mediaSalarialHospital}
+                            blurBackground={blurBackground}
                         />
                     </DialogContentText>
                 </DialogContent>

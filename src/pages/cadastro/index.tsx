@@ -1,10 +1,14 @@
 import { Formik, useFormik } from 'formik';
 import React, { useState } from 'react';
+import { useAsyncCallback } from 'react-async-hook';
+import { useHistory } from 'react-router';
 import FormCadastro from '../../components/FormCadastro';
 import NavBar from '../../components/NavBar';
+import api from '../../services/api';
 import './styles.css';
 
 function Cadastro () {
+    const history = useHistory();
     const [etapa, setEtapa] = useState(0);
     const [arquivoFotoDocumento, setArquivoFotoDocumento] = useState<File>();
     const formik = useFormik({
@@ -25,9 +29,7 @@ function Cadastro () {
             },
             arquivo: ''
         },
-        onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
-        }
+        onSubmit: async () => handleSubmit.execute()
     })
 
     function ResetCidade(reset: boolean){
@@ -44,6 +46,17 @@ function Cadastro () {
             setEtapa(0)
         }
     }
+
+    const handleSubmit = useAsyncCallback(
+        async () => {
+            try {
+                await api.post('/usuarios', formik.values)
+                history.push('/plantoes')
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    )
 
     return (
         <div className="page-cadastro">

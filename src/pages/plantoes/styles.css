@@ -1,5 +1,6 @@
 .page-plantoes {
     width: 100%;
+    overflow: hidden;
 }
 
 .page-plantoes .pesquisaplantoes {
