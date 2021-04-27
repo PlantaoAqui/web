@@ -49,12 +49,15 @@ function Cadastro () {
 
     const handleSubmit = useAsyncCallback(
         async () => {
-            try {
-                await api.post('/usuarios', formik.values)
-                history.push('/plantoes')
-            } catch (error) {
+            await api.post('/usuarios', formik.values)
+            .then((response) => {
+                for (var [key, value] of Object.entries(response.data)) {
+                    sessionStorage.setItem(key, String(value));
+                }
+                history.push('/plantoes');
+            }).catch(error =>{
                 console.log(error);
-            }
+            })
         }
     )
 
