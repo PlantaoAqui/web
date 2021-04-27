@@ -45,7 +45,7 @@
 }
 
 .filtrospesquisa .cabecalho p {
-    font: 400 1.2rem Roboto;
+    font: 400 1.4rem SFProText;
     color: var(--cor-texto-claro);
     max-width: 60%;
 }
@@ -55,13 +55,13 @@
     background: none;
     cursor: pointer;
     outline: none;
-    font-size: 1.2rem;
+    font: 400 1.2rem SFProText;
     color: var(--cor-texto-claro);
 }
 
 .filtrospesquisa .cabecalho + p {
     margin-top: 1rem;
-    font: 500 1.2rem Roboto;
+    font: 500 1.4rem SFProText;
     color: var(--cor-texto-escuro);
 }
 
@@ -99,11 +99,6 @@
 
 .filtrospesquisa .basepesquisa .detalhespesquisa .local .seletor p {
     font: 400 1.4rem Roboto;
-    color: var(--cor-texto-claro);
-}
-
-.filtrospesquisa p {
-    font: 400 1.8rem Roboto;
     color: var(--cor-texto-claro);
 }
 
@@ -147,12 +142,12 @@
 
 .filtrospesquisa .sumariofiltro .informacoesfiltro p.nomefiltro {
     color: var(--cor-texto-escuro);
-    font: 400 1.2rem Roboto;
+    font: 400 1.2rem SFProText;
 }
 
 .filtrospesquisa .sumariofiltro .informacoesfiltro p.numeroderesultados {
     color: var(--cor-texto-claro);
-    font: 400 1.2rem Roboto;
+    font: 400 1.2rem SFProText;
 }
 
 .filtrospesquisa .propaganda {

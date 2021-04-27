@@ -29,10 +29,10 @@
 }
 
 .navbar a .logo {
-    font: 400 3.2rem SFProText;
+    font: 500 3.2rem SFProText;
     color: var(--cor-texto-escuro);
 }
 
 .navbar a .link {
-    font: 600 1.6rem Nunito;
+    font: 400 1.6rem SFProText;
 }

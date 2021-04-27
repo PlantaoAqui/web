@@ -1,0 +1,15 @@
+.select-input-styled {
+    width: 100%;
+}
+
+.select-input-styled .MuiOutlinedInput-notchedOutline {
+    border: none;
+}
+
+.select-input-styled .MuiSelect-root:focus {
+    background: transparent;
+}
+
+.select-input-styled .MuiSelect-icon {
+    top: unset;
+}

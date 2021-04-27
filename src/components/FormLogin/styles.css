@@ -23,12 +23,12 @@
 }
 
 .modal-login form .titulo h1{
-    font: 500 2.4rem Roboto;
+    font: 500 2.4rem SFProText;
     color: var(--cor-texto-escuro);
 }
 
 .modal-login form .subtitulo h3 {
-    font: 400 1.7rem Roboto;
+    font: 400 1.7rem SFProText;
     color: var(--cor-texto-claro);
     margin-top: 0.8rem;
 }
@@ -49,7 +49,7 @@
     padding-left: 1.3rem;
     height: 4rem;
     outline: none;
-    font: 400 1.7rem Roboto;
+    font: 400 1.7rem SFProText;
     color: var(--cor-texto-claro);
     width: 30rem;
 }
@@ -65,7 +65,7 @@
     outline: none;
     text-align: start;
     padding-left: 1.3rem;
-    font: 400 2.4rem Roboto;
+    font: 400 2.4rem SFProText;
     color: var(--cor-texto-escuro);
 }
 
@@ -74,6 +74,6 @@
 }
 
 .modal-login form .rodape {
-    font: 500 1.4rem Roboto;
+    font: 500 1.4rem SFProText;
     color: var(--cor-vermelha-warning);
 }

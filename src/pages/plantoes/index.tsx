@@ -10,7 +10,7 @@ import api from '../../services/api';
 import './styles.css';
 
 export interface Hospital {
-    id_card: number;
+    idCard: number;
     id: number;
     nome: string;
     tipo: number;
@@ -68,18 +68,18 @@ function Plantoes () {
                         component="ul"
                         columns={2}
                         columnWidth={250}
-                        itemHeight={120}
+                        itemHeight={125}
                         gutterWidth={13}
                         gutterHeight={13}
                         springConfig={{stiffness: 170, damping: 26}}
                     >
                         {Array.isArray(hospitais) && hospitais.map(cardHospital => {
                             return(
-                            <li key={cardHospital.id_card}>
+                            <li key={cardHospital.idCard}>
                                 <CardHospital
                                     idHospital={cardHospital.id}
                                     nomeHospital={cardHospital.nome}
-                                    tipoHospital={cardHospital.tipo}
+                                    tipoPlantao={cardHospital.tipo}
                                     notaHospital={cardHospital.nota}
                                     mediaSalarialHospital={cardHospital.salario}
                                     blurBackground={setBlurBackground}

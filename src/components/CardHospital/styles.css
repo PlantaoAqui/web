@@ -1,6 +1,6 @@
 .cardhospital {
     width: 250px;
-    min-height: 120px;
+    min-height: 125px;
     max-height: 170px;
     display: flex;
     flex-direction: column;
@@ -25,7 +25,7 @@
 }
 
 .cardhospital .partesuperior h5 {
-    font: 400 1.4rem Roboto;
+    font: 500 1.2rem SFProText;
     color: var(--cor-texto-escuro);
     max-width: 60%;
 }
@@ -35,7 +35,7 @@
     cursor: pointer;
     outline: none;
     background: none;
-    font-size: 1.2rem;
+    font: 400 1.2rem SFProText;
     color: var(--cor-texto-claro);
 }
 
@@ -48,7 +48,7 @@
 }
 
 .cardhospital .parteinferior img {
-    width: 4.2rem;
+    width: 5rem;
     height: auto;
     margin-right: 2rem;
 }
@@ -56,10 +56,8 @@
 .cardhospital .parteinferior .dadoshospital {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    flex: 1;
-    height: 100%;
+    align-items: flex-start;
+    width: 100%;
 }
 
 .cardhospital .parteinferior .dadoshospital .nota {
@@ -80,13 +78,18 @@
     height: 100%;
 }
 
+.cardhospital .parteinferior .dadoshospital .nota .descricao,
+.cardhospital .parteinferior .dadoshospital .mediasalarial .descricao {
+    margin-bottom: 0.6rem;
+}
+
 .cardhospital .parteinferior .dadoshospital p.descricao {
-    font: 400 1.2rem Roboto;
+    font: 300 1.2rem SFProText;
     color: var(--cor-texto-claro);
 }
 
 .cardhospital .parteinferior .dadoshospital p.valor {
-    font: 400 1.2rem Roboto;
+    font: 400 1.2rem SFProText;
     color: var(--cor-texto-escuro);
 }
 

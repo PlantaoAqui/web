@@ -1,0 +1,41 @@
+.review-input {
+    background: transparent;
+    border: 1px solid var(--cor-borda-campos);
+    border-radius: 0.8rem;
+    margin-bottom: 1.3rem;
+    padding: 0.6rem 1.3rem;
+    width: 100%;
+    outline: none;
+    font: 400 1.7rem SFProText;
+    color: var(--cor-texto-claro);
+}
+
+.review-input .review {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.review-input .review .descricao h3 {
+    font: bold 1.8rem SFProText;
+}
+
+.review-input .review .descricao p {
+    font: 400 1rem SFProText;
+}
+
+.review-input .pergunta {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.review-input .pergunta p {
+    font: bold 1.2rem SFProText;
+}
+
+.review-input .pergunta .PrivateSwitchBase-root-1 {
+    padding: 0.6rem;
+}

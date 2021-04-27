@@ -1,21 +1,28 @@
-import { Avatar } from '@material-ui/core';
 import React, { createRef, useEffect, useState } from 'react';
 import { Line, Bar } from 'react-chartjs-2'
 import { ChartOptions, ChartData } from 'chart.js'
 import './styles.css';
 
+import Avatar from '@material-ui/core/Avatar';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import { InterfaceCardHospital } from '../CardHospital';
+import api from '../../services/api';
 
 import iconeDptoEmergencia from "../../assets/images/icones/tipoplantao/dptoemergencia.svg";
 import iconePacientesInternados from "../../assets/images/icones/tipoplantao/pacientesinternados.svg";
 import iconeTransporteInterhospitalar from "../../assets/images/icones/tipoplantao/transporteinterhospitalar.svg";
-import api from '../../services/api';
+import iconeEstrela from "../../assets/images/icones/reviewStar.svg"
+import ModalAvaliacaoHospital from '../ModalAvaliacaoHospital';
+import StarRating from '../StarRating';
 
-interface DetalhesHospital {
+type DetalhesHospital = {
     nome: string;
     endereco: string;
     cnpj: string;
     responsavel: string;
+    numero_avaliacoes: number;
     infraestrutura: number;
     equipamento: number;
     equipe: number;
@@ -34,13 +41,15 @@ type ConfiguracaoGraficos = {
     }
 }
 
-function ModalInfoHospital ({idHospital, nomeHospital, tipoHospital, notaHospital, mediaSalarialHospital}: InterfaceCardHospital) {
-    const salarioMes = createRef();
+function ModalInfoHospital (props: InterfaceCardHospital) {
+    const {idHospital, nomeHospital, tipoPlantao, notaHospital, mediaSalarialHospital} = props;
+    const [modalAvaliacaoHospitalAberto, setModalAvaliacaoHospitalAberto] = useState(false);
     const [informacoes, setInformacoes] = useState<DetalhesHospital>({
         nome: nomeHospital,
         endereco: '',
         cnpj: '',
         responsavel: '',
+        numero_avaliacoes: 0,
         infraestrutura: 0,
         equipamento: 0,
         equipe: 0,
@@ -52,7 +61,7 @@ function ModalInfoHospital ({idHospital, nomeHospital, tipoHospital, notaHospita
         try {
             const response = await api.get(`hospitais/${idHospital}`, {
                 params: {
-                    tipo: tipoHospital
+                    tipo: tipoPlantao
                 }
             });
 
@@ -210,8 +219,9 @@ function ModalInfoHospital ({idHospital, nomeHospital, tipoHospital, notaHospita
             }
         }
     }
+
     return (
-        <div className="modalinfohospital">
+        <div className="modalinfohospital" style={modalAvaliacaoHospitalAberto ? {display: 'none'} : {}}>
             <div className="informacoes">
                 <div className="detalhes">
                     <div className="nome">
@@ -252,7 +262,7 @@ function ModalInfoHospital ({idHospital, nomeHospital, tipoHospital, notaHospita
                             </div>
                         </div>
                     </div>
-                    <button>
+                    <button onClick={() => setModalAvaliacaoHospitalAberto(true)}>
                         Nova Avaliação
                     </button>
                 </div>
@@ -260,31 +270,53 @@ function ModalInfoHospital ({idHospital, nomeHospital, tipoHospital, notaHospita
                     <div className="sumario">Avaliações</div>
                     <div className="itens">
                         <div className="numeroavaliacoes">
-                            31 avaliações
+                            {informacoes.numero_avaliacoes === 0
+                                ? 'Nenhuma avaliação'
+                                : informacoes.numero_avaliacoes === 1
+                                    ? '1 avaliação'
+                                    : `${informacoes.numero_avaliacoes} avaliações`}
                         </div>
                         <div className="item">
                             <div className="rotulo">Infraestrutura</div>
-                            <div className="avaliacao">{informacoes.infraestrutura.toFixed(1)}</div>
+                            <div className="avaliacao">
+                                {informacoes.infraestrutura.toFixed(1)}
+                                <StarRating value={informacoes.infraestrutura} readonly/>
+                            </div>
                         </div>
                         <div className="item">
                             <div className="rotulo">Equipamento</div>
-                            <div className="avaliacao">{informacoes.equipamento.toFixed(1)}</div>
+                            <div className="avaliacao">
+                                {informacoes.equipamento.toFixed(1)}
+                                <StarRating value={informacoes.equipamento} readonly/>
+                            </div>
                         </div>
                         <div className="item">
                             <div className="rotulo">Equipe de Saúde</div>
-                            <div className="avaliacao">{informacoes.equipe.toFixed(1)}</div>
+                            <div className="avaliacao">
+                                {informacoes.equipe.toFixed(1)}
+                                <StarRating value={informacoes.equipe} readonly/>
+                            </div>
                         </div>
                         <div className="item">
                             <div className="rotulo">Segurança</div>
-                            <div className="avaliacao">{informacoes.seguranca.toFixed(1)}</div>
+                            <div className="avaliacao">
+                                {informacoes.seguranca.toFixed(1)}
+                                <StarRating value={informacoes.seguranca} readonly/>
+                            </div>
                         </div>
                         <div className="item">
                             <div className="rotulo">Pagamento</div>
-                            <div className="avaliacao">{informacoes.pagamento.toFixed(1)}</div>
+                            <div className="avaliacao">
+                                {informacoes.pagamento.toFixed(1)}
+                                <StarRating value={informacoes.pagamento} readonly/>
+                            </div>
                         </div>
                         <div className="item">
                             <div className="rotulo">Pagamento em dia</div>
-                            <div className="avaliacao">3,0</div>
+                            <div className="avaliacao">
+                                3,0
+                                <StarRating value={5} readonly/>
+                            </div>
                         </div>
                         <div className="item">
                             <div className="rotulo">Média Salarial</div>
@@ -294,7 +326,13 @@ function ModalInfoHospital ({idHospital, nomeHospital, tipoHospital, notaHospita
                     <hr/>
                     <div className="avaliacao-hospital">
                         <div className="rotulo">Avaliação</div>
-                        <div className="nota">{notaHospital}/5</div>
+                        <div className="classificacao">
+                            <div className="nota">
+                                <div className="valor">{notaHospital}</div>
+                                <div className="rodape">/5</div>
+                            </div>
+                            <StarRating value={notaHospital} readonly size='large'/>
+                        </div>
                     </div>
                 </div>
                 <div className="analise-salarial">
@@ -427,6 +465,31 @@ function ModalInfoHospital ({idHospital, nomeHospital, tipoHospital, notaHospita
                     </div>
                 </div>
             </div>
+            <Dialog
+                open={modalAvaliacaoHospitalAberto}
+                onClose={() => {setModalAvaliacaoHospitalAberto(false)}}
+                scroll="body"
+                aria-labelledby="scroll-dialog-title"
+                aria-describedby="scroll-dialog-description"
+                PaperProps={{
+                    style: {
+                        backgroundColor: 'transparent',
+                        maxWidth: '720px',
+                        minWidth: '500px',
+                        width: '35vw',
+                        // marginLeft: 'calc(22% - 20px)',
+                        // marginTop: '11rem',
+                        outline: '0',
+                    },
+                }}
+            >
+                <ModalAvaliacaoHospital
+                    tipo={tipoPlantao}
+                    idHospital={idHospital}
+                    nomeHospital={nomeHospital}
+                    onClose={() => {setModalAvaliacaoHospitalAberto(false)}}
+                />
+            </Dialog>
         </div>
     );
 }

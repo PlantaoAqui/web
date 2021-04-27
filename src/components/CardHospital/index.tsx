@@ -11,13 +11,13 @@ import ModalInfoHospital from '../ModalInfoHospital';
 export interface InterfaceCardHospital {
     idHospital: number;
     nomeHospital: string;
-    tipoHospital: number;
+    tipoPlantao: number;
     notaHospital: number;
     mediaSalarialHospital: number;
-    blurBackground: (e: boolean) => void
+    blurBackground: (e: boolean) => void;
 }
 
-function CardHospital ({idHospital, nomeHospital, tipoHospital, notaHospital, mediaSalarialHospital, blurBackground}: InterfaceCardHospital) {
+function CardHospital ({idHospital, nomeHospital, tipoPlantao: tipoHospital, notaHospital, mediaSalarialHospital, blurBackground}: InterfaceCardHospital) {
     const [nomeHospitalCard, setNomeHospitalCard] = useState(nomeHospital);
     const [iconeHospital, setIconeHospital] = useState('');
     const [modalInfoCardAberto, setModalInfoCardAberto] = useState(false);
@@ -102,23 +102,14 @@ function CardHospital ({idHospital, nomeHospital, tipoHospital, notaHospital, me
                 },
                 }}
             >
-                <DialogContent style={{padding: '0'}}>
-                    <DialogContentText
-                        id="scroll-dialog-description"
-                        ref={refInfoCardHospital}
-                        tabIndex={-1}
-                        style={{outline: 'none'}}
-                    >
-                        <ModalInfoHospital
-                            idHospital={idHospital}
-                            nomeHospital={nomeHospital}
-                            tipoHospital={tipoHospital}
-                            notaHospital={notaHospital}
-                            mediaSalarialHospital={mediaSalarialHospital}
-                            blurBackground={blurBackground}
-                        />
-                    </DialogContentText>
-                </DialogContent>
+                <ModalInfoHospital
+                    idHospital={idHospital}
+                    nomeHospital={nomeHospital}
+                    tipoPlantao={tipoHospital}
+                    notaHospital={notaHospital}
+                    mediaSalarialHospital={mediaSalarialHospital}
+                    blurBackground={blurBackground}
+                />
             </Dialog>
         </div>
     );

@@ -22,12 +22,12 @@
 
 .modalinfohospital .informacoes .detalhes .secao {
     color: var(--cor-texto-escuro);
-    font: 500 1.2rem Roboto;
+    font: 500 1.2rem SFProText;
     margin-bottom: 4px;
 }
 
 .modalinfohospital .informacoes .detalhes .descricao {
-    font: 400 1.2rem Roboto;
+    font: 400 1.2rem SFProText;
     margin-bottom: 1.2rem;
 }
 
@@ -40,8 +40,7 @@
 }
 
 .modalinfohospital .informacoes .detalhes .nome p {
-    font: 400 2rem Roboto;
-    color: var(--cor-texto-escuro);
+    font-size: 2rem;
     max-width: 80%;
 }
 
@@ -104,17 +103,7 @@
     border: none;
     height: 4rem;
     cursor: pointer;
-}
-
-.modalinfohospital .informacoes .detalhes .dadosavaliados {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
-.modalinfohospital .informacoes .detalhes .avaliacao .nota {
-    font: 500 3.6rem Roboto;
+    font: 400 1.4rem SFProText;
 }
 
 .modalinfohospital .informacoes .sobre {
@@ -128,13 +117,13 @@
 
 .modalinfohospital .informacoes .sobre .sumario {
     color: var(--cor-texto-escuro);
-    font: 500 1.2rem Roboto;
+    font: 500 1.4rem SFProText;
     margin-bottom: 1.6rem;
 }
 
 .modalinfohospital .informacoes .sobre .numeroavaliacoes {
     color: var(--cor-texto-claro);
-    font: 400 1.2rem Roboto;
+    font: 400 1.2rem SFProText;
     margin-bottom: 1.2rem;
 }
 
@@ -153,15 +142,18 @@
 .modalinfohospital .informacoes .sobre .item .rotulo {
     flex: 1;
     color: var(--cor-texto-escuro);
-    font: 400 1.2rem Roboto;
+    font: 400 1.2rem SFProText;
     margin-right: 1rem;
 }
 
 .modalinfohospital .informacoes .sobre .item .avaliacao {
     flex: 1;
     color: var(--cor-texto-claro);
-    font: 400 1.2rem Roboto;
-    left: 17rem;
+    font: 400 1.2rem SFProText;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .modalinfohospital .informacoes .sobre .avaliacao-hospital {
@@ -174,12 +166,30 @@
 
 .modalinfohospital .informacoes .sobre .avaliacao-hospital .rotulo {
     color: var(--cor-texto-escuro);
-    font: 400 1.2rem Roboto;
+    font: 400 1.2rem SFProText;
 }
 
-.modalinfohospital .informacoes .sobre .avaliacao-hospital .nota {
+.modalinfohospital .informacoes .sobre .avaliacao-hospital .classificacao {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.modalinfohospital .informacoes .sobre .avaliacao-hospital .classificacao .nota {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.modalinfohospital .informacoes .sobre .avaliacao-hospital .classificacao .nota .valor {
     color: var(--cor-texto-escuro);
-    font: 400 4.4rem Roboto;
+    font: 400 4.6rem SFProText;
+}
+
+.modalinfohospital .informacoes .sobre .avaliacao-hospital .classificacao .nota .rodape {
+    color: var(--cor-texto-escuro);
+    font: 400 1.4rem SFProText;
 }
 
 .modalinfohospital .informacoes .analise-salarial {
