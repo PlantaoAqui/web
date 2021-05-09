@@ -2,7 +2,7 @@ import axios from 'axios';
 import history from '../services/history'
 
 const api =  axios.create({
-    baseURL: 'https://18.229.76.91/',
+    baseURL: 'api.plantaofacil.com',
 });
 
 api.interceptors.request.use(
