@@ -2,7 +2,7 @@ import axios from 'axios';
 import history from '../services/history'
 
 const api =  axios.create({
-    baseURL: 'api.plantaofacil.com',
+    baseURL: 'https://api.plantaofacil.com',
 });
 
 api.interceptors.request.use(
