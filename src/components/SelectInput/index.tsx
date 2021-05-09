@@ -9,7 +9,9 @@ interface SelectInputProps<T> {
     name?: string;
     value: string;
     default: string;
+    error?: boolean;
     handleChange: (e: React.ChangeEvent<any>) => void;
+    handleBlur?: (e: React.FocusEvent<any>) => void;
     items: T[] | null;
     keyMap: (record: T) => ReactText;
     valueMap: (record: T) => string;
@@ -31,6 +33,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     selected: {
         color: "var(--cor-texto-escuro)"
+    },
+    erro: {
+        color: "var(--cor-vermelha-warning)",
+        border: "1px solid var(--cor-vermelha-warning)"
     }
   }),
 );
@@ -41,11 +47,12 @@ function SelectInput<T> (props: SelectInputProps<T>) {
         <div className="select-input-styled">
             <FormControl variant="outlined" className={classes.formControl}>
                 <Select
-                    className={props.value ? `${classes.root} ${classes.selected}` : classes.root}
+                    className={`${classes.root} ${props.value && classes.selected} ${props.error && classes.erro}`}
                     displayEmpty
                     name={props.name}
                     value={props.value}
                     onChange={props.handleChange}
+                    onBlur={props.handleBlur}
                 >
                     <MenuItem disabled value=""><p>{props.default}</p></MenuItem>
                     {props.items && props.items.map(record => {

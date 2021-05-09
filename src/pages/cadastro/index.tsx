@@ -1,15 +1,45 @@
 import { Formik, useFormik } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAsyncCallback } from 'react-async-hook';
 import { useHistory } from 'react-router';
 import FormCadastro from '../../components/FormCadastro';
 import NavBar from '../../components/NavBar';
 import api from '../../services/api';
+import * as Yup from 'yup'
 import './styles.css';
+import { Button, CircularProgress } from '@material-ui/core';
+import TextInput from '../../components/TextInput';
+
+const mensagemCampoObrigatorio = 'Preencha os campos obrigatórios';
+
+const validationSchema = [
+    Yup.object({
+        usuario: Yup.object({
+            nome: Yup.string().required(mensagemCampoObrigatorio),
+            sobrenome: Yup.string().required(mensagemCampoObrigatorio),
+            email: Yup.string().email('O email inserido não é válido').required(mensagemCampoObrigatorio),
+            senha: Yup.string().required(mensagemCampoObrigatorio)
+                .min(6, 'A senha deve ter pelo menos 6 caracteres')
+        })
+    }),
+    Yup.object({
+        informacoesUsuario: Yup.object({
+            crm: Yup.string().required(mensagemCampoObrigatorio),
+            status: Yup.number().positive(mensagemCampoObrigatorio).required(mensagemCampoObrigatorio),
+            estado: Yup.string().required(mensagemCampoObrigatorio),
+            cidade: Yup.string().required(mensagemCampoObrigatorio),
+            instituicaoDeEnsino: Yup.string().required(mensagemCampoObrigatorio),
+            dataDeNascimento: Yup.string().required(mensagemCampoObrigatorio)
+        })
+    }),
+    Yup.object({
+        arquivo: Yup.string().required('O arquivo com o documento é obrigatório.')
+    })
+]
 
 function Cadastro () {
     const history = useHistory();
-    const [etapa, setEtapa] = useState(0);
+    const [etapaAtual, setEtapaAtual] = useState(0);
     const [arquivoFotoDocumento, setArquivoFotoDocumento] = useState<File>();
     const formik = useFormik({
         initialValues: {
@@ -21,7 +51,7 @@ function Cadastro () {
             },
             informacoesUsuario: {
                 crm: '',
-                status: '',
+                status: 0,
                 estado: '',
                 cidade: '',
                 instituicaoDeEnsino: '',
@@ -29,7 +59,16 @@ function Cadastro () {
             },
             arquivo: ''
         },
-        onSubmit: async () => handleSubmit.execute()
+        validationSchema: validationSchema[etapaAtual],
+        onSubmit: (values, actions) => {
+            if (etapaAtual >= 2) {
+                submitForm.execute();
+            } else {
+                setEtapaAtual(etapaAtual + 1);
+                actions.setTouched({});
+                actions.setSubmitting(false);
+            }
+        }
     })
 
     function ResetCidade(reset: boolean){
@@ -38,80 +77,101 @@ function Cadastro () {
         }
     }
 
-    function ProximaEtapa(e: React.ChangeEvent<HTMLFormElement>) {
-        if(etapa < 3){
-            setEtapa(etapa + 1)
-        } else {
-            formik.handleSubmit(e)
-            setEtapa(0)
-        }
-    }
-
-    const handleSubmit = useAsyncCallback(
+    const submitForm = useAsyncCallback(
         async () => {
-            await api.post('/usuarios', formik.values)
-            .then((response) => {
-                for (var [key, value] of Object.entries(response.data)) {
-                    sessionStorage.setItem(key, String(value));
-                }
-                history.push('/plantoes');
-            }).catch(error =>{
-                console.log(error);
-            })
+            if (arquivoFotoDocumento) {
+                const formData = new FormData();
+                formData.append("confirmacaoCadastro", arquivoFotoDocumento)
+                formData.append('dados', JSON.stringify(formik.values));
+                await api.post('/usuarios', formData, {
+                    headers: {
+                        "Content-Type": 'multipart/form-data'
+                    }
+                })
+                .then((response) => {
+                    for (var [key, value] of Object.entries(response.data)) {
+                        sessionStorage.setItem(key, String(value));
+                    }
+                    history.push('/plantoes');
+                }).catch(error =>{
+                    console.log(error);
+                })
+            }
         }
     )
 
+    function etapaForm () {
+        switch (etapaAtual) {
+            case 0:
+            default:
+                return(
+                    <FormCadastro
+                        titulo="Seja bem-vindo!"
+                        subtitulo="Forneça alguns dados para criar a sua conta."
+                        etapa={etapaAtual}
+                        rodape="Digite uma senha com min 6 caracteres"
+                        textoBotao="Quero me cadastrar"
+                        values={formik.values}
+                        errors={formik.errors}
+                        touched={formik.touched}
+                        handleChange={formik.handleChange}
+                        handleBlur={formik.handleBlur}
+                        handleSubmit={formik.handleSubmit}
+                    />
+                );
+            case 1:
+                return(
+                    <FormCadastro
+                        titulo="Como somos uma comunidade de médicos, vamos precisar de mais alguns dados..."
+                        etapa={etapaAtual}
+                        textoBotao="Prosseguir"
+                        values={formik.values}
+                        errors={formik.errors}
+                        touched={formik.touched}
+                        handleChange={formik.handleChange}
+                        handleBlur={formik.handleBlur}
+                        handleSubmit={formik.handleSubmit}
+                        resetCidade={ResetCidade}
+                    />
+                );
+            case 2:
+                return(
+                    <FormCadastro
+                        titulo="Confirmação dos documentos"
+                        etapa={etapaAtual}
+                        textoBotao="Upload do arquivo"
+                        values={formik.values}
+                        errors={formik.errors}
+                        touched={formik.touched}
+                        handleChange={formik.handleChange}
+                        handleBlur={formik.handleBlur}
+                        handleSubmit={formik.handleSubmit}
+                        setFotoDocumento={(url) => formik.setFieldValue('arquivo', url)}
+                        setArquivoDocumento={setArquivoFotoDocumento}
+                    />
+                );
+            case 5:
+                return(
+                    <FormCadastro
+                        titulo="Termos e Políticas Todeplantão.com"
+                        etapa={etapaAtual}
+                        termos="1. Os serviços fornecidosNossa missão é proporcionar às pessoas o poder de criar "
+                        textoBotao="Concordar e Prosseguir"
+                        values={formik.values}
+                        errors={formik.errors}
+                        touched={formik.touched}
+                        handleChange={formik.handleChange}
+                        handleBlur={formik.handleBlur}
+                        handleSubmit={formik.handleSubmit}
+                    />
+                );
+        }
+    }
+
     return (
         <div className="page-cadastro">
-            <NavBar aba={2} />
-            {etapa === 0 && (
-                <FormCadastro
-                    titulo="Seja bem-vindo!"
-                    subtitulo="Forneça alguns dados para criar a sua conta."
-                    etapa={0}
-                    rodape="Digite uma senha com min 6 caracteres"
-                    textoBotao="Quero me cadastrar"
-                    values={formik.values}
-                    handleChange={formik.handleChange}
-                    proximaEtapa={ProximaEtapa}
-                />
-            )}
-            {etapa === 1 && (
-                <FormCadastro
-                    titulo="Como somos uma comunidade de médicos, vamos precisar de mais alguns dados..."
-                    etapa={1}
-                    textoBotao="Prosseguir"
-                    values={formik.values}
-                    handleChange={formik.handleChange}
-                    proximaEtapa={ProximaEtapa}
-                    resetCidade={ResetCidade}
-                />
-            )}
-            {etapa === 2 && (
-                <FormCadastro
-                    titulo="Termos e Políticas Todeplantão.com"
-                    etapa={2}
-                    termos="1. Os serviços fornecidosNossa missão é proporcionar às pessoas o poder de criar "
-                    textoBotao="Concordar e Prosseguir"
-                    values={formik.values}
-                    handleChange={formik.handleChange}
-                    proximaEtapa={ProximaEtapa}
-                />
-            )}
-            {etapa === 3 && (
-                <FormCadastro
-                    titulo="Confirmação dos documentos"
-                    etapa={3}
-                    textoDocumento="obrigado por ter chegado até aqui e fazer parte da nossa comunidade! Porém ainda falta um ultimo passo para que possa usufruir 100% da nossa plataforma. Precisamos que tire uma foto junto com o seu CRM, comprovando a sua identidade."
-                    placeholderDocumento="Clique aqui ou arraste o seu arquivo"
-                    textoBotao="Upload do arquivo"
-                    values={formik.values}
-                    handleChange={formik.handleChange}
-                    proximaEtapa={ProximaEtapa}
-                    setFotoDocumento={(url) => formik.setFieldValue('arquivo', url)}
-                    setArquivoDocumento={setArquivoFotoDocumento}
-                />
-            )}
+            <NavBar aba={2}/>
+            {etapaForm()}
         </div>
     );
 }

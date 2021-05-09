@@ -7,15 +7,18 @@ import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import api from '../../services/api';
+import SelectInput from '../SelectInput';
+import TextInput from '../TextInput';
+import CampoDocumentoIcon from '../../assets/images/icones/campoDocumento.svg';
 import './styles.css';
 
 interface FormCadastroProps {
     titulo: string;
     subtitulo?: string;
+    mensagemErro?: string;
     etapa: number;
     termos?: string;
-    textoDocumento?: string;
-    placeholderDocumento?: string;
     rodape?: string;
     textoBotao: string;
     values: {
@@ -27,7 +30,7 @@ interface FormCadastroProps {
         },
         informacoesUsuario: {
             crm: string,
-            status: string,
+            status: number,
             estado: string,
             cidade: string,
             instituicaoDeEnsino: string,
@@ -35,8 +38,43 @@ interface FormCadastroProps {
         },
         arquivo: string
     },
+    errors: {
+        usuario?: {
+            nome?: string,
+            sobrenome?: string,
+            email?: string,
+            senha?: string
+        },
+        informacoesUsuario?: {
+            crm?: string,
+            status?: string,
+            estado?: string,
+            cidade?: string,
+            instituicaoDeEnsino?: string,
+            dataDeNascimento?: string
+        },
+        arquivo?: string
+    },
+    touched: {
+        usuario?: {
+            nome?: boolean,
+            sobrenome?: boolean,
+            email?: boolean,
+            senha?: boolean
+        },
+        informacoesUsuario?: {
+            crm?: boolean,
+            status?: boolean,
+            estado?: boolean,
+            cidade?: boolean,
+            instituicaoDeEnsino?: boolean,
+            dataDeNascimento?: boolean
+        },
+        arquivo?: boolean
+    },
     handleChange: (e: React.ChangeEvent<any>) => void;
-    proximaEtapa: (e: React.ChangeEvent<HTMLFormElement>) => void;
+    handleBlur: (e: React.FocusEvent<any>) => void;
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     resetCidade?: (reset: boolean) => void;
     setFotoDocumento?: (url: string) => void;
     setArquivoDocumento?: (arquivo: File) => void;
@@ -60,10 +98,40 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function FormCadastro (props: FormCadastroProps) {
-    const classes = useStyles();
+    const [status, setStatus] = useState('');
+    const [statusList, setStatusList] = useState([{id: 0, nome: ''}]);
     const [estados, setEstados] = useState([{id: 0, nome: ''}]);
     const [cidades, setCidades] = useState([{id: 0, nome: ''}]);
     const [fotoDocumento, setFotoDocumento] = useState<string>();
+    const [erro, setErro] = useState(false);
+    const [mensagemErro, setMensagemErro] = useState('');
+
+    useEffect(() =>{
+        setErro(!!props.mensagemErro ||
+            (!!props.errors.usuario?.nome && !!props.touched.usuario?.nome) ||
+            (!!props.errors.usuario?.sobrenome && !!props.touched.usuario?.sobrenome) ||
+            (!!props.errors.usuario?.email && !!props.touched.usuario?.email) ||
+            (!!props.errors.usuario?.senha && !!props.touched.usuario?.senha) ||
+            (!!props.errors.informacoesUsuario?.crm && !!props.touched.informacoesUsuario?.crm) ||
+            (!!props.errors.informacoesUsuario?.estado && !!props.touched.informacoesUsuario?.estado) ||
+            (!!props.errors.informacoesUsuario?.status && !!props.touched.informacoesUsuario?.status) ||
+            (!!props.errors.informacoesUsuario?.cidade && !!props.touched.informacoesUsuario?.cidade) ||
+            (!!props.errors.informacoesUsuario?.instituicaoDeEnsino && !!props.touched.informacoesUsuario?.instituicaoDeEnsino) ||
+            (!!props.errors.informacoesUsuario?.dataDeNascimento && !!props.touched.informacoesUsuario?.dataDeNascimento) ||
+            (!!props.errors.arquivo && !!props.touched.arquivo));
+        setMensagemErro(props.mensagemErro ||
+            (props.touched.usuario?.nome && props.errors.usuario?.nome) ||
+            (props.touched.usuario?.sobrenome && props.errors.usuario?.sobrenome) ||
+            (props.touched.usuario?.email && props.errors.usuario?.email) ||
+            (props.touched.usuario?.senha && props.errors.usuario?.senha) ||
+            (props.touched.informacoesUsuario?.crm && props.errors.informacoesUsuario?.crm) ||
+            (props.touched.informacoesUsuario?.estado && props.errors.informacoesUsuario?.estado) ||
+            (props.touched.informacoesUsuario?.status && props.errors.informacoesUsuario?.status) ||
+            (props.touched.informacoesUsuario?.cidade && props.errors.informacoesUsuario?.cidade) ||
+            (props.touched.informacoesUsuario?.instituicaoDeEnsino && props.errors.informacoesUsuario?.instituicaoDeEnsino) ||
+            (props.touched.informacoesUsuario?.dataDeNascimento && props.errors.informacoesUsuario?.dataDeNascimento) ||
+            (props.touched.arquivo && props.errors.arquivo) || '');
+    }, [props.mensagemErro, props.errors, props.touched]);
 
     async function listarEstados() {
         try {
@@ -74,8 +142,21 @@ function FormCadastro (props: FormCadastroProps) {
         }
     }
 
+    async function listarStatus() {
+        try {
+            const response = await api.get(`/tipos`, {
+                params: { tipo: 'status' }
+            })
+            setStatusList(response.data)
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
+
     useEffect(() => {
         listarEstados();
+        listarStatus();
     }, [props.etapa === 1]);
 
     async function listarCidades() {
@@ -104,170 +185,177 @@ function FormCadastro (props: FormCadastroProps) {
 
     return (
         <div className="modal-cadastro">
-            <form onSubmit={props.proximaEtapa}>
+            <form onSubmit={props.handleSubmit}>
                 <div className="titulo">
-                    <h1>{props.titulo}</h1>
+                    <h1>{props.mensagemErro || props.titulo}</h1>
                 </div>
-                {props.subtitulo && (
-                    <div className="subtitulo">
-                        <h3>{props.subtitulo}</h3>
-                    </div>
-                )}
+                <div className="subtitulo" style={erro ? { color: "var(--cor-vermelha-warning)"} : {color: "var(--cor-texto-claro)"}}>
+                    <h3>{mensagemErro || props.subtitulo}</h3>
+                </div>
                 <div className="conteudo">
                     {props.etapa === 0 && (
                         <>
-                            <div className="nome">
-                                <input
+                            <div className="linha dupla">
+                                <TextInput
                                     type="text"
                                     name="usuario.nome"
                                     placeholder="Nome"
                                     value={props.values.usuario.nome}
-                                    onChange={props.handleChange}
+                                    error={!!props.errors.usuario?.nome && !!props.touched.usuario?.nome}
+                                    handleChange={props.handleChange}
+                                    handleBlur={props.handleBlur}
                                 />
-                                <input
+                                <TextInput
                                     type="text"
                                     name="usuario.sobrenome"
                                     placeholder="Sobrenome"
                                     value={props.values.usuario.sobrenome}
-                                    onChange={props.handleChange}
+                                    error={!!props.errors.usuario?.sobrenome && !!props.touched.usuario?.sobrenome}
+                                    handleChange={props.handleChange}
+                                    handleBlur={props.handleBlur}
                                 />
                             </div>
-                            <input
-                                type="email"
-                                name="usuario.email"
-                                placeholder="nome@exemplo.com"
-                                value={props.values.usuario.email}
-                                onChange={props.handleChange}
-                            />
-                            <input
-                                type="password"
-                                name="usuario.senha"
-                                placeholder="Senha"
-                                value={props.values.usuario.senha}
-                                onChange={props.handleChange}
-                            />
+                            <div className="linha">
+                                <TextInput
+                                    type="email"
+                                    name="usuario.email"
+                                    placeholder="nome@exemplo.com"
+                                    value={props.values.usuario.email}
+                                    error={!!props.errors.usuario?.email && !!props.touched.usuario?.email}
+                                    handleChange={props.handleChange}
+                                    handleBlur={props.handleBlur}
+                                />
+                            </div>
+                            <div className="linha">
+                                <TextInput
+                                    type="password"
+                                    name="usuario.senha"
+                                    placeholder="Senha"
+                                    value={props.values.usuario.senha}
+                                    error={!!props.errors.usuario?.senha && !!props.touched.usuario?.senha}
+                                    handleChange={props.handleChange}
+                                    handleBlur={props.handleBlur}
+                                />
+                            </div>
                             <p className="rodape">{props.rodape}</p>
-                            <button style={{background: "#CFEACA"}} type="submit">{props.textoBotao}</button>
+                            <button style={{background: "#A1E09E"}} type="submit">{props.textoBotao}</button>
                         </>
                     )}
                     {props.etapa === 1 && (
                         <>
-                            <div className="linha">
-                                <div className="campo">
-                                    <input
-                                        type="text"
-                                        name="informacoesUsuario.crm"
-                                        placeholder="CRM"
-                                        value={props.values.informacoesUsuario.crm}
-                                        onChange={props.handleChange}
-                                    />
-                                </div>
-                                <div className="campo">
-                                    <FormControl variant="outlined" className={classes.formControl}>
-                                        <Select
-                                            className={classes.root}
-                                            displayEmpty
-                                            name="informacoesUsuario.estado"
-                                            value={props.values.informacoesUsuario.estado}
-                                            onChange={(e) => {
-                                                props.handleChange(e);
-                                                props.resetCidade && props.resetCidade(true);
-                                            }}
-                                        >
-                                            <MenuItem disabled value=""><em>Estado</em></MenuItem>
-                                            {estados.map(estado => {
-                                                return(
-                                                    <MenuItem
-                                                        key={estado.id} value={estado.nome}
-                                                    >
-                                                        {estado.nome}
-                                                    </MenuItem>
-                                                );
-                                            })}
-                                        </Select>
-                                    </FormControl>
-                                </div>
+                            <div className="linha dupla">
+                                <TextInput
+                                    type="text"
+                                    name="informacoesUsuario.crm"
+                                    placeholder="CRM"
+                                    value={props.values.informacoesUsuario.crm}
+                                    error={!!props.errors.informacoesUsuario?.crm && !!props.touched.informacoesUsuario?.crm}
+                                    handleChange={props.handleChange}
+                                    handleBlur={props.handleBlur}
+                                />
+                                <SelectInput
+                                    name="informacoesUsuario.estado"
+                                    default="Estado"
+                                    value={props.values.informacoesUsuario.estado}
+                                    error={!!props.errors.informacoesUsuario?.estado && !!props.touched.informacoesUsuario?.estado}
+                                    handleChange={(e) => {
+                                        props.handleChange(e);
+                                        props.resetCidade && props.resetCidade(true);
+                                    }}
+                                    handleBlur={props.handleBlur}
+                                    items={estados}
+                                    keyMap={estado => estado.id}
+                                    valueMap={estado => estado.nome}
+                                />
                             </div>
-                            <div className="linha">
-                                <div className="campo">
-                                    <input
-                                        type="text"
-                                        name="informacoesUsuario.status"
-                                        placeholder="Status"
-                                        value={props.values.informacoesUsuario.status}
-                                        onChange={props.handleChange}
-                                    />
-                                </div>
-                                <div className="campo">
-                                    <FormControl variant="outlined" className={classes.formControl}>
-                                        <Select
-                                            className={classes.root}
-                                            displayEmpty
-                                            name="informacoesUsuario.cidade"
-                                            value={props.values.informacoesUsuario.cidade}
-                                            onChange={props.handleChange}
-                                        >
-                                            <MenuItem disabled value=""><em>Cidade</em></MenuItem>
-                                            {cidades.map(cidade => {
-                                                return(
-                                                    <MenuItem
-                                                        key={cidade.id} value={cidade.nome}
-                                                    >
-                                                        {cidade.nome}
-                                                    </MenuItem>
-                                                );
-                                            })}
-                                        </Select>
-                                    </FormControl>
-
-                                </div>
+                            <div className="linha dupla">
+                                <SelectInput
+                                    name="informacoesUsuario.status"
+                                    value={status}
+                                    error={!!props.errors.informacoesUsuario?.status && !!props.touched.informacoesUsuario?.status}
+                                    default="Status"
+                                    handleChange={(e) => {
+                                        setStatus(e.target.value);
+                                        e.target.value = statusList?.find(stat => stat.nome === e.target.value)?.id;
+                                        props.handleChange(e);
+                                    }}
+                                    handleBlur={props.handleBlur}
+                                    items={statusList}
+                                    keyMap={status => status.id}
+                                    valueMap={status => status.nome}
+                                />
+                                <SelectInput
+                                    name="informacoesUsuario.cidade"
+                                    value={props.values.informacoesUsuario.cidade}
+                                    error={!!props.errors.informacoesUsuario?.cidade && !!props.touched.informacoesUsuario?.cidade}
+                                    default="Cidade"
+                                    handleChange={props.handleChange}
+                                    handleBlur={props.handleBlur}
+                                    items={cidades}
+                                    keyMap={cidade => cidade.id}
+                                    valueMap={cidade => cidade.nome}
+                                />
                             </div>
-                            <div className="linha">
-                                <input
+                            <div className="linha dupla">
+                                <TextInput
                                     type="text"
                                     name="informacoesUsuario.instituicaoDeEnsino"
                                     placeholder="Instituição de ensino"
                                     value={props.values.informacoesUsuario.instituicaoDeEnsino}
-                                    onChange={props.handleChange}
+                                    error={!!props.errors.informacoesUsuario?.instituicaoDeEnsino && !!props.touched.informacoesUsuario?.instituicaoDeEnsino}
+                                    handleChange={props.handleChange}
+                                    handleBlur={props.handleBlur}
                                 />
-                                <input
-                                    type="text" onFocus={(e) => e.target.type='date'}
+                                <TextInput
+                                    type="text"
+                                    data
                                     name="informacoesUsuario.dataDeNascimento"
                                     placeholder="Data de nascimento"
                                     value={props.values.informacoesUsuario.dataDeNascimento}
-                                    onChange={props.handleChange}
+                                    error={!!props.errors.informacoesUsuario?.dataDeNascimento && !!props.touched.informacoesUsuario?.dataDeNascimento}
+                                    handleChange={props.handleChange}
+                                    handleBlur={props.handleBlur}
                                 />
                             </div>
-                            <button style={{background: "#C7E2EB"}} type="submit">{props.textoBotao}</button>
+                            <button style={{background: "#7BB2ED"}} type="submit">{props.textoBotao}</button>
                         </>
                     )}
                     {props.etapa === 2 && (
                         <>
-                            <div className="termos">
-                                <p>{props.termos}</p>
-                            </div>
-                            <button style={{background: "#EFD8D8"}} type="submit">{props.textoBotao}</button>
-                        </>
-                    )}
-                    {props.etapa === 3 && (
-                        <>
                             <div className="confirmacao-documento">
                                 <div className="descricao">
-                                    <p>{props.textoDocumento}</p>
+                                    <p>
+                                        Obrigado por ter chegado até aqui e fazer parte da nossa comunidade!
+                                        Porém ainda falta um ultimo passo para que possa usufruir 100% da
+                                        nossa plataforma. <br/><br/> Precisamos que tire uma foto junto com o
+                                        seu CRM, comprovando a sua identidade.
+                                    </p>
                                 </div>
                                 <div className="arquivo">
-                                    {fotoDocumento && <img src={fotoDocumento} alt="Foto do seu documento"/>}
+                                    {fotoDocumento
+                                        ? <img src={fotoDocumento} alt="Foto do seu documento"/>
+                                        : <img src={CampoDocumentoIcon} alt="Insira o seu documento"/>}
                                     <label htmlFor="selecionar-foto">
-                                        <p>{props.placeholderDocumento}</p>
+                                        <p>Clique aqui <br/> ou arraste o seu arquivo</p>
                                     </label>
                                 </div>
                                 <input
                                     id="selecionar-foto"
+                                    name="confirmacaoCadastro"
                                     type="file"
+                                    accept="image/x-png,image/jpeg"
                                     onChange={handleChangePhoto}
                                 />
                             </div>
-                            <button style={{background: "#EDDCC1"}} type="submit">{props.textoBotao}</button>
+                            <button style={{background: "#FCE37F"}} type="submit">{props.textoBotao}</button>
+                        </>
+                    )}
+                    {props.etapa === 5 && (
+                        <>
+                            <div className="termos">
+                                <p>{props.termos}</p>
+                            </div>
+                            <button style={{background: "#FF817C"}} type="submit">{props.textoBotao}</button>
                         </>
                     )}
                 </div>
