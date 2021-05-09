@@ -2,7 +2,7 @@ import axios from 'axios';
 import history from '../services/history'
 
 const api =  axios.create({
-    baseURL: 'http://localhost:3333',
+    baseURL: 'https://18.229.76.91/',
 });
 
 api.interceptors.request.use(
