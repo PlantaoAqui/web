@@ -1,0 +1,45 @@
+.barra-footer {
+    width: 100vw;
+    background: white;
+}
+
+.barra-footer .footer {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+    width: 95%;
+    max-width: 150rem;
+    height: 12rem;
+    margin: auto;
+    background: white;
+}
+
+.barra-footer .footer .logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.barra-footer .footer .logo p {
+    font: 400 1.8rem SFProText;
+    color: var(--cor-texto-escuro);
+}
+
+.barra-footer .footer .links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 40%;
+}
+
+.barra-footer .footer .links a {
+    text-decoration: none;
+    align-self: center;
+    height: fit-content;
+    padding: 0.4rem 0;
+    font: 400 1.8rem SFProText;
+    color: var(--cor-texto-escuro);
+}

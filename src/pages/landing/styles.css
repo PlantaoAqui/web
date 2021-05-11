@@ -1,0 +1,293 @@
+.page-landing {
+    width: 100%;
+    background: var(--cor-fundo-landing);
+    overflow-x: hidden;
+}
+
+.page-landing .conteudo {
+    padding: 0 2.5vw;
+    max-width: 1396px;
+    margin: 0 auto;
+}
+
+#entrada {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+    height: 70vh;
+    max-height: 60rem;
+}
+
+#entrada .texto {
+    width: 50%;
+    padding-right: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+#entrada .texto .secao-principal {
+    border: 1px solid var(--cor-borda-campos-landing);
+    border-radius: 2.4rem;
+    padding: 2.2rem 2rem;
+}
+
+#entrada .texto .secao-principal h1 {
+    font: 500 5.6rem SFProText;
+    line-height: 5.6rem;
+    color: var(--cor-texto-escuro);
+    margin-bottom: 3.2rem;
+}
+
+#entrada .texto .secao-principal p {
+    font: 400 2.1rem SFProText;
+    color: var(--cor-texto-claro);
+}
+
+#entrada .texto .secao-acesso p {
+    font: 400 1.7rem SFProText;
+    color: var(--cor-texto-claro);
+    margin-bottom: 2rem;
+}
+
+#entrada .texto .secao-acesso .campo-email {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+#entrada .texto .secao-acesso .campo-email input {
+    width: 50%;
+    border: 1px solid #FF817C;
+    color: var(--cor-texto-escuro);
+    background: transparent;
+    border-radius: 0.8rem 0 0 0.8rem;
+    padding-left: 1.3rem;
+    height: 4rem;
+    outline: none;
+    font: 400 1.7rem SFProText;
+}
+
+#entrada .texto .secao-acesso .campo-email input::placeholder {
+    color: #FF817C;
+}
+
+#entrada .texto .secao-acesso .campo-email button {
+    width: 50%;
+    background: #FF817C;
+    color: var(--cor-fundo-landing);
+    font: 400 1.7rem SFProText;
+    outline: none;
+    border: none;
+    border-radius: 0 0.8rem 0.8rem 0;
+    cursor: pointer;
+}
+
+#entrada .imagem {
+    width: 50%;
+}
+
+#entrada .imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2.4rem;
+}
+
+.page-landing .saiba-mais p {
+    font: 400 1.7rem SFProText;
+    color: var(--cor-texto-claro);
+    text-align: center;
+    margin-bottom: 2.4rem;
+    cursor: pointer;
+}
+
+.page-landing .saiba-mais p a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#sobrenos {
+    background: #7BB2ED;
+    border-radius: 2.4rem;
+    padding: 2.2rem 3.2rem;
+    margin-bottom: 4rem;
+}
+
+#sobrenos h1 {
+    font: 400 4.8rem SFProText;
+    color: var(--cor-texto-escuro);
+    text-align: center;
+    padding: 0 12rem;
+}
+
+#sobrenos .secao {
+    border: 1px solid var(--cor-fundo-landing);
+    border-radius: 2.4rem;
+    padding: 2.2rem 2rem;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: row;
+}
+
+#sobrenos .secao .descricao {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+
+#sobrenos .secao .descricao h4 {
+    font: 400 2.4rem SFProText;
+    color: var(--cor-texto-escuro);
+    padding-right: 15rem;
+}
+
+#sobrenos .secao .descricao p {
+    font: 400 1.5rem SFProText;
+    color: var(--cor-texto-escuro);
+}
+
+#sobrenos .secao .descricao a {
+    background: #FCC077;
+    color: var(--cor-texto-escuro);
+    font: 400 1.7rem SFProText;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    height: 4rem;
+    line-height: 4rem;
+    padding: 0 6rem;
+}
+
+#sobrenos .secao .carrousel {
+    flex: 1;
+}
+
+#sobrenos .secao .carrousel img {
+    height: 30rem;
+    width: auto;
+}
+
+.page-landing .missao {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+}
+
+.page-landing .missao .imagem {
+    flex: 1;
+    padding-right: 4.8rem;
+}
+
+.page-landing .missao .imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2.4rem;
+}
+
+.page-landing .missao .texto {
+    width: 50%;
+    background: #FCE37F;
+    border-radius: 2.4rem;
+    padding: 2.2rem 5.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.page-landing .missao .texto h3 {
+    font: 400 4.8rem SFProText;
+    color: var(--cor-texto-escuro);
+    margin-bottom: 1.8rem;
+}
+
+.page-landing .missao .texto p {
+    font: 400 1.5rem SFProText;
+    color: var(--cor-texto-escuro);
+}
+
+#contato {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+}
+
+#contato .duvida {
+    border: 1px solid var(--cor-borda-campos-landing);
+    border-radius: 2.4rem;
+    padding: 2.2rem 2rem;
+    flex: 1;
+    margin-right: 4.8rem;
+}
+
+#contato .duvida h4 {
+    font: 400 2.4rem SFProText;
+    color: var(--cor-texto-escuro);
+    margin-bottom: 3rem;
+}
+
+#contato .duvida p {
+    font: 400 1.5rem SFProText;
+    color: var(--cor-texto-escuro);
+}
+
+#contato .acesso {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+#contato .acesso p {
+    font: 400 1.6rem SFProText;
+    color: var(--cor-texto-claro);
+    margin-bottom: 2rem;
+}
+
+#contato .acesso .campo-email {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    width: 100%;
+}
+
+#contato .acesso .campo-email input {
+    width: 57%;
+    border: 1px solid #A1E09E;
+    color: var(--cor-texto-escuro);
+    background: transparent;
+    border-radius: 0.8rem 0 0 0.8rem;
+    padding-left: 1.3rem;
+    height: 4rem;
+    outline: none;
+    font: 400 1.7rem SFProText;
+}
+
+#contato .acesso .campo-email input::placeholder {
+    color: #A1E09E;
+}
+
+#contato .acesso .campo-email button {
+    flex: 1;
+    background: #A1E09E;
+    color: var(--cor-fundo-landing);
+    font: 400 1.7rem SFProText;
+    outline: none;
+    border: none;
+    border-radius: 0 0.8rem 0.8rem 0;
+    cursor: pointer;
+}

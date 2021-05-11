@@ -55,7 +55,7 @@ function SelectInput<T> (props: SelectInputProps<T>) {
                     onBlur={props.handleBlur}
                 >
                     <MenuItem disabled value=""><p>{props.default}</p></MenuItem>
-                    {props.items && props.items.map(record => {
+                    {props.items && props.items.length > 0 && props.items.map(record => {
                         return(
                             <MenuItem
                                 key={props.keyMap(record)}

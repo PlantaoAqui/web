@@ -51,7 +51,7 @@ function Cadastro () {
             },
             informacoesUsuario: {
                 crm: '',
-                status: 0,
+                grauDeFormacao: 0,
                 estado: '',
                 cidade: '',
                 instituicaoDeEnsino: '',
@@ -60,7 +60,7 @@ function Cadastro () {
             arquivo: ''
         },
         validationSchema: validationSchema[etapaAtual],
-        onSubmit: (values, actions) => {
+        onSubmit: (_, actions) => {
             if (etapaAtual >= 2) {
                 submitForm.execute();
             } else {

@@ -30,7 +30,7 @@ interface FormCadastroProps {
         },
         informacoesUsuario: {
             crm: string,
-            status: number,
+            grauDeFormacao: number,
             estado: string,
             cidade: string,
             instituicaoDeEnsino: string,
@@ -47,7 +47,7 @@ interface FormCadastroProps {
         },
         informacoesUsuario?: {
             crm?: string,
-            status?: string,
+            grauDeFormacao?: string,
             estado?: string,
             cidade?: string,
             instituicaoDeEnsino?: string,
@@ -64,7 +64,7 @@ interface FormCadastroProps {
         },
         informacoesUsuario?: {
             crm?: boolean,
-            status?: boolean,
+            grauDeFormacao?: boolean,
             estado?: boolean,
             cidade?: boolean,
             instituicaoDeEnsino?: boolean,
@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function FormCadastro (props: FormCadastroProps) {
-    const [status, setStatus] = useState('');
+    const [grauDeFormacao, setGrauDeFormacao] = useState('');
     const [statusList, setStatusList] = useState([{id: 0, nome: ''}]);
     const [estados, setEstados] = useState([{id: 0, nome: ''}]);
     const [cidades, setCidades] = useState([{id: 0, nome: ''}]);
@@ -114,7 +114,7 @@ function FormCadastro (props: FormCadastroProps) {
             (!!props.errors.usuario?.senha && !!props.touched.usuario?.senha) ||
             (!!props.errors.informacoesUsuario?.crm && !!props.touched.informacoesUsuario?.crm) ||
             (!!props.errors.informacoesUsuario?.estado && !!props.touched.informacoesUsuario?.estado) ||
-            (!!props.errors.informacoesUsuario?.status && !!props.touched.informacoesUsuario?.status) ||
+            (!!props.errors.informacoesUsuario?.grauDeFormacao && !!props.touched.informacoesUsuario?.grauDeFormacao) ||
             (!!props.errors.informacoesUsuario?.cidade && !!props.touched.informacoesUsuario?.cidade) ||
             (!!props.errors.informacoesUsuario?.instituicaoDeEnsino && !!props.touched.informacoesUsuario?.instituicaoDeEnsino) ||
             (!!props.errors.informacoesUsuario?.dataDeNascimento && !!props.touched.informacoesUsuario?.dataDeNascimento) ||
@@ -126,7 +126,7 @@ function FormCadastro (props: FormCadastroProps) {
             (props.touched.usuario?.senha && props.errors.usuario?.senha) ||
             (props.touched.informacoesUsuario?.crm && props.errors.informacoesUsuario?.crm) ||
             (props.touched.informacoesUsuario?.estado && props.errors.informacoesUsuario?.estado) ||
-            (props.touched.informacoesUsuario?.status && props.errors.informacoesUsuario?.status) ||
+            (props.touched.informacoesUsuario?.grauDeFormacao && props.errors.informacoesUsuario?.grauDeFormacao) ||
             (props.touched.informacoesUsuario?.cidade && props.errors.informacoesUsuario?.cidade) ||
             (props.touched.informacoesUsuario?.instituicaoDeEnsino && props.errors.informacoesUsuario?.instituicaoDeEnsino) ||
             (props.touched.informacoesUsuario?.dataDeNascimento && props.errors.informacoesUsuario?.dataDeNascimento) ||
@@ -142,10 +142,10 @@ function FormCadastro (props: FormCadastroProps) {
         }
     }
 
-    async function listarStatus() {
+    async function listarGrauDeFormacao() {
         try {
             const response = await api.get(`/tipos`, {
-                params: { tipo: 'status' }
+                params: { tipo: 'formacao' }
             })
             setStatusList(response.data)
         } catch (error) {
@@ -156,7 +156,7 @@ function FormCadastro (props: FormCadastroProps) {
 
     useEffect(() => {
         listarEstados();
-        listarStatus();
+        listarGrauDeFormacao();
     }, [props.etapa === 1]);
 
     async function listarCidades() {
@@ -270,12 +270,12 @@ function FormCadastro (props: FormCadastroProps) {
                             </div>
                             <div className="linha dupla">
                                 <SelectInput
-                                    name="informacoesUsuario.status"
-                                    value={status}
-                                    error={!!props.errors.informacoesUsuario?.status && !!props.touched.informacoesUsuario?.status}
-                                    default="Status"
+                                    name="informacoesUsuario.grauDeFormacao"
+                                    value={grauDeFormacao}
+                                    error={!!props.errors.informacoesUsuario?.grauDeFormacao && !!props.touched.informacoesUsuario?.grauDeFormacao}
+                                    default="Grau de formação"
                                     handleChange={(e) => {
-                                        setStatus(e.target.value);
+                                        setGrauDeFormacao(e.target.value);
                                         e.target.value = statusList?.find(stat => stat.nome === e.target.value)?.id;
                                         props.handleChange(e);
                                     }}

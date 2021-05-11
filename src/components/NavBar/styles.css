@@ -1,24 +1,29 @@
-.barra {
+.barra-navbar {
     width: 100vw;
     background: var(--cor-fundo-card);
 }
 
-.barra .navbar {
+.barra-navbar .navbar {
     display: flex;
     flex-direction: row;
     align-content: center;
     justify-content: space-between;
-    width: 75%;
+    width: 95%;
+    max-width: 150rem;
     height: 6rem;
     margin: auto;
     margin-bottom: 5.2rem;
 }
 
-.navbar .metade1 {
+.navbar .logo {
+    margin: auto 0;
+}
+
+.navbar .links {
     display: flex;
     flex-direction: row;
-    align-content: center;
-    flex: 1;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .navbar a {
@@ -28,11 +33,12 @@
     padding: 0.4rem 0;
 }
 
-.navbar a .logo {
-    font: 500 3.2rem SFProText;
-    color: var(--cor-texto-escuro);
+.navbar .links a {
+    font: 400 1.6rem SFProText;
+    color: var(--cor-texto-claro);
 }
 
-.navbar a .link {
-    font: 400 1.6rem SFProText;
+.navbar .links button {
+    width: 15rem;
+    padding: 0;
 }
