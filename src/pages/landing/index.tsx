@@ -71,7 +71,7 @@ function Landing () {
                     <p><a href="#sobrenos">Saiba mais sobre nós</a></p>
                 </div>
                 <div id="sobrenos">
-                    <h1>Descubra os melhores plantões e evite as situações indesejadas</h1>
+                    <h1>Descubra os melhores plantões <br/> e evite as situações indesejadas</h1>
                     <div className="secao">
                         <div className="descricao">
                             <div className="titulo">
@@ -139,7 +139,7 @@ function Landing () {
                         <h4>Contato</h4>
                         <p>
                             Caso tenha alguma dúvida, ou interesse em fazer parte do nosso
-                            projeto,entre em contato com a gente em contato@plantaofacil.com
+                            projeto,entre em contato com a gente em <b><a href='mailto:contato@plantaofacil.com'>contato@plantaofacil.com</a></b>
                         </p>
                     </div>
                     <div className="acesso">

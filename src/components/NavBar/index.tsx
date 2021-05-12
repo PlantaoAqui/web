@@ -53,7 +53,7 @@ function NavBar ({ aba, landing }: LinksNavbar) {
         <>
             <a href="#sobrenos">Sobre nós</a>
             <a href="#contato">Fale conosco</a>
-            <Link to="#" style={aba === 5 ? {borderBottom: "2px solid black"} : {}}>
+            <Link to="#" style={{ display: 'none' }}>
                 <div
                     className="link"
                     style={aba === 5 ? {color: "black"} : {color: "#3E3E3E"}}
@@ -81,7 +81,7 @@ function NavBar ({ aba, landing }: LinksNavbar) {
                     </Link>
                 </div>
                 <div className="links" style={landing ? {
-                    flex: 1
+                    width: '35%'
                 } : {
                     width: '70%'
                 }}>

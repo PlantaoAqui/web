@@ -23,23 +23,23 @@
 }
 
 .barra-footer .footer .logo p {
-    font: 400 1.8rem SFProText;
+    font: 400 1.6rem SFProText;
     color: var(--cor-texto-escuro);
 }
 
 .barra-footer .footer .links {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-evenly;
+    margin-top: 1.6rem;
     width: 40%;
 }
 
 .barra-footer .footer .links a {
     text-decoration: none;
-    align-self: center;
     height: fit-content;
     padding: 0.4rem 0;
-    font: 400 1.8rem SFProText;
+    font: 400 1.6rem SFProText;
     color: var(--cor-texto-escuro);
 }

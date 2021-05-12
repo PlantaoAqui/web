@@ -1,6 +1,8 @@
 .barra-navbar {
     width: 100vw;
-    background: var(--cor-fundo-card);
+    background: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    position: fixed;
 }
 
 .barra-navbar .navbar {
@@ -12,7 +14,6 @@
     max-width: 150rem;
     height: 6rem;
     margin: auto;
-    margin-bottom: 5.2rem;
 }
 
 .navbar .logo {
@@ -35,10 +36,13 @@
 
 .navbar .links a {
     font: 400 1.6rem SFProText;
-    color: var(--cor-texto-claro);
+    color: var(--cor-texto-escuro);
 }
 
 .navbar .links button {
-    width: 15rem;
+    font: 400 1.6rem SFProText;
+    color: var(--cor-fundo-landing);
+    width: 12rem;
     padding: 0;
+    height: 3rem;
 }
