@@ -2,7 +2,9 @@ import React from 'react';
 import './styles.css';
 
 import LogoPlantaoFacil from '../../assets/images/logos/plantaoFacil.svg';
-import { Link } from 'react-router-dom';
+import LogoFacebook from '../../assets/images/logos/facebookBlack.svg';
+import LogoTwitter from '../../assets/images/logos/twitterBlack.svg';
+import LogoInsta from '../../assets/images/logos/instaBlack.svg';
 
 interface TipoFooter {
     landing?: boolean;
@@ -27,6 +29,11 @@ function Footer ({ landing }: TipoFooter) {
                 </div>
                 <div className="links">
                     {landing && links[0]}
+                    <div className="redes-sociais">
+                        <img src={LogoFacebook} alt="Facebook" />
+                        <img src={LogoTwitter} alt="Twitter" />
+                        <img src={LogoInsta} alt="Instagram" />
+                    </div>
                 </div>
             </div>
         </div>

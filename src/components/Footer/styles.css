@@ -20,6 +20,7 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-around;
+    flex: 1;
 }
 
 .barra-footer .footer .logo p {
@@ -42,4 +43,33 @@
     padding: 0.4rem 0;
     font: 400 1.6rem SFProText;
     color: var(--cor-texto-escuro);
+}
+
+@media (max-width: 600px) {
+    .barra-footer .footer .logo img {
+        width: 80%;
+    }
+
+    .barra-footer .footer .logo p {
+        font-size: 0.8rem;
+    }
+
+    .barra-footer .footer .links {
+        width: 50%;
+        flex-wrap: wrap;
+        align-content: flex-start;
+    }
+
+    .barra-footer .footer .links a {
+        font-size: 1rem;
+    }
+
+    .barra-footer .footer .links .redes-sociais {
+        margin-left: 2rem;
+    }
+
+    .barra-footer .footer .links .redes-sociais img {
+        margin: 1rem;
+    }
+
 }

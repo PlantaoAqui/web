@@ -11,6 +11,7 @@ import ImagemEntrada from '../../assets/images/landingPage-entrada.jpg'
 import ImagemMissao from '../../assets/images/landingPage-missao.jpg'
 import ImagemCarrousel from '../../assets/images/carrousel.png'
 import Footer from '../../components/Footer';
+import { Hidden } from '@material-ui/core';
 
 
 function Landing () {
@@ -71,7 +72,11 @@ function Landing () {
                     <p><a href="#sobrenos">Saiba mais sobre nós</a></p>
                 </div>
                 <div id="sobrenos">
-                    <h1>Descubra os melhores plantões <br/> e evite as situações indesejadas</h1>
+                    <h1>
+                        Descubra os melhores plantões
+                        <Hidden xsDown><br /></Hidden> e
+                        evite as situações indesejadas
+                    </h1>
                     <div className="secao">
                         <div className="descricao">
                             <div className="titulo">

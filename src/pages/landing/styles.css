@@ -296,3 +296,154 @@
     border-radius: 0 0.8rem 0.8rem 0;
     cursor: pointer;
 }
+
+@media (max-width: 600px) {
+    .page-landing .conteudo {
+        margin-top: 8rem;
+    }
+
+    #entrada {
+        display: unset;
+    }
+
+    #entrada .texto {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    #entrada .texto .secao-principal {
+        margin-bottom: 4rem;
+    }
+
+    #entrada .texto .secao-principal h1 {
+        font-size: 4rem;
+        line-height: 4rem;
+    }
+
+    #entrada .texto .secao-principal p {
+        line-height: 2.2rem;
+    }
+
+    #entrada .texto .secao-acesso p {
+        font-size: 1.55rem;
+    }
+
+    #entrada .texto .secao-acesso .campo-email {
+        flex-direction: column;
+    }
+
+    #entrada .texto .secao-acesso .campo-email input {
+        width: 100%;
+        border-radius: 0.8rem;
+        padding-left: 1.3rem;
+    }
+
+    #entrada .texto .secao-acesso .campo-email button {
+        width: 100%;
+        margin-top: 2rem;
+        height: 4rem;
+        border-radius: 0.8rem;
+    }
+
+    #entrada .imagem {
+        display: none;
+    }
+
+    .page-landing .saiba-mais p {
+        font: 400 1.7rem SFProText;
+        margin-top: 1.2rem;
+    }
+
+    #sobrenos {
+        margin: 1rem;
+        margin-bottom: 2rem;
+        padding: 2.2rem 2rem;
+    }
+
+    #sobrenos h1 {
+        text-align: start;
+        font-size: 4rem;
+        line-height: 4rem;
+    }
+
+    #sobrenos .secao {
+        flex-direction: column;
+    }
+
+    #sobrenos .secao:last-child {
+        flex-direction: column-reverse;
+    }
+
+    #sobrenos .secao .descricao p,
+    #sobrenos .secao .descricao a,
+    #sobrenos .secao .descricao h4 {
+        margin-bottom: 2rem;
+    }
+
+    #sobrenos .secao .descricao p {
+        font-size: 1.6rem;
+    }
+
+    #sobrenos .secao .descricao a {
+        line-height: 2rem;
+        padding: 0.4rem 4rem;
+        text-align: center;
+        height: 4.8rem;
+    }
+
+    #sobrenos .secao .carrousel img {
+        width: 100%;
+        height: auto;
+    }
+
+    .page-landing .missao {
+        flex-direction: column;
+        margin: 1rem;
+        margin-bottom: 2.8rem;
+    }
+
+    .page-landing .missao .imagem {
+        padding: 0;
+        margin-bottom: 2rem;
+    }
+
+    .page-landing .missao .texto {
+        width: 100%;
+        padding: 2.2rem 3.2rem;
+    }
+
+    .page-landing .missao .texto .nossamissao {
+        margin-bottom: 2rem;
+    }
+
+    #contato {
+        flex-direction: column;
+        margin: 1rem;
+        margin-bottom: 4rem;
+    }
+
+    #contato .duvida {
+        width: 100%;
+        margin-bottom: 2.4rem;
+    }
+
+    #contato .acesso {
+        width: 100%;
+    }
+
+    #contato .acesso .campo-email {
+        display: unset;
+    }
+
+    #contato .acesso .campo-email input {
+        width: 100%;
+        border-radius: 0.8rem;
+    }
+
+    #contato .acesso .campo-email button {
+        width: 100%;
+        margin-top: 2rem;
+        height: 4rem;
+        border-radius: 0.8rem;
+    }
+}
