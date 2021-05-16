@@ -263,6 +263,10 @@
     margin-bottom: 2rem;
 }
 
+#contato .acesso form {
+    width: 100%;
+}
+
 #contato .acesso .campo-email {
     display: flex;
     flex-direction: row;
@@ -309,6 +313,7 @@
     #entrada .texto {
         width: 100%;
         padding: 1rem;
+        margin-bottom: 4rem;
     }
 
     #entrada .texto .secao-principal {
@@ -412,8 +417,17 @@
         padding: 2.2rem 3.2rem;
     }
 
+    .page-landing .missao .texto h3 {
+        font-size: 4rem;
+        line-height: 4rem;
+    }
+
+    .page-landing .missao .texto p {
+        font-size: 1.6rem;
+    }
+
     .page-landing .missao .texto .nossamissao {
-        margin-bottom: 2rem;
+        margin-bottom: 3.2rem;
     }
 
     #contato {

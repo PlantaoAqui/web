@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
+import { Link, Typography } from '@material-ui/core';
 
 import LogoPlantaoFacil from '../../../assets/images/logos/plantaoFacilFundoVerde.svg';
 import LogoFacebook from '../../../assets/images/logos/facebookBlack.svg';
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) =>
     },
     secao: {
         borderRadius: theme.spacing(2),
-        margin: theme.spacing(5, 1),
+        margin: theme.spacing(2, 1),
         padding: theme.spacing(2),
         border: '1px solid white',
     },
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) =>
         }
     },
     logo: {
-        padding: theme.spacing(2),
+        padding: theme.spacing(2, 4),
         display: 'flex',
         flexDirection: 'column',
         '& img': {
@@ -104,19 +104,31 @@ function DrawerMobile ({ open, handleDrawerToggle }: DrawerMobileProps) {
                     Contato
                 </Typography>
                 <a href="mailto:contato@plantaofacil.com" className={classes.linkSecao}>
-                    <Typography variant="body1">
+                    <Typography variant="h4">
                         contato@plantaofacil.com
                     </Typography>
-                    <div className={classes.redesSociais}>
-                        <img src={LogoFacebook} alt="Facebook" />
-                        <img src={LogoTwitter} alt="Twitter" />
-                        <img src={LogoInsta} alt="Instagram" />
-                    </div>
                 </a>
+                <div className={classes.redesSociais}>
+                    <Link
+                        href="https://www.facebook.com/plantaofacil"
+                    >
+                        <img src={LogoFacebook} alt="Facebook" />
+                    </Link>
+                    <Link
+                        href="https://twitter.com/plantaofacil"
+                    >
+                        <img src={LogoTwitter} alt="Twitter" />
+                    </Link>
+                    <Link
+                        href="https://www.instagram.com/plantao.facil"
+                    >
+                        <img src={LogoInsta} alt="Instagram" />
+                    </Link>
+                </div>
             </div>
             <div className={classes.logo}>
                 <img src={LogoPlantaoFacil} alt="PlantaoFacil"/>
-                <Typography variant="caption" align="center">
+                <Typography variant="caption" align="left">
                     © Plantão Fácil 2021, Todos os direitos reservados.
                 </Typography>
             </div>

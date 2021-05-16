@@ -5,6 +5,7 @@ import LogoPlantaoFacil from '../../assets/images/logos/plantaoFacil.svg';
 import LogoFacebook from '../../assets/images/logos/facebookBlack.svg';
 import LogoTwitter from '../../assets/images/logos/twitterBlack.svg';
 import LogoInsta from '../../assets/images/logos/instaBlack.svg';
+import Link from '@material-ui/core/Link';
 
 interface TipoFooter {
     landing?: boolean;
@@ -27,12 +28,26 @@ function Footer ({ landing }: TipoFooter) {
                     <img src={LogoPlantaoFacil} alt="PlantaoFacil"/>
                     <p>© Plantão Fácil 2021, Todos os direitos reservados.</p>
                 </div>
-                <div className="links">
-                    {landing && links[0]}
+                <div className="conteudo-footer">
+                    <div className="links">
+                        {landing && links[0]}
+                    </div>
                     <div className="redes-sociais">
-                        <img src={LogoFacebook} alt="Facebook" />
-                        <img src={LogoTwitter} alt="Twitter" />
-                        <img src={LogoInsta} alt="Instagram" />
+                        <Link
+                            href="https://www.facebook.com/plantaofacil"
+                        >
+                            <img src={LogoFacebook} alt="Facebook" />
+                        </Link>
+                        <Link
+                            href="https://twitter.com/plantaofacil"
+                        >
+                            <img src={LogoTwitter} alt="Twitter" />
+                        </Link>
+                        <Link
+                            href="https://www.instagram.com/plantao.facil"
+                        >
+                            <img src={LogoInsta} alt="Instagram" />
+                        </Link>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { useAsyncCallback } from 'react-async-hook';
-import FormLogin from '../../components/FormLogin';
 import NavBar from '../../components/NavBar';
 import api from '../../services/api';
 import * as Yup from 'yup'
@@ -16,6 +14,7 @@ import { Hidden } from '@material-ui/core';
 
 function Landing () {
     const [error, setError] = useState('');
+    const [activeInput, setActiveInput] = useState(0);
     const formik = useFormik({
         initialValues: {
             email: ''
@@ -23,25 +22,17 @@ function Landing () {
         validationSchema: Yup.object({
             email: Yup.string().email().required('Preencha os campos obrigatórios')
           }),
-        onSubmit: () => handleSubmit.execute()
+        onSubmit: () => handleSubmit()
     })
 
-    const handleSubmit = useAsyncCallback(
-        async () => {
-            await api.post('/autenticar', formik.values)
-            .then((response) => {
-                for (var [key, value] of Object.entries(response.data)) {
-                    sessionStorage.setItem(key, String(value));
-                }
-            }).catch(error =>{
-                if ([400, 401, 404].includes(error.response.status)) {
-                    setError(error.response.data.message);
-                } else {
-                    console.log(error.response.data);
-                }
-            })
+    async function handleSubmit() {
+        try {
+            await api.post('/acesso-antecipado', formik.values)
+            formik.resetForm()
+        } catch (error) {
+            console.log(error)
         }
-    )
+    }
 
     return (
         <div className="page-landing">
@@ -58,10 +49,21 @@ function Landing () {
                             <p>Estamos em fase final de desenvolvimento. Para ter acesso antecipado a
                                 nossa plataforma, clique no botão abaixo e cadastre seu email. Em breve
                                 você será convidado para integrar a nossa comunidade.</p>
-                            <div className="campo-email">
-                                <input type="text" placeholder="Email"/>
-                                <button>Quero ter acesso antecipado</button>
-                            </div>
+                            <form onSubmit={formik.handleSubmit}>
+                                <div className="campo-email">
+                                    <input value={
+                                        activeInput === 1 ? (
+                                            formik.values.email
+                                        ) : ('')
+                                    }
+                                    onFocus={() => setActiveInput(1)}
+                                    onChange={(change) => {
+                                        activeInput === 1 && formik.handleChange(change);
+                                    }}
+                                    name="email" type="text" placeholder="Email"/>
+                                    <button type="submit">Quero ter acesso antecipado</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div className="imagem">
@@ -114,7 +116,7 @@ function Landing () {
                                     preferências de trabalho.
                                 </p>
                             </div>
-                            <a href="#entrada">Quero ter acesso essas ferramentas</a>
+                            <a href="#entrada">Quero ter acesso a essas ferramentas</a>
                         </div>
                     </div>
                 </div>
@@ -152,10 +154,21 @@ function Landing () {
                             Para ter acesso antecipado a nossa plataforma, clique no botão abaixo
                             e cadastre seu email. Em breve você será convidado para integrar a nossa comunidade.
                         </p>
-                        <div className="campo-email">
-                            <input type="text" placeholder="Email"/>
-                            <button>Quero ter acesso antecipado</button>
-                        </div>
+                        <form onSubmit={formik.handleSubmit}>
+                            <div className="campo-email">
+                                <input value={
+                                        activeInput === 2 ? (
+                                            formik.values.email
+                                        ) : ('')
+                                    }
+                                    onFocus={() => setActiveInput(2)}
+                                    onChange={(change) => {
+                                        activeInput === 2 && formik.handleChange(change);
+                                    }}
+                                    name="email" type="text" placeholder="Email"/>
+                                <button type="submit">Quero ter acesso antecipado</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
