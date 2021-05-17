@@ -160,7 +160,17 @@ function Landing () {
                     </div>
                     <div className="secao">
                         <div className="carrousel">
-                            <Carousel interval={6000}>
+                            <Carousel
+                                interval={6000}
+                                className={classes.carousel}
+                                navButtonsProps={{          // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
+                                    className: "buttons",
+                                    style: {
+                                        backgroundColor: 'transparent',
+                                        borderRadius: 0
+                                    }
+                                }}
+                            >
                                 {itemsCarrousel2.map(item => item)}
                             </Carousel>
                         </div>
