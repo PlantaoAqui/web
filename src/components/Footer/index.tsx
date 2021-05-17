@@ -1,11 +1,12 @@
 import React from 'react';
+import Link from '@material-ui/core/Link';
+import { Link as LinkScroll } from "react-scroll";
 import './styles.css';
 
 import LogoPlantaoFacil from '../../assets/images/logos/plantaoFacil.svg';
 import LogoFacebook from '../../assets/images/logos/facebookBlack.svg';
 import LogoTwitter from '../../assets/images/logos/twitterBlack.svg';
 import LogoInsta from '../../assets/images/logos/instaBlack.svg';
-import Link from '@material-ui/core/Link';
 
 interface TipoFooter {
     landing?: boolean;
@@ -14,8 +15,18 @@ interface TipoFooter {
 function Footer ({ landing }: TipoFooter) {
     const links = [
         <>
-            <a href="#sobrenos">Sobre nós</a>
-            <a href="#contato">Fale conosco</a>
+            <LinkScroll
+                activeClass="active" to="sobrenos" spy={true} smooth={true}
+                offset={-70} duration={500}
+            >
+                Sobre nós
+            </LinkScroll>
+            <LinkScroll
+                activeClass="active" to="contato" spy={true} smooth={true}
+                offset={-70} duration={500}
+            >
+                Fale conosco
+            </LinkScroll>
             <a href='mailto:contato@plantaofacil.com'>
                 contato@plantaofacil.com
             </a>

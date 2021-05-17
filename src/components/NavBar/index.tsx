@@ -4,6 +4,8 @@ import LogoPlantaoFacil from '../../assets/images/logos/plantaoFacil.svg';
 import { Link } from 'react-router-dom';
 import { AppBar, Button, createStyles, Drawer, Hidden, IconButton, makeStyles, Theme, Toolbar } from '@material-ui/core';
 
+import { Link as LinkScroll } from "react-scroll";
+
 import IconeMenu from '../../assets/images/icones/hamburguerMenu.svg'
 import DrawerMobile from './components/DrawerMobile';
 
@@ -29,11 +31,11 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     },
     linksLanding: {
-        width: '35%',
+        width: '25%',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-around'
     },
     link: {
         textDecoration: 'none',
@@ -42,15 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
         padding: '0.4rem 0',
         font: '400 1.6rem SFProText',
         color: 'var(--cor-texto-escuro)',
-    },
-    button: {
-        font: '400 1.6rem SFProText',
-        color: 'var(--cor-fundo-landing)',
-        textTransform: 'none',
-        width: '12rem',
-        padding: 0,
-        height: '3rem',
-        background: "#A1E09E"
+        cursor: 'pointer'
     }
   }),
 );
@@ -102,8 +96,18 @@ function NavBar ({ aba, landing }: LinksNavbar) {
             </Link>
         </>,
         <div className={classes.linksLanding}>
-            <a href="#sobrenos" className={classes.link}>Sobre nós</a>
-            <a href="#contato" className={classes.link}>Fale conosco</a>
+            <LinkScroll
+                activeClass="active" to="sobrenos" spy={true} smooth={true}
+                offset={-70} duration={500} className={classes.link}
+            >
+                Sobre nós
+            </LinkScroll>
+            <LinkScroll
+                activeClass="active" to="contato" spy={true} smooth={true}
+                offset={-70} duration={500} className={classes.link}
+            >
+                Fale conosco
+            </LinkScroll>
             <Link to="#" style={{ display: 'none' }}>
                 <div
                     className="link"
@@ -112,12 +116,6 @@ function NavBar ({ aba, landing }: LinksNavbar) {
                     Log In
                 </div>
             </Link>
-            <Button
-                className={classes.button}
-                type='button'
-            >
-                Faça Parte
-            </Button>
         </div>
     ]
 

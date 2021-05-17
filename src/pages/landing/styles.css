@@ -70,6 +70,7 @@
     height: 4rem;
     outline: none;
     font: 400 1.7rem SFProText;
+    transition: 0.2s;
 }
 
 #entrada .texto .secao-acesso .campo-email input::placeholder {
@@ -85,6 +86,20 @@
     border: none;
     border-radius: 0 0.8rem 0.8rem 0;
     cursor: pointer;
+    transition: 0.2s;
+}
+
+#entrada .texto .secao-acesso .email-enviado input {
+    width: 0;
+    opacity: 0;
+    border-width: 0;
+    padding: 0;
+}
+
+#entrada .texto .secao-acesso .email-enviado button {
+    width: 100%;
+    border-radius: 0.8rem;
+    height: 4rem;
 }
 
 #entrada .imagem {
@@ -98,18 +113,17 @@
     border-radius: 2.4rem;
 }
 
-.page-landing .saiba-mais p {
+.page-landing .saiba-mais {
+    width: fit-content;
+    margin: 4rem auto 2.8rem auto;
+}
+
+.page-landing .saiba-mais a {
     font: 400 1.7rem SFProText;
     color: var(--cor-texto-claro);
-    text-align: center;
-    margin-bottom: 2.4rem;
     cursor: pointer;
 }
 
-.page-landing .saiba-mais p a {
-    text-decoration: none;
-    color: inherit;
-}
 
 #sobrenos {
     background: #7BB2ED;
@@ -284,6 +298,7 @@
     height: 4rem;
     outline: none;
     font: 400 1.7rem SFProText;
+    transition: 0.2s;
 }
 
 #contato .acesso .campo-email input::placeholder {
@@ -299,6 +314,20 @@
     border: none;
     border-radius: 0 0.8rem 0.8rem 0;
     cursor: pointer;
+    transition: 0.2s;
+}
+
+#contato .acesso .email-enviado input {
+    width: 0;
+    opacity: 0;
+    border-width: 0;
+    padding: 0;
+}
+
+#contato .acesso .email-enviado button {
+    width: 100%;
+    border-radius: 0.8rem;
+    height: 4rem;
 }
 
 @media (max-width: 600px) {
@@ -350,13 +379,16 @@
         border-radius: 0.8rem;
     }
 
-    #entrada .imagem {
-        display: none;
+    #entrada .texto .secao-acesso .email-enviado input {
+        height: 0;
     }
 
-    .page-landing .saiba-mais p {
-        font: 400 1.7rem SFProText;
-        margin-top: 1.2rem;
+    #entrada .texto .secao-acesso .email-enviado button {
+        margin-top: 0;
+    }
+
+    #entrada .imagem {
+        display: none;
     }
 
     #sobrenos {
@@ -459,5 +491,13 @@
         margin-top: 2rem;
         height: 4rem;
         border-radius: 0.8rem;
+    }
+
+    #contato .acesso .email-enviado input {
+        height: 0;
+    }
+
+    #contato .acesso .email-enviado button {
+        margin-top: 0;
     }
 }

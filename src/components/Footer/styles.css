@@ -49,6 +49,7 @@
     padding: 0.4rem 0;
     font: 400 1.6rem SFProText;
     color: var(--cor-texto-escuro);
+    cursor: pointer;
 }
 
 .barra-footer .footer .conteudo-footer .redes-sociais {

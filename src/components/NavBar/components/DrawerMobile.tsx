@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { Link, Typography } from '@material-ui/core';
+import { Link as LinkScroll } from "react-scroll";
 
 import LogoPlantaoFacil from '../../../assets/images/logos/plantaoFacilFundoVerde.svg';
 import LogoFacebook from '../../../assets/images/logos/facebookBlack.svg';
@@ -84,16 +85,24 @@ function DrawerMobile ({ open, handleDrawerToggle }: DrawerMobileProps) {
                 >
                     MENU
                 </Typography>
-                <a href="#sobrenos" className={classes.linkSecao}>
+                <LinkScroll
+                    activeClass="active" to="sobrenos" spy={true} smooth={true}
+                    offset={-70} duration={500} className={classes.linkSecao}
+                    onClick={handleDrawerToggle}
+                >
                     <Typography variant="h4" gutterBottom>
                         Sobre Nós
                     </Typography>
-                </a>
-                <a href="#contato" className={classes.linkSecao}>
+                </LinkScroll>
+                <LinkScroll
+                    activeClass="active" to="contato" spy={true} smooth={true}
+                    offset={-70} duration={500} className={classes.linkSecao}
+                    onClick={handleDrawerToggle}
+                >
                     <Typography variant="h4" gutterBottom>
                         Fale Conosco
                     </Typography>
-                </a>
+                </LinkScroll>
             </div>
             <div className={classes.espaco}/>
             <div className={classes.secao}>
