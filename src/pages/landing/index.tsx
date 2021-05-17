@@ -8,9 +8,9 @@ import './styles.css'
 
 import ImagemEntrada from '../../assets/images/landing-page/landingPage-entrada.jpg'
 import ImagemMissao from '../../assets/images/landing-page/landingPage-missao.jpg'
-import ImagemCarrousel1_0 from '../../assets/images/landing-page/carrousel-1-0.png'
-import ImagemCarrousel1_1 from '../../assets/images/landing-page/carrousel-1-1.png'
-import ImagemCarrousel2_0 from '../../assets/images/landing-page/carrousel-2-0.png'
+import ImagemCarrousel1_0 from '../../assets/images/landing-page/carrousel-1-0.jpg'
+import ImagemCarrousel1_1 from '../../assets/images/landing-page/carrousel-1-1.jpg'
+import ImagemCarrousel2_0 from '../../assets/images/landing-page/carrousel-2-0.jpg'
 import Footer from '../../components/Footer';
 import { createStyles, Hidden, makeStyles, Theme } from '@material-ui/core';
 import Carousel from 'react-material-ui-carousel';
@@ -144,6 +144,7 @@ function Landing () {
                         </div>
                         <div className={'carrousel ' + classes.carouselDireita}>
                             <Carousel
+                                interval={6000}
                                 className={classes.carousel}
                                 navButtonsProps={{          // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
                                     className: "buttons",
@@ -159,7 +160,7 @@ function Landing () {
                     </div>
                     <div className="secao">
                         <div className="carrousel">
-                            <Carousel>
+                            <Carousel interval={6000}>
                                 {itemsCarrousel2.map(item => item)}
                             </Carousel>
                         </div>
@@ -187,7 +188,7 @@ function Landing () {
                         <div className="nossamissao">
                             <h3>Nossa missão</h3>
                             <p>
-                                Facilitar as escolas dos médicos plantonistas egarantir
+                                Facilitar as escolhas dos médicos plantonistas egarantir
                                 que tenham melhores condições de trabalho e pagamento.
                             </p>
                         </div>
