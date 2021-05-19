@@ -10,7 +10,8 @@ import IconeMenu from '../../assets/images/icones/hamburguerMenu.svg'
 import DrawerMobile from './components/DrawerMobile';
 
 interface LinksNavbar {
-    aba: number;
+    aba?: number;
+    semLink?: boolean;
     landing?: boolean;
 }
 
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function NavBar ({ aba, landing }: LinksNavbar) {
+function NavBar ({ aba, semLink, landing }: LinksNavbar) {
     const classes = useStyles();
     const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -126,7 +127,7 @@ function NavBar ({ aba, landing }: LinksNavbar) {
                     <img src={LogoPlantaoFacil} alt="PlantaoFacil"/>
                 </div>
                 <Hidden xsDown>
-                    {landing ? links[1] : links[0]}
+                    {!semLink && (landing ? links[1] : links[0])}
                 </Hidden>
                 <Hidden smUp>
                     <IconButton onClick={handleDrawerToggle}>

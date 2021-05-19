@@ -7,8 +7,6 @@ import NavBar from '../../components/NavBar';
 import api from '../../services/api';
 import * as Yup from 'yup'
 import './styles.css';
-import { Button, CircularProgress } from '@material-ui/core';
-import TextInput from '../../components/TextInput';
 
 const mensagemCampoObrigatorio = 'Preencha os campos obrigatórios';
 
@@ -170,7 +168,7 @@ function Cadastro () {
 
     return (
         <div className="page-cadastro">
-            <NavBar aba={2}/>
+            <NavBar semLink/>
             {etapaForm()}
         </div>
     );

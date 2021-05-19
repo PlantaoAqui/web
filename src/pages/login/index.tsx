@@ -42,7 +42,7 @@ function Login () {
 
     return (
         <div className="page-login">
-            <NavBar aba={1} />
+            <NavBar semLink />
             <FormLogin
                 titulo="Login"
                 subtitulo="Entre na nossa comunidade de médicos"

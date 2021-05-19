@@ -79,7 +79,7 @@ function Landing () {
 
     return (
         <div className="page-landing">
-            <NavBar aba={1} landing/>
+            <NavBar landing/>
             <div className="conteudo">
                 <div id="entrada">
                     <div className="texto">
