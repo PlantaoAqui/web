@@ -11,6 +11,7 @@ import LogoInsta from '../../../assets/images/logos/instaBlack.svg';
 
 interface DrawerMobileProps {
     open: boolean;
+    tipoLinks: 'none' | 'landing' | 'default';
     handleDrawerToggle: () => void;
 }
 
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) =>
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
         width: '60vw',
+        maxWidth: '30rem',
         background: '#A1E09E',
     },
     secao: {
@@ -51,33 +53,20 @@ const useStyles = makeStyles((theme) =>
         display: 'flex',
         flexDirection: 'column',
         '& img': {
-            marginBottom: theme.spacing(1)
+            marginBottom: theme.spacing(1),
+            maxHeight: '3rem',
+            width: 'fit-content'
         }
     }
   }),
 );
 
-function DrawerMobile ({ open, handleDrawerToggle }: DrawerMobileProps) {
+function DrawerMobile ({ open, tipoLinks, handleDrawerToggle }: DrawerMobileProps) {
     const classes = useStyles();
 
-    return (
-        <Drawer
-            elevation={1}
-            variant="temporary"
-            anchor="right"
-            open={open}
-            onClose={handleDrawerToggle}
-            classes={{
-                paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-                keepMounted: true,
-                BackdropProps: {
-                    invisible: true
-                }
-            }}
-        >
-            <div className={classes.toolbar} />
+    const links: Record<'none' | 'landing' | 'default', JSX.Element> = {
+        none: <></>,
+        landing:
             <div className={classes.secao}>
                 <Typography
                     variant="h3" gutterBottom
@@ -103,7 +92,67 @@ function DrawerMobile ({ open, handleDrawerToggle }: DrawerMobileProps) {
                         Fale Conosco
                     </Typography>
                 </LinkScroll>
-            </div>
+            </div>,
+        default:
+            <div className={classes.secao}>
+                <Typography
+                    variant="h3" gutterBottom
+                    className={classes.tituloSecao}
+                >
+                    MENU
+                </Typography>
+                <Link href="/plantoes" className={classes.linkSecao}>
+                    <Typography variant="h4" gutterBottom>
+                        Pesquisar
+                    </Typography>
+                </Link>
+                <Link href="/plantoes" className={classes.linkSecao}>
+                    <Typography variant="h4" gutterBottom>
+                        Plantões
+                    </Typography>
+                </Link>
+                <Link href="/plantoes" className={classes.linkSecao}>
+                    <Typography variant="h4" gutterBottom>
+                        Cursos
+                    </Typography>
+                </Link>
+                <Link href="/plantoes" className={classes.linkSecao}>
+                    <Typography variant="h4" gutterBottom>
+                        Ofertas
+                    </Typography>
+                </Link>
+                <Link href="/plantoes" className={classes.linkSecao}>
+                    <Typography variant="h4" gutterBottom>
+                        Nova Avaliação
+                    </Typography>
+                </Link>
+                <Link href="/plantoes" className={classes.linkSecao}>
+                    <Typography variant="h4" gutterBottom>
+                        Minha conta
+                    </Typography>
+                </Link>
+            </div>,
+    }
+
+    return (
+        <Drawer
+            elevation={1}
+            variant="temporary"
+            anchor="right"
+            open={open}
+            onClose={handleDrawerToggle}
+            classes={{
+                paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+                keepMounted: true,
+                BackdropProps: {
+                    invisible: true
+                }
+            }}
+        >
+            <div className={classes.toolbar} />
+            {links[tipoLinks]}
             <div className={classes.espaco}/>
             <div className={classes.secao}>
                 <Typography

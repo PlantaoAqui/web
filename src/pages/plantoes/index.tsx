@@ -59,7 +59,7 @@ function Plantoes () {
 
     return (
         <div className="page-plantoes" style={blurBackground ? {filter: 'blur(3px)'} : {}}>
-            <NavBar aba={1}/>
+            <NavBar tipoLinks="default" aba={1}/>
             <div className="pesquisaplantoes">
                 <FiltrosPesquisa hospitais={hospitais} pesquisa={pesquisarHospitais}/>
                 <span className="gridcontainer">

@@ -168,7 +168,7 @@ function Cadastro () {
 
     return (
         <div className="page-cadastro">
-            <NavBar semLink/>
+            <NavBar tipoLinks="none"/>
             {etapaForm()}
         </div>
     );
