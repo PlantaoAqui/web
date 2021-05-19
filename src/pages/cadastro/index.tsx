@@ -25,7 +25,7 @@ const validationSchema = [
     Yup.object({
         informacoesUsuario: Yup.object({
             crm: Yup.string().required(mensagemCampoObrigatorio),
-            status: Yup.number().positive(mensagemCampoObrigatorio).required(mensagemCampoObrigatorio),
+            grauDeFormacao: Yup.number().positive(mensagemCampoObrigatorio).required(mensagemCampoObrigatorio),
             estado: Yup.string().required(mensagemCampoObrigatorio),
             cidade: Yup.string().required(mensagemCampoObrigatorio),
             instituicaoDeEnsino: Yup.string().required(mensagemCampoObrigatorio),
