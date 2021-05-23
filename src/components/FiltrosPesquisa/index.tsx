@@ -1,235 +1,161 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles.css';
 
-import iconeDptoEmergencia from "../../assets/images/icones/tipoplantao/dptoemergencia.svg";
-import iconePacientesInternados from "../../assets/images/icones/tipoplantao/pacientesinternados.svg";
-import iconeTransporteInterhospitalar from "../../assets/images/icones/tipoplantao/transporteinterhospitalar.svg";
-import iconeAmbulancia from "../../assets/images/icones/tipoplantao/ambulancia.svg";
-import { Accordion, AccordionDetails, AccordionSummary } from '@material-ui/core';
-import { Hospital } from "../../pages/plantoes";
+import { Typography } from '@material-ui/core';
+import { Hospital } from '../../pages/plantoes';
+import Filtro from './components/Filtro';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
+import SelectInputSlim from '../SelectInputSlim';
+import FiltroBase from './components/FiltroBase';
+import api from '../../services/api';
 
 export interface HospitaisPesquisados {
     hospitais: Array<Hospital> | undefined;
     pesquisa: (p: number) => void;
 }
 
-function FiltrosPesquisa ({hospitais, pesquisa}: HospitaisPesquisados) {
-    const [pesquisaBasicaExpanded, setPesquisaBasicaExpanded] = useState(false);
-    const [filtrosExpanded, setFiltrosExpanded] = useState<number | false>(false);
+enum OrdenarPor {
+    Relevancia = 'Mais relevantes',
+    Nota = 'Nota de avaliação',
+    Remuneracao = 'Remuneração'
+}
 
-    const handleChangeAccordionPesquisaBasica = () => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
-        setPesquisaBasicaExpanded(isExpanded);
-    };
+const ordenarPorValues: OrdenarPor[] = [
+    OrdenarPor.Relevancia,
+    OrdenarPor.Nota,
+    OrdenarPor.Remuneracao
+];
+
+export type TipoPlantao = {
+    id: number;
+    nome: string;
+    icone: string;
+    subcategorias: Subcategoria[]
+};
+
+type Subcategoria = {
+    id: number;
+    id_tipo: number;
+    nome: string;
+};
+
+const useStyles = makeStyles(() =>
+    createStyles({
+        resultados: {
+            height: '6rem',
+            width: '100%',
+            padding: '0.7rem 1.3rem',
+            background: 'var(--cor-fundo-card)',
+            borderRadius: '8px',
+            marginBottom: '1.3rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            alignContent: 'stretch'
+        },
+        linhaSimples: {
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+            alignContent: 'center',
+            justifyContent: 'space-between'
+        },
+        textoClaro: {
+            color: 'var(--cor-texto-claro)',
+            font: '400 1.4rem SFProText'
+        },
+        textoEscuro: {
+            color: 'var(--cor-texto-escuro)',
+            font: '500 1.4rem SFProText'
+        },
+        indices: {
+            width: '100%',
+            paddingLeft: '1.3rem',
+            marginBottom: '1.2rem'
+        }
+    })
+);
+
+function FiltrosPesquisa ({ hospitais, pesquisa }: HospitaisPesquisados) {
+    const classes = useStyles();
+    const [tipoPlantao, setTipoPlantao] = useState<TipoPlantao[] | null>(null);
+    const [filtrosExpanded, setFiltrosExpanded] = useState<number | false>(false);
+    const [ordenarPor, setOrdenarPor] = useState<OrdenarPor>(OrdenarPor.Relevancia);
+    const [estado, setEstado] = useState('');
+    const [cidade, setCidade] = useState('');
 
     const handleClickAccordionFiltros = (tipo: number) => {
-        setFiltrosExpanded(filtrosExpanded ? false : tipo);
+        setFiltrosExpanded(filtrosExpanded === tipo ? false : tipo);
         pesquisa(filtrosExpanded ? 0 : tipo);
+    };
+
+    async function listarTiposPlantao () {
+        try {
+            const response = await api.get('tipos', {
+                params: {
+                    tipo: 'plantao'
+                }
+            });
+
+            setTipoPlantao(response.data);
+        } catch (error) {
+            console.log(error);
+        }
     }
+
+    useEffect(() => {
+        listarTiposPlantao();
+    }, []);
 
     return (
         <div className="filtrospesquisa">
-            <div className="basepesquisa">
-                <Accordion expanded={pesquisaBasicaExpanded} onChange={handleChangeAccordionPesquisaBasica()}>
-                    <AccordionSummary>
-                        <div className="sumario"
-                            aria-label="sumario"
-                            onClick={(event) => event.stopPropagation()}
-                            onFocus={(event) => event.stopPropagation()}
-                        >
-                            <div className="cabecalho">
-                                <p>Plantões encontrados</p>
-                                <button onClick={() => setPesquisaBasicaExpanded(!pesquisaBasicaExpanded)}>
-                                    {pesquisaBasicaExpanded
-                                    ? "Ocultar filtros"
-                                    : "Mostrar filtros"}
-                                </button>
-                            </div>
-                            <p>{hospitais === undefined || !Array.isArray(hospitais)
-                                ? 0 : hospitais.length} plantões</p>
-                        </div>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <div className="detalhespesquisa">
-                            <div className="local">
-                                <p className="descricao">Local</p>
-                                <div className="seletor">
-                                    <p>Cidade v</p>
-                                    <p>Bairro v</p>
-                                </div>
-                            </div>
-                            <div className="subfiltros">
-                                <div className="opcao">Avaliação</div>
-                                <div className="opcao">
-                                    <p>0 {'>'} 2</p>24
-                                </div>
-                                <div className="opcao">
-                                    <p>2 {'>'} 4</p>12
-                                </div>
-                                <div className="opcao">
-                                    <p>4 {'>'} 5</p>18
-                                </div>
-                            </div>
-                        </div>
-                    </AccordionDetails>
-                </Accordion>
+            <div className={classes.resultados}>
+                <div className={classes.linhaSimples}>
+                    <p className={classes.textoClaro}>Plantões encontrados</p>
+                    <p className={classes.textoEscuro}>{hospitais === undefined || !Array.isArray(hospitais)
+                        ? 0
+                        : hospitais.length} plantões
+                    </p>
+                </div>
+                <div className={classes.linhaSimples}>
+                    <p className={classes.textoEscuro}>Ordenar por</p>
+                    <SelectInputSlim
+                        value={ordenarPor}
+                        defaultValue={OrdenarPor.Relevancia}
+                        handleChange={(e) => setOrdenarPor((e.target as HTMLSelectElement).value as OrdenarPor)}
+                        items={ordenarPorValues}
+                        keyMap={(item) => item}
+                        valueMap={(item) => item}
+                    />
+                </div>
             </div>
-            <div className={filtrosExpanded === 1 ? "dptoemergencia" :"dptoemergencia dptoemergencia-collapsed"}>
-                <Accordion expanded={filtrosExpanded === 1}>
-                    <AccordionSummary>
-                        <div className="filtro"
-                            onClick={(event) => event.stopPropagation()}
-                            onFocus={(event) => event.stopPropagation()}
-                        >
-                            <div className="cabecalho">
-                                <p>Tipo de Plantão</p>
-                                <button onClick={() => handleClickAccordionFiltros(1)}>
-                                    {filtrosExpanded === 1
-                                    ? "- Filtros"
-                                    : "+ Filtros"}
-                                </button>
-                            </div>
-                            <div className="sumariofiltro">
-                                <img src={iconeDptoEmergencia} alt="Departamento de Emergência"/>
-                                <div className="informacoesfiltro">
-                                    <p className="nomefiltro">Departamento de Emergência</p>
-                                    {filtrosExpanded === 1 && <p className="numeroderesultados">{hospitais?.length} plantões encontrados</p>}
-                                </div>
-                            </div>
-                        </div>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <div className="subfiltros">
-                            <div className="opcao">
-                                <p>Porta</p>24
-                            </div>
-                            <div className="opcao">
-                                <p>Sala de Emergência</p>12
-                            </div>
-                            <div className="opcao">
-                                <p>Chefe de plantão</p>10
-                            </div>
-                            <div className="opcao">
-                                <p>Observação</p>18
-                            </div>
-                        </div>
-                    </AccordionDetails>
-                </Accordion>
-            </div>
-            <div className={filtrosExpanded === 2 ? "pacientes" : "pacientes pacientes-collapsed"}>
-                <Accordion expanded={filtrosExpanded === 2}>
-                    <AccordionSummary>
-                        <div className="filtro"
-                            onClick={(event) => event.stopPropagation()}
-                            onFocus={(event) => event.stopPropagation()}
-                        >
-                            <div className="cabecalho">
-                                <p>Tipo de Plantão</p>
-                                <button onClick={() => handleClickAccordionFiltros(2)}>
-                                    {filtrosExpanded === 2
-                                    ? "- Filtros"
-                                    : "+ Filtros"}
-                                </button>
-                            </div>
-                            <div className="sumariofiltro">
-                                <img src={iconePacientesInternados} alt="Pacientes internados"/>
-                                <div className="informacoesfiltro">
-                                    <p className="nomefiltro">Departamento de Emergência</p>
-                                    {filtrosExpanded === 2 && <p className="numeroderesultados">{hospitais?.length} plantões encontrados</p>}
-                                </div>
-                            </div>
-                        </div>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <div className="subfiltros">
-                            <div className="opcao">
-                                <p>Enfermaria</p>14
-                            </div>
-                            <div className="opcao">
-                                <p>UTI</p>18
-                            </div>
-                        </div>
-                    </AccordionDetails>
-                </Accordion>
-            </div>
-            <div className={filtrosExpanded === 3 ? "transporte" : "transporte transporte-collapsed"}>
-                <Accordion expanded={filtrosExpanded === 3}>
-                    <AccordionSummary>
-                        <div className="filtro"
-                            onClick={(event) => event.stopPropagation()}
-                            onFocus={(event) => event.stopPropagation()}
-                        >
-                            <div className="cabecalho">
-                                <p>Tipo de Plantão</p>
-                                <button onClick={() => handleClickAccordionFiltros(3)}>
-                                    {filtrosExpanded === 3
-                                    ? "- Filtros"
-                                    : "+ Filtros"}
-                                </button>
-                            </div>
-                            <div className="sumariofiltro">
-                                <img src={iconeTransporteInterhospitalar} alt="Transporte Interhospitalar"/>
-                                <div className="informacoesfiltro">
-                                    <p className="nomefiltro">Transporte Interhospitalar</p>
-                                    {filtrosExpanded === 3 && <p className="numeroderesultados">{hospitais?.length} plantões encontrados</p>}
-                                </div>
-                            </div>
-                        </div>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <div className="subfiltros">
-                            <div className="opcao">
-                                <p>Atendimento pré-hospitalar</p>24
-                            </div>
-                            <div className="opcao">
-                                <p>Altas</p>8
-                            </div>
-                            <div className="opcao">
-                                <p>Transporte interhospitalar</p>22
-                            </div>
-                            <div className="opcao">
-                                <p>Aeromédico</p>4
-                            </div>
-                        </div>
-                    </AccordionDetails>
-                </Accordion>
-            </div>
-            <div className={filtrosExpanded === 4 ? "ambulancia" : "ambulancia ambulancia-collapsed"}>
-                <Accordion expanded={filtrosExpanded === 4}>
-                    <AccordionSummary>
-                        <div className="filtro"
-                            onClick={(event) => event.stopPropagation()}
-                            onFocus={(event) => event.stopPropagation()}
-                        >
-                            <div className="cabecalho">
-                                <p>Tipo de Plantão</p>
-                                <button onClick={() => handleClickAccordionFiltros(4)}>
-                                    {filtrosExpanded === 4
-                                    ? "- Filtros"
-                                    : "+ Filtros"}
-                                </button>
-                            </div>
-                            <div className="sumariofiltro">
-                                <img src={iconeAmbulancia} alt="Ambulância"/>
-                                <div className="informacoesfiltro">
-                                    <p className="nomefiltro">Postos fixos de ambulância</p>
-                                    {filtrosExpanded === 4 && <p className="numeroderesultados">{hospitais?.length} plantões encontrados</p>}
-                                </div>
-                            </div>
-                        </div>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <div className="subfiltros">
-                            <div className="opcao">
-                                <p>Eventos esportivos e festivos</p>13
-                            </div>
-                            <div className="opcao">
-                                <p>Shoppings</p>15
-                            </div>
-                        </div>
-                    </AccordionDetails>
-                </Accordion>
-            </div>
-            <div className="propaganda" />
+            <Typography variant="h5" gutterBottom
+                className={classes.indices}
+            >
+                Filtros
+            </Typography>
+            <FiltroBase
+                estado={estado}
+                setEstado={setEstado}
+                cidade={cidade}
+                setCidade={setCidade}
+            />
+            <Typography variant="h5" gutterBottom
+                className={classes.indices}
+            >
+                Filtrar por Categorias de Plantão
+            </Typography>
+            {tipoPlantao?.map(tipo => {
+                return (
+                    <Filtro
+                        key={tipo.id}
+                        tipo={tipo}
+                        expanded={filtrosExpanded === tipo.id}
+                        resultados={10}
+                        handleChange={() => handleClickAccordionFiltros(tipo.id)}
+                    />
+                );
+            })}
         </div>
     );
 }
