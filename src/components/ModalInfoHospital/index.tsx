@@ -1,19 +1,16 @@
-import React, { createRef, useEffect, useState } from 'react';
-import { Line, Bar } from 'react-chartjs-2'
-import { ChartOptions, ChartData } from 'chart.js'
+import React, { useEffect, useState } from 'react';
+import { Line, Bar } from 'react-chartjs-2';
+import { ChartOptions, ChartData } from 'chart.js';
 import './styles.css';
 
 import Avatar from '@material-ui/core/Avatar';
 import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import { InterfaceCardHospital } from '../CardHospital';
 import api from '../../services/api';
 
-import iconeDptoEmergencia from "../../assets/images/icones/tipoplantao/dptoemergencia.svg";
-import iconePacientesInternados from "../../assets/images/icones/tipoplantao/pacientesinternados.svg";
-import iconeTransporteInterhospitalar from "../../assets/images/icones/tipoplantao/transporteinterhospitalar.svg";
-import iconeEstrela from "../../assets/images/icones/reviewStar.svg"
+import iconeDptoEmergencia from '../../assets/images/icones/tipoplantao/dptoemergencia.svg';
+import iconePacientesInternados from '../../assets/images/icones/tipoplantao/pacientesinternados.svg';
+import iconeTransporteInterhospitalar from '../../assets/images/icones/tipoplantao/transporteinterhospitalar.svg';
 import ModalAvaliacaoHospital from '../ModalAvaliacaoHospital';
 import StarRating from '../StarRating';
 
@@ -28,7 +25,7 @@ type DetalhesHospital = {
     equipe: number;
     pagamento: number;
     seguranca: number;
-}
+};
 
 type ConfiguracaoGraficos = {
     salarioMes: {
@@ -39,10 +36,10 @@ type ConfiguracaoGraficos = {
         data: ChartData;
         options: ChartOptions;
     }
-}
+};
 
 function ModalInfoHospital (props: InterfaceCardHospital) {
-    const {idHospital, nomeHospital, tipoPlantao, notaHospital, mediaSalarialHospital} = props;
+    const { idHospital, nomeHospital, tipoPlantao, notaHospital, mediaSalarialHospital } = props;
     const [modalAvaliacaoHospitalAberto, setModalAvaliacaoHospitalAberto] = useState(false);
     const [informacoes, setInformacoes] = useState<DetalhesHospital>({
         nome: nomeHospital,
@@ -57,7 +54,7 @@ function ModalInfoHospital (props: InterfaceCardHospital) {
         seguranca: 0
     });
 
-    async function loadInfo() {
+    async function loadInfo () {
         try {
             const response = await api.get(`hospitais/${idHospital}`, {
                 params: {
@@ -76,7 +73,7 @@ function ModalInfoHospital (props: InterfaceCardHospital) {
     }, []);
 
     const dados: ConfiguracaoGraficos = {
-        salarioMes : {
+        salarioMes: {
             data: {
                 labels: [
                     'Janeiro',
@@ -93,23 +90,23 @@ function ModalInfoHospital (props: InterfaceCardHospital) {
                     'Dezembro'
                 ],
                 datasets: [
-                {
-                    label: 'Salário/Mês',
-                    data: [1200, 1900, 300, 500, 1200, 1300, 400, 1600, 300, 600, 1300, 1400],
-                    fill: false,
-                    borderColor: '#5D9550',
-                    pointBackgroundColor: '#5D9550',
-                    showLine: true,
-                    lineTension: 0,
-                    pointRadius: 0,
-                    pointHitRadius: 8,
-                },
-                ],
+                    {
+                        label: 'Salário/Mês',
+                        data: [1200, 1900, 300, 500, 1200, 1300, 400, 1600, 300, 600, 1300, 1400],
+                        fill: false,
+                        borderColor: '#5D9550',
+                        pointBackgroundColor: '#5D9550',
+                        showLine: true,
+                        lineTension: 0,
+                        pointRadius: 0,
+                        pointHitRadius: 8
+                    }
+                ]
             },
             options: {
                 legend: {
                     display: true,
-                    position: "top",
+                    position: 'top',
                     align: 'start',
                     onClick: (e) => e.stopPropagation(),
                     labels: {
@@ -120,38 +117,38 @@ function ModalInfoHospital (props: InterfaceCardHospital) {
                     xAxes: [{
                         position: 'bottom',
                         gridLines: {
-                            display: false,
+                            display: false
                         },
                         offset: true,
                         ticks: {
-                            callback: function(value, index, values) {
-                                if(typeof(value) === 'string'){
+                            callback: function (value) {
+                                if (typeof (value) === 'string') {
                                     return value.charAt(0);
                                 }
                             },
-                            fontSize: 10,
+                            fontSize: 10
                         }
                     }],
                     yAxes: [{
                         position: 'right',
                         gridLines: {
                             drawOnChartArea: false,
-                            tickMarkLength: 5,
+                            tickMarkLength: 5
                         },
                         ticks: {
-                            callback: function(value, index, values) {
-                                if (!!((index + 1)%2)) {
+                            callback: function (value, index) {
+                                if ((index + 1) % 2) {
                                     return 'R$ ' + value;
                                 }
                             },
                             beginAtZero: true,
-                            fontSize: 10,
+                            fontSize: 10
                         }
-                    }],
-                },
+                    }]
+                }
             }
         },
-        salarioDiaSemana : {
+        salarioDiaSemana: {
             data: {
                 labels: [
                     'Segunda',
@@ -163,19 +160,19 @@ function ModalInfoHospital (props: InterfaceCardHospital) {
                     'Domingo'
                 ],
                 datasets: [
-                {
-                    label: 'Salário/Dia da Semana',
-                    data: [7, 2, 6, 3, 6, 3, 4],
-                    backgroundColor: '#5D9550',
-                    barPercentage: 0.4,
-                },
-                ],
+                    {
+                        label: 'Salário/Dia da Semana',
+                        data: [7, 2, 6, 3, 6, 3, 4],
+                        backgroundColor: '#5D9550',
+                        barPercentage: 0.4
+                    }
+                ]
             },
             options: {
                 maintainAspectRatio: false,
                 legend: {
                     display: true,
-                    position: "top",
+                    position: 'top',
                     align: 'start',
                     onClick: (e) => e.stopPropagation(),
                     labels: {
@@ -186,42 +183,42 @@ function ModalInfoHospital (props: InterfaceCardHospital) {
                     xAxes: [{
                         position: 'bottom',
                         gridLines: {
-                            display: false,
+                            display: false
                         },
                         ticks: {
-                            callback: function(value, index, values) {
-                                if(typeof(value) === 'string'){
+                            callback: function (value) {
+                                if (typeof (value) === 'string') {
                                     return value.charAt(0);
                                 }
-                            },
-                        },
+                            }
+                        }
                     }],
                     yAxes: [{
                         position: 'right',
                         gridLines: {
                             drawOnChartArea: false,
-                            tickMarkLength: 5,
+                            tickMarkLength: 5
                         },
                         ticks: {
-                            callback: function(value, index, values) {
-                                if (!!((index + 1)%2)) {
+                            callback: function (value, index) {
+                                if ((index + 1) % 2) {
                                     return 'R$ ' + value;
                                 }
                             },
                             beginAtZero: true,
-                            fontSize: 10,
-                        },
+                            fontSize: 10
+                        }
                     }],
                     gridLines: {
-                        drawTicks: false,
+                        drawTicks: false
                     }
-                },
+                }
             }
         }
-    }
+    };
 
     return (
-        <div className="modalinfohospital" style={modalAvaliacaoHospitalAberto ? {display: 'none'} : {}}>
+        <div className="modalinfohospital" style={modalAvaliacaoHospitalAberto ? { display: 'none' } : {}}>
             <div className="informacoes">
                 <div className="detalhes">
                     <div className="nome">
@@ -467,7 +464,7 @@ function ModalInfoHospital (props: InterfaceCardHospital) {
             </div>
             <Dialog
                 open={modalAvaliacaoHospitalAberto}
-                onClose={() => {setModalAvaliacaoHospitalAberto(false)}}
+                onClose={() => { setModalAvaliacaoHospitalAberto(false); }}
                 scroll="body"
                 aria-labelledby="scroll-dialog-title"
                 aria-describedby="scroll-dialog-description"
@@ -479,15 +476,15 @@ function ModalInfoHospital (props: InterfaceCardHospital) {
                         width: '35vw',
                         // marginLeft: 'calc(22% - 20px)',
                         // marginTop: '11rem',
-                        outline: '0',
-                    },
+                        outline: '0'
+                    }
                 }}
             >
                 <ModalAvaliacaoHospital
                     tipo={tipoPlantao}
                     idHospital={idHospital}
                     nomeHospital={nomeHospital}
-                    onClose={() => {setModalAvaliacaoHospitalAberto(false)}}
+                    onClose={() => { setModalAvaliacaoHospitalAberto(false); }}
                 />
             </Dialog>
         </div>

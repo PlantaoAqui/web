@@ -1,5 +1,5 @@
-import { makeStyles, Theme, createStyles } from '@material-ui/core';
-import React, { useState } from 'react';
+import { makeStyles, createStyles } from '@material-ui/core';
+import React from 'react';
 import './styles.css';
 
 interface TextInputProps {
@@ -9,27 +9,27 @@ interface TextInputProps {
     value: string;
     data?: boolean;
     error?: boolean;
-    handleChange: (e: React.ChangeEvent<any>) => void;
-    handleBlur?: (e: React.FocusEvent<any>) => void;
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleBlur?: (e: React.FocusEvent<unknown>) => void;
 }
 
 const useStyles = makeStyles(() =>
-  createStyles({
-    erro: {
-        color: "var(--cor-vermelha-warning)",
-        border: "1px solid var(--cor-vermelha-warning)",
-        '&::placeholder': {
-            color: "var(--cor-vermelha-warning)",
+    createStyles({
+        erro: {
+            color: 'var(--cor-vermelha-warning)',
+            border: '1px solid var(--cor-vermelha-warning)',
+            '&::placeholder': {
+                color: 'var(--cor-vermelha-warning)'
+            }
+        },
+        normal: {
+            color: 'var(--cor-texto-escuro)',
+            border: '1px solid var(--cor-borda-campos)',
+            '&::placeholder': {
+                color: 'var(--cor-texto-claro)'
+            }
         }
-    },
-    normal: {
-        color: "var(--cor-texto-escuro)",
-        border: "1px solid var(--cor-borda-campos)",
-        '&::placeholder': {
-            color: "var(--cor-texto-claro)",
-        }
-    }
-  }),
+    })
 );
 
 function TextInput (props: TextInputProps) {
@@ -37,7 +37,11 @@ function TextInput (props: TextInputProps) {
     return (
         <input
             type={props.type || 'text'}
-            onFocus={(e) => props.data ? e.target.type='date' : {}}
+            onFocus={(e) => {
+                if (props.data) {
+                    e.target.type = 'date';
+                }
+            }}
             name={props.name}
             placeholder={props.placeholder}
             value={props.value}

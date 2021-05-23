@@ -1,46 +1,46 @@
-import React, { createRef, useEffect, useState } from 'react';
+import React, { createRef, useState } from 'react';
 import { useFormik } from 'formik';
 import NavBar from '../../components/NavBar';
 import api from '../../services/api';
-import { Link, animateScroll as scroll } from "react-scroll";
-import * as Yup from 'yup'
-import './styles.css'
+import { Link, animateScroll as scroll } from 'react-scroll';
+import * as Yup from 'yup';
+import './styles.css';
 
-import ImagemEntrada from '../../assets/images/landing-page/landingPage-entrada.jpg'
-import ImagemMissao from '../../assets/images/landing-page/landingPage-missao.jpg'
-import ImagemCarrousel1_0 from '../../assets/images/landing-page/carrousel-1-0.jpg'
-import ImagemCarrousel1_1 from '../../assets/images/landing-page/carrousel-1-1.jpg'
-import ImagemCarrousel2_0 from '../../assets/images/landing-page/carrousel-2-0.jpg'
+import ImagemEntrada from '../../assets/images/landing-page/landingPage-entrada.jpg';
+import ImagemMissao from '../../assets/images/landing-page/landingPage-missao.jpg';
+import ImagemCarrousel1_0 from '../../assets/images/landing-page/carrousel-1-0.jpg';
+import ImagemCarrousel1_1 from '../../assets/images/landing-page/carrousel-1-1.jpg';
+import ImagemCarrousel2_0 from '../../assets/images/landing-page/carrousel-2-0.jpg';
 import Footer from '../../components/Footer';
-import { createStyles, Hidden, makeStyles, Theme } from '@material-ui/core';
+import { createStyles, Hidden, makeStyles } from '@material-ui/core';
 import Carousel from 'react-material-ui-carousel';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    carousel: {
-        width: 'fit-content'
-    },
-    carouselDireita: {
-        '& > div': {
-            float: 'right'
+const useStyles = makeStyles(() =>
+    createStyles({
+        carousel: {
+            width: 'fit-content'
+        },
+        carouselDireita: {
+            '& > div': {
+                float: 'right'
+            }
+        },
+        fotos: {
+            height: '100%',
+            width: 'auto',
+            objectFit: 'cover'
         }
-    },
-    fotos: {
-        height: '100%',
-        width: 'auto',
-        objectFit: 'cover'
-    }
-  }),
+    })
 );
 
 const itemsCarrousel1 = [
     <img key={1} src={ImagemCarrousel1_0} alt="Instituição"/>,
     <img key={2} src={ImagemCarrousel1_1} alt="Formulario"/>
-]
+];
 
 const itemsCarrousel2 = [
     <img key={1} src={ImagemCarrousel2_0} alt="Home"/>
-]
+];
 
 function Landing () {
     const [activeInput, setActiveInput] = useState(0);
@@ -51,28 +51,28 @@ function Landing () {
         'Quero ter acesso antecipado',
         'Obrigado por se inscrever!',
         'Email já cadastrado!'
-    ]
+    ];
     const formik = useFormik({
         initialValues: {
             email: ''
         },
         validationSchema: Yup.object({
             email: Yup.string().email().required('Preencha os campos obrigatórios')
-          }),
+        }),
         onSubmit: () => handleSubmit()
-    })
+    });
 
-    async function handleSubmit() {
+    async function handleSubmit () {
         try {
-            await api.post('/acesso-antecipado', formik.values)
-            formik.resetForm()
-            setStatusEnvio(1)
+            await api.post('/acesso-antecipado', formik.values);
+            formik.resetForm();
+            setStatusEnvio(1);
         } catch (error) {
-            if (error.response.status === 409){
-                formik.resetForm()
-                setStatusEnvio(2)
+            if (error.response.status === 409) {
+                formik.resetForm();
+                setStatusEnvio(2);
             } else {
-                console.log(error)
+                console.log(error);
             }
         }
     }
@@ -86,24 +86,30 @@ function Landing () {
                         <div className="secao-principal">
                             <h1>Entender onde você vai trabalhar agora ficou mais fácil</h1>
                             <p>Verifique a confiabilidade dos seus plantões a partir de uma
-                                plataforma otimizada e desenvolvida por uma comunidade de médicos.</p>
+                                plataforma otimizada e desenvolvida por uma comunidade de médicos.
+                            </p>
                         </div>
                         <div className="secao-acesso">
                             <p>Estamos em fase final de desenvolvimento. Para ter acesso antecipado a
                                 nossa plataforma, clique no botão abaixo e cadastre seu email. Em breve
-                                você será convidado para integrar a nossa comunidade.</p>
+                                você será convidado para integrar a nossa comunidade.
+                            </p>
                             <form onSubmit={formik.handleSubmit}>
-                                <div className={`campo-email ${(statusEnvio !== 0 &&  'email-enviado')}`}>
-                                    <input value={
-                                        activeInput === 1 ? (
-                                            formik.values.email
-                                        ) : ('')
-                                    }
-                                    onFocus={() => setActiveInput(1)}
-                                    onChange={(change) => {
-                                        activeInput === 1 && formik.handleChange(change);
-                                    }}
-                                    name="email" type="text" placeholder="Email"/>
+                                <div className={`campo-email ${(statusEnvio !== 0 && 'email-enviado')}`}>
+                                    <input
+                                        value={
+                                            activeInput === 1
+                                                ? (
+                                                    formik.values.email
+                                                )
+                                                : ('')
+                                        }
+                                        onFocus={() => setActiveInput(1)}
+                                        onChange={(change) => {
+                                            activeInput === 1 && formik.handleChange(change);
+                                        }}
+                                        name="email" type="text" placeholder="Email"
+                                    />
                                     <button type="submit">{textoBotao[statusEnvio]}</button>
                                 </div>
                             </form>
@@ -146,8 +152,8 @@ function Landing () {
                             <Carousel
                                 interval={6000}
                                 className={classes.carousel}
-                                navButtonsProps={{          // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
-                                    className: "buttons",
+                                navButtonsProps={{
+                                    className: 'buttons',
                                     style: {
                                         backgroundColor: 'transparent',
                                         borderRadius: 0
@@ -163,8 +169,8 @@ function Landing () {
                             <Carousel
                                 interval={6000}
                                 className={classes.carousel}
-                                navButtonsProps={{          // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
-                                    className: "buttons",
+                                navButtonsProps={{
+                                    className: 'buttons',
                                     style: {
                                         backgroundColor: 'transparent',
                                         borderRadius: 0
@@ -225,17 +231,21 @@ function Landing () {
                             e cadastre seu email. Em breve você será convidado para integrar a nossa comunidade.
                         </p>
                         <form onSubmit={formik.handleSubmit}>
-                            <div className={`campo-email ${(statusEnvio !== 0 &&  'email-enviado')}`}>
-                                <input value={
-                                        activeInput === 2 ? (
-                                            formik.values.email
-                                        ) : ('')
+                            <div className={`campo-email ${(statusEnvio !== 0 && 'email-enviado')}`}>
+                                <input
+                                    value={
+                                        activeInput === 2
+                                            ? (
+                                                formik.values.email
+                                            )
+                                            : ('')
                                     }
                                     onFocus={() => setActiveInput(2)}
                                     onChange={(change) => {
                                         activeInput === 2 && formik.handleChange(change);
                                     }}
-                                    name="email" type="text" placeholder="Email"/>
+                                    name="email" type="text" placeholder="Email"
+                                />
                                 <button type="submit">{textoBotao[statusEnvio]}</button>
                             </div>
                         </form>

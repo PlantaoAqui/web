@@ -11,11 +11,11 @@ interface ReviewInputProps {
     titulo: string;
     descricao: string;
     nota: number;
-    handleChange?: (event: React.ChangeEvent<{}>, value: number | null) => void;
+    handleChange?: (event: React.ChangeEvent<unknown>, value: number | null) => void;
     pergunta?: boolean;
     textoPergunta?: string;
     valorPergunta?: boolean;
-    handleChangePergunta?: (event: React.ChangeEvent<{}>, value: string) => void
+    handleChangePergunta?: (event: React.ChangeEvent<unknown>, value: string) => void
 }
 
 function ReviewInput (props: ReviewInputProps) {

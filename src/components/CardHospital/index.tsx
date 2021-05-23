@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './styles.css';
 
-import iconeDptoEmergencia from "../../assets/images/icones/tipoplantao/dptoemergencia.svg";
-import iconePacientesInternados from "../../assets/images/icones/tipoplantao/pacientesinternados.svg";
-import iconeTransporteInterhospitalar from "../../assets/images/icones/tipoplantao/transporteinterhospitalar.svg";
-import iconeAmbulancia from "../../assets/images/icones/tipoplantao/ambulancia.svg";
-import { Dialog, DialogContent, DialogContentText } from '@material-ui/core';
+import iconeDptoEmergencia from '../../assets/images/icones/tipoplantao/dptoemergencia.svg';
+import iconePacientesInternados from '../../assets/images/icones/tipoplantao/pacientesinternados.svg';
+import iconeTransporteInterhospitalar from '../../assets/images/icones/tipoplantao/transporteinterhospitalar.svg';
+import iconeAmbulancia from '../../assets/images/icones/tipoplantao/ambulancia.svg';
+import { Dialog } from '@material-ui/core';
 import ModalInfoHospital from '../ModalInfoHospital';
 
 export interface InterfaceCardHospital {
@@ -17,7 +17,7 @@ export interface InterfaceCardHospital {
     blurBackground: (e: boolean) => void;
 }
 
-function CardHospital ({idHospital, nomeHospital, tipoPlantao: tipoHospital, notaHospital, mediaSalarialHospital, blurBackground}: InterfaceCardHospital) {
+function CardHospital ({ idHospital, nomeHospital, tipoPlantao: tipoHospital, notaHospital, mediaSalarialHospital, blurBackground }: InterfaceCardHospital) {
     const [nomeHospitalCard, setNomeHospitalCard] = useState(nomeHospital);
     const [iconeHospital, setIconeHospital] = useState('');
     const [modalInfoCardAberto, setModalInfoCardAberto] = useState(false);
@@ -25,27 +25,27 @@ function CardHospital ({idHospital, nomeHospital, tipoPlantao: tipoHospital, not
 
     useEffect(() => {
         switch (tipoHospital) {
-            case 1:
-                setIconeHospital(iconeDptoEmergencia);
-                break;
-            case 2:
-                setIconeHospital(iconePacientesInternados);
-                break;
-            case 3:
-                setIconeHospital(iconeTransporteInterhospitalar);
-                break;
-            case 4:
-                setIconeHospital(iconeAmbulancia);
-                break;
-            default:
-                break;
+        case 1:
+            setIconeHospital(iconeDptoEmergencia);
+            break;
+        case 2:
+            setIconeHospital(iconePacientesInternados);
+            break;
+        case 3:
+            setIconeHospital(iconeTransporteInterhospitalar);
+            break;
+        case 4:
+            setIconeHospital(iconeAmbulancia);
+            break;
+        default:
+            break;
         }
-
     }, [tipoHospital]);
 
     useEffect(() => {
         if (modalInfoCardAberto) {
             const { current: descriptionElement } = refInfoCardHospital;
+
             if (descriptionElement !== null) {
                 descriptionElement.focus();
             }
@@ -56,10 +56,11 @@ function CardHospital ({idHospital, nomeHospital, tipoPlantao: tipoHospital, not
     useEffect(() => {
         if (nomeHospitalCard.length > 40) {
             let nome = nomeHospitalCard;
+
             while (nome.length > 40) {
-                nome = nome.substring(0, nome.lastIndexOf(" "));
+                nome = nome.substring(0, nome.lastIndexOf(' '));
             }
-            nome = nome.concat(" ...");
+            nome = nome.concat(' ...');
             setNomeHospitalCard(nome);
         }
     }, [nomeHospitalCard]);
@@ -68,7 +69,7 @@ function CardHospital ({idHospital, nomeHospital, tipoPlantao: tipoHospital, not
         <div className="cardhospital">
             <div className="partesuperior">
                 <h5>{nomeHospitalCard}</h5>
-                <button onClick={() => {setModalInfoCardAberto(true)}}>Mostrar mais +</button>
+                <button onClick={() => { setModalInfoCardAberto(true); }}>Mostrar mais +</button>
             </div>
             <div className="parteinferior">
                 <img src={iconeHospital} alt={nomeHospital}/>
@@ -85,21 +86,21 @@ function CardHospital ({idHospital, nomeHospital, tipoPlantao: tipoHospital, not
             </div>
             <Dialog
                 open={modalInfoCardAberto}
-                onClose={() => {setModalInfoCardAberto(false)}}
+                onClose={() => { setModalInfoCardAberto(false); }}
                 scroll="body"
                 aria-labelledby="scroll-dialog-title"
                 aria-describedby="scroll-dialog-description"
                 PaperProps={{
-                style: {
-                    backgroundColor: 'transparent',
-                    maxWidth: '1080px',
-                    minWidth: '720px',
-                    width: '57vw',
-                    marginLeft: '22%',
-                    marginTop: '11rem',
-                    outline: '0',
-                    boxShadow: 'none',
-                },
+                    style: {
+                        backgroundColor: 'transparent',
+                        maxWidth: '1080px',
+                        minWidth: '720px',
+                        width: '57vw',
+                        marginLeft: '22%',
+                        marginTop: '11rem',
+                        outline: '0',
+                        boxShadow: 'none'
+                    }
                 }}
             >
                 <ModalInfoHospital

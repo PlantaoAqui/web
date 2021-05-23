@@ -1,8 +1,8 @@
+import React, { ReactText } from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import React, { ReactText } from 'react';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import './styles.css';
 
 interface SelectInputProps<T> {
@@ -10,35 +10,35 @@ interface SelectInputProps<T> {
     value: string;
     default: string;
     error?: boolean;
-    handleChange: (e: React.ChangeEvent<any>) => void;
-    handleBlur?: (e: React.FocusEvent<any>) => void;
+    handleChange: (e: React.ChangeEvent<unknown>) => void;
+    handleBlur?: (e: React.FocusEvent<unknown>) => void;
     items: T[] | null;
     keyMap: (record: T) => ReactText;
     valueMap: (record: T) => string;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    formControl: {
-        width: '100%'
-    },
-    root: {
-        height: '4rem',
-        color: "var(--cor-texto-claro)",
-        background: 'transparent',
-        border: '1px solid var(--cor-borda-campos)',
-        borderRadius: '0.8rem',
-        font: '400 1.7rem SFProText',
-        padding: '0'
-    },
-    selected: {
-        color: "var(--cor-texto-escuro)"
-    },
-    erro: {
-        color: "var(--cor-vermelha-warning)",
-        border: "1px solid var(--cor-vermelha-warning)"
-    }
-  }),
+const useStyles = makeStyles(() =>
+    createStyles({
+        formControl: {
+            width: '100%'
+        },
+        root: {
+            height: '4rem',
+            color: 'var(--cor-texto-claro)',
+            background: 'transparent',
+            border: '1px solid var(--cor-borda-campos)',
+            borderRadius: '0.8rem',
+            font: '400 1.7rem SFProText',
+            padding: '0'
+        },
+        selected: {
+            color: 'var(--cor-texto-escuro)'
+        },
+        erro: {
+            color: 'var(--cor-vermelha-warning)',
+            border: '1px solid var(--cor-vermelha-warning)'
+        }
+    })
 );
 
 function SelectInput<T> (props: SelectInputProps<T>) {
@@ -52,11 +52,11 @@ function SelectInput<T> (props: SelectInputProps<T>) {
                     name={props.name}
                     value={props.value}
                     onChange={props.handleChange}
-                    onBlur={props.handleBlur}
+                    onBlur={props.handleBlur && props.handleBlur}
                 >
                     <MenuItem disabled value=""><p>{props.default}</p></MenuItem>
                     {props.items && props.items.length > 0 && props.items.map(record => {
-                        return(
+                        return (
                             <MenuItem
                                 key={props.keyMap(record)}
                                 value={props.valueMap(record)}

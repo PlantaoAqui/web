@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from '@material-ui/core/Link';
-import { Link as LinkScroll } from "react-scroll";
+import { Link as LinkScroll } from 'react-scroll';
 import './styles.css';
 
 import LogoPlantaoFacil from '../../assets/images/logos/plantaoFacil.svg';
@@ -31,7 +31,8 @@ function Footer ({ landing }: TipoFooter) {
                 contato@plantaofacil.com
             </a>
         </>
-    ]
+    ];
+
     return (
         <div className="barra-footer">
             <div className="footer">

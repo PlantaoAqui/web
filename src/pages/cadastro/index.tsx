@@ -1,11 +1,11 @@
-import { Formik, useFormik } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useFormik } from 'formik';
 import { useAsyncCallback } from 'react-async-hook';
 import { useHistory } from 'react-router';
 import FormCadastro from '../../components/FormCadastro';
 import NavBar from '../../components/NavBar';
 import api from '../../services/api';
-import * as Yup from 'yup'
+import * as Yup from 'yup';
 import './styles.css';
 
 const mensagemCampoObrigatorio = 'Preencha os campos obrigatórios';
@@ -33,7 +33,7 @@ const validationSchema = [
     Yup.object({
         arquivo: Yup.string().required('O arquivo com o documento é obrigatório.')
     })
-]
+];
 
 function Cadastro () {
     const history = useHistory();
@@ -45,7 +45,7 @@ function Cadastro () {
                 nome: '',
                 sobrenome: '',
                 email: '',
-                senha: '',
+                senha: ''
             },
             informacoesUsuario: {
                 crm: '',
@@ -67,10 +67,10 @@ function Cadastro () {
                 actions.setSubmitting(false);
             }
         }
-    })
+    });
 
-    function ResetCidade(reset: boolean){
-        if (reset){
+    function ResetCidade (reset: boolean) {
+        if (reset) {
             formik.setFieldValue('informacoesUsuario.cidade', '');
         }
     }
@@ -79,90 +79,89 @@ function Cadastro () {
         async () => {
             if (arquivoFotoDocumento) {
                 const formData = new FormData();
-                formData.append("confirmacaoCadastro", arquivoFotoDocumento)
+                formData.append('confirmacaoCadastro', arquivoFotoDocumento);
                 formData.append('dados', JSON.stringify(formik.values));
                 await api.post('/usuarios', formData, {
                     headers: {
-                        "Content-Type": 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data'
                     }
                 })
-                .then((response) => {
-                    for (var [key, value] of Object.entries(response.data)) {
-                        sessionStorage.setItem(key, String(value));
-                    }
-                    history.push('/plantoes');
-                }).catch(error =>{
-                    console.log(error);
-                })
+                    .then((response) => {
+                        for (const [key, value] of Object.entries(response.data)) {
+                            sessionStorage.setItem(key, String(value));
+                        }
+                        history.push('/plantoes');
+                    }).catch(error => {
+                        console.log(error);
+                    });
             }
         }
-    )
+    );
 
     function etapaForm () {
         switch (etapaAtual) {
-            case 0:
-            default:
-                return(
-                    <FormCadastro
-                        titulo="Seja bem-vindo!"
-                        subtitulo="Forneça alguns dados para criar a sua conta."
-                        etapa={etapaAtual}
-                        rodape="Digite uma senha com min 6 caracteres"
-                        textoBotao="Quero me cadastrar"
-                        values={formik.values}
-                        errors={formik.errors}
-                        touched={formik.touched}
-                        handleChange={formik.handleChange}
-                        handleBlur={formik.handleBlur}
-                        handleSubmit={formik.handleSubmit}
-                    />
-                );
-            case 1:
-                return(
-                    <FormCadastro
-                        titulo="Como somos uma comunidade de médicos, vamos precisar de mais alguns dados..."
-                        etapa={etapaAtual}
-                        textoBotao="Prosseguir"
-                        values={formik.values}
-                        errors={formik.errors}
-                        touched={formik.touched}
-                        handleChange={formik.handleChange}
-                        handleBlur={formik.handleBlur}
-                        handleSubmit={formik.handleSubmit}
-                        resetCidade={ResetCidade}
-                    />
-                );
-            case 2:
-                return(
-                    <FormCadastro
-                        titulo="Confirmação dos documentos"
-                        etapa={etapaAtual}
-                        textoBotao="Upload do arquivo"
-                        values={formik.values}
-                        errors={formik.errors}
-                        touched={formik.touched}
-                        handleChange={formik.handleChange}
-                        handleBlur={formik.handleBlur}
-                        handleSubmit={formik.handleSubmit}
-                        setFotoDocumento={(url) => formik.setFieldValue('arquivo', url)}
-                        setArquivoDocumento={setArquivoFotoDocumento}
-                    />
-                );
-            case 5:
-                return(
-                    <FormCadastro
-                        titulo="Termos e Políticas Todeplantão.com"
-                        etapa={etapaAtual}
-                        termos="1. Os serviços fornecidosNossa missão é proporcionar às pessoas o poder de criar "
-                        textoBotao="Concordar e Prosseguir"
-                        values={formik.values}
-                        errors={formik.errors}
-                        touched={formik.touched}
-                        handleChange={formik.handleChange}
-                        handleBlur={formik.handleBlur}
-                        handleSubmit={formik.handleSubmit}
-                    />
-                );
+        case 0:
+            return (
+                <FormCadastro
+                    titulo="Seja bem-vindo!"
+                    subtitulo="Forneça alguns dados para criar a sua conta."
+                    etapa={etapaAtual}
+                    rodape="Digite uma senha com min 6 caracteres"
+                    textoBotao="Quero me cadastrar"
+                    values={formik.values}
+                    errors={formik.errors}
+                    touched={formik.touched}
+                    handleChange={formik.handleChange}
+                    handleBlur={formik.handleBlur}
+                    handleSubmit={formik.handleSubmit}
+                />
+            );
+        case 1:
+            return (
+                <FormCadastro
+                    titulo="Como somos uma comunidade de médicos, vamos precisar de mais alguns dados..."
+                    etapa={etapaAtual}
+                    textoBotao="Prosseguir"
+                    values={formik.values}
+                    errors={formik.errors}
+                    touched={formik.touched}
+                    handleChange={formik.handleChange}
+                    handleBlur={formik.handleBlur}
+                    handleSubmit={formik.handleSubmit}
+                    resetCidade={ResetCidade}
+                />
+            );
+        case 2:
+            return (
+                <FormCadastro
+                    titulo="Confirmação dos documentos"
+                    etapa={etapaAtual}
+                    textoBotao="Upload do arquivo"
+                    values={formik.values}
+                    errors={formik.errors}
+                    touched={formik.touched}
+                    handleChange={formik.handleChange}
+                    handleBlur={formik.handleBlur}
+                    handleSubmit={formik.handleSubmit}
+                    setFotoDocumento={(url) => formik.setFieldValue('arquivo', url)}
+                    setArquivoDocumento={setArquivoFotoDocumento}
+                />
+            );
+        case 5:
+            return (
+                <FormCadastro
+                    titulo="Termos e Políticas Todeplantão.com"
+                    etapa={etapaAtual}
+                    termos="1. Os serviços fornecidosNossa missão é proporcionar às pessoas o poder de criar "
+                    textoBotao="Concordar e Prosseguir"
+                    values={formik.values}
+                    errors={formik.errors}
+                    touched={formik.touched}
+                    handleChange={formik.handleChange}
+                    handleBlur={formik.handleBlur}
+                    handleSubmit={formik.handleSubmit}
+                />
+            );
         }
     }
 

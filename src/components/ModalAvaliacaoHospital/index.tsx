@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import * as Yup from 'yup'
+import * as Yup from 'yup';
 import ReviewInput from '../ReviewInput';
 import TextInput from '../TextInput';
 import './styles.css';
@@ -16,13 +16,13 @@ interface ModalAvaliacaoHospitalProps {
     tipo?: number;
     idHospital?: number;
     nomeHospital?: string;
-    onClose: (event: {}) => void;
+    onClose: (event: unknown) => void;
 }
 
 type itemSelect = {
     id: number;
     nome: string;
-}
+};
 
 function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
     const formik = useFormik({
@@ -32,8 +32,8 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
             avaliacao: {
                 valor_recebido: 0,
                 id_horas: 0,
-                data_registrado: new Date (Date.now()).toISOString().slice(0, 19).replace('T', ' ').split(' ')[0],
-                data_realizado: 0,
+                data_registrado: new Date(Date.now()).toISOString().slice(0, 19).replace('T', ' ').split(' ')[0],
+                data_realizado: 0
             },
             avaliacaoFixa: {
                 infraestrutura: 0,
@@ -42,7 +42,7 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
                 pagamento: 0,
                 seguranca: 0,
                 atrasado: false,
-                comentario: '',
+                comentario: ''
             }
         },
         validationSchema: Yup.object({
@@ -52,7 +52,7 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
                 valor_recebido: Yup.number().positive().required(),
                 id_horas: Yup.number().positive().required(),
                 data_registrado: Yup.date().required(),
-                data_realizado: Yup.date().required(),
+                data_realizado: Yup.date().required()
             }),
             avaliacaoFixa: Yup.object({
                 infraestrutura: Yup.number().min(0).max(5).integer().required(),
@@ -61,14 +61,14 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
                 pagamento: Yup.number().min(0).max(5).integer().required(),
                 seguranca: Yup.number().min(0).max(5).integer().required(),
                 atrasado: Yup.boolean().required(),
-                comentario: Yup.string().optional(),
+                comentario: Yup.string().optional()
             })
         }),
-        onSubmit: async values => {
+        onSubmit: async (event, values) => {
             await api.post('/avaliacoes', values);
-            props.onClose;
+            props.onClose(event);
         }
-    })
+    });
     const [tipo, setTipo] = useState('');
     const dataAvaliacao = new Date();
     const [dataPlantao, setDataPlantao] = useState('');
@@ -76,14 +76,14 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
     const [remuneracao, setRemuneracao] = useState('');
     const [cidade, setCidade] = useState('');
     const [tempoPlantao, setTempoPlantao] = useState('');
-    const [instituicao, setInstituicao] = useState<itemSelect | null>(null)
+    const [instituicao, setInstituicao] = useState<itemSelect | null>(null);
 
     const [estados, setEstados] = useState<itemSelect[] | null>(null);
     const [cidades, setCidades] = useState<itemSelect[] | null>(null);
-    const [tiposPlantao, setTiposPlantao] = useState<itemSelect[] | null>(null)
-    const [horasPlantao, setHorasPlantao] = useState([{ id: 0, horas: '' }])
+    const [tiposPlantao, setTiposPlantao] = useState<itemSelect[] | null>(null);
+    const [horasPlantao, setHorasPlantao] = useState([{ id: 0, horas: '' }]);
 
-    async function listarEstados() {
+    async function listarEstados () {
         try {
             const response = await axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome');
             setEstados(response.data);
@@ -92,54 +92,59 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
         }
     }
 
-    async function listarTiposPlantao() {
+    async function listarTiposPlantao () {
         try {
-            await api.get('/tipos-plantao')
-            .then(response => {
-                setTiposPlantao(response.data)
-                setTipo(response.data.find((tipo: itemSelect) =>
-                    tipo.id === props.tipo)?.nome || '')
+            await api.get('/tipos', {
+                params: { tipo: 'plantao' }
             })
+                .then(response => {
+                    setTiposPlantao(response.data);
+                    setTipo(response.data.find((tipo: itemSelect) =>
+                        tipo.id === props.tipo)?.nome || '');
+                });
         } catch (error) {
             console.log(error);
         }
     }
 
-    async function listarHorasPlantao() {
+    async function listarHorasPlantao () {
         try {
-            await api.get('/horas-plantao')
-            .then(response => setHorasPlantao(response.data))
+            await api.get('/tipos', {
+                params: { tipo: 'horas' }
+            })
+                .then(response => setHorasPlantao(response.data));
         } catch (error) {
             console.log(error);
         }
     }
 
-    async function listarInstituicoes(like: string) {
+    async function listarInstituicoes (like: string) {
         try {
             const response = await api.get('/procurar-hospitais', {
                 params: { like }
-            })
+            });
+
             if (like === '') {
-                response.data.unshift({ id: 0, nome: props.nomeHospital })
+                response.data.unshift({ id: 0, nome: props.nomeHospital });
             }
-            return response.data
+            return response.data;
         } catch (error) {
             console.log(error);
         }
     }
 
-    async function obterLocalidade() {
+    async function obterLocalidade () {
         try {
             const { data } = await api.get('/usuarios', { params: { filtro: 'localidade' } });
-            setEstado(data.estado)
-            setCidades([{ id: 0, nome: data.cidade }])
-            setCidade(data.cidade)
+            setEstado(data.estado);
+            setCidades([{ id: 0, nome: data.cidade }]);
+            setCidade(data.cidade);
         } catch (error) {
             console.log(error);
         }
     }
 
-    async function obterAvaliacao() {
+    async function obterAvaliacao () {
         try {
             const response = await api.get('/avaliacoes', {
                 params: {
@@ -153,7 +158,7 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
                     ...response.data,
                     atrasado: Boolean(response.data.atrasado)
                 }
-            })
+            });
         } catch (error) {
             console.log(error);
         }
@@ -163,14 +168,15 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
         listarEstados().then(obterLocalidade);
         listarTiposPlantao();
         listarHorasPlantao();
-        props.nomeHospital && setInstituicao({ id: 0, nome: props.nomeHospital })
+        props.nomeHospital && setInstituicao({ id: 0, nome: props.nomeHospital });
         obterAvaliacao();
     }, []);
 
-    async function listarCidades() {
+    async function listarCidades () {
         const idEstado = estados?.find(estadoSelecionado => estadoSelecionado.nome === estado)?.id;
+
         try {
-            if (!idEstado) return
+            if (!idEstado) return;
             const response = await axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${idEstado}/municipios?orderBy=nome`);
             response.data.length > 0 && setCidades(response.data);
         } catch (error) {
@@ -196,9 +202,11 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
                             value={tipo}
                             default="Tipo de Plantão"
                             handleChange={(e) => {
-                                setTipo(e.target.value);
-                                e.target.value = tiposPlantao?.find(tipo => tipo.nome === e.target.value)?.id;
-                                formik.handleChange(e);
+                                const value = (e.target as HTMLSelectElement).value;
+                                setTipo(value);
+                                const event = e as React.ChangeEvent<HTMLSelectElement>;
+                                event.target.value = tiposPlantao?.find(tipo => tipo.nome === value)?.id.toString() || '';
+                                formik.handleChange(event);
                             }}
                             items={tiposPlantao}
                             keyMap={item => item.id}
@@ -219,7 +227,11 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
                         <SelectInput
                             value={estado}
                             default="Estado"
-                            handleChange={(e) => setEstado(e.target.value)}
+                            handleChange={(e) => {
+                                const value = (e.target as HTMLSelectElement).value;
+                                setEstado(value);
+                                setCidade('');
+                            }}
                             items={estados}
                             keyMap={item => item.id}
                             valueMap={item => item.nome}
@@ -228,13 +240,19 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
                             placeholder="Remuneração"
                             decimalScale={2}
                             prefix="R$"
+                            style={{
+                                border: '1px solid var(--cor-borda-campos)'
+                            }}
                             value={remuneracao}
                             onValueChange={(value) => {
-                                setRemuneracao(value || '')
-                                formik.setValues({ ...formik.values, avaliacao: {
-                                    ...formik.values.avaliacao,
-                                    valor_recebido: parseFloat(value?.replace('R$', '').replace('.', '').replace(',', '.') || '0')
-                                }})
+                                setRemuneracao(value || '');
+                                formik.setValues({
+                                    ...formik.values,
+                                    avaliacao: {
+                                        ...formik.values.avaliacao,
+                                        valor_recebido: parseFloat(value?.replace('R$', '').replace('.', '').replace(',', '.') || '0')
+                                    }
+                                });
                             }}
                         />
                     </div>
@@ -243,7 +261,10 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
                             name="cidade"
                             value={cidade}
                             default="Cidade"
-                            handleChange={(e) => setCidade(e.target.value)}
+                            handleChange={(e) => {
+                                const value = (e.target as HTMLSelectElement).value;
+                                setCidade(value);
+                            }}
                             items={cidades}
                             keyMap={item => item.id}
                             valueMap={item => item.nome}
@@ -253,9 +274,11 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
                             value={tempoPlantao}
                             default="Tempo de Plantão"
                             handleChange={(e) => {
-                                setTempoPlantao(e.target.value);
-                                e.target.value = horasPlantao?.find(plantao => plantao.horas === e.target.value)?.id;
-                                formik.handleChange(e);
+                                const value = (e.target as HTMLSelectElement).value;
+                                setTempoPlantao(value);
+                                const event = e as React.ChangeEvent<HTMLSelectElement>;
+                                event.target.value = horasPlantao?.find(plantao => plantao.horas === value)?.id.toString() || '';
+                                formik.handleChange(event);
                             }}
                             items={horasPlantao}
                             keyMap={item => item.id}
@@ -267,10 +290,10 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
                             getOptions={listarInstituicoes}
                             value={instituicao}
                             onChange={(_event, newValue) => {
-                                setInstituicao(newValue || { id: 0, nome: ''})
-                                formik.setValues({ ...formik.values, id_hospital: newValue?.id || 0 })
+                                setInstituicao(newValue || { id: 0, nome: '' });
+                                formik.setValues({ ...formik.values, id_hospital: newValue?.id || 0 });
                             }}
-                            getOptionLabel={(option) =>  option?.nome || ''}
+                            getOptionLabel={(option) => option?.nome || ''}
                             getOptionSelected={(option, value) => option?.nome === value?.nome}
                             placeholder="Instituição"
                         />
@@ -318,10 +341,13 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
                         textoPergunta="Pagamento dentro do prazo?"
                         valorPergunta={formik.values.avaliacaoFixa.atrasado}
                         handleChangePergunta={(_, value) => {
-                            formik.setValues({ ...formik.values, avaliacaoFixa: {
-                                ...formik.values.avaliacaoFixa,
-                                atrasado: value === 'true'
-                            }})
+                            formik.setValues({
+                                ...formik.values,
+                                avaliacaoFixa: {
+                                    ...formik.values.avaliacaoFixa,
+                                    atrasado: value === 'true'
+                                }
+                            });
                         }}
                     />
                     <TextAreaInput

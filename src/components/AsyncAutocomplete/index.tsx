@@ -8,7 +8,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import createStyles from '@material-ui/core/styles/createStyles';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
 interface AsyncAutocompleteProps<T> {
     getOptions: (inputValue: string) => Promise<T[]>;
@@ -25,7 +24,7 @@ interface AsyncAutocompleteProps<T> {
     delay?: number;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         autocomplete: {
             '& .MuiOutlinedInput-notchedOutline': {
@@ -47,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
                 font: '400 1.7rem Roboto',
                 '&::placeholder': {
                     opacity: '1',
-                    color: 'var(--cor-texto-claro)',
+                    color: 'var(--cor-texto-claro)'
                 }
             },
             '& .MuiAutocomplete-endAdornment': {
@@ -60,21 +59,21 @@ const useStyles = makeStyles((theme: Theme) =>
             right: '5rem',
             alignSelf: 'center'
         }
-    }),
+    })
 );
 
-export default function AsyncAutocomplete<T>(props: AsyncAutocompleteProps<T>) {
+export default function AsyncAutocomplete<T> (props: AsyncAutocompleteProps<T>) {
     const classes = useStyles();
-    const [inputValue, setInputValue] = useState('')
-    const [debouncedInputValue] = useDebounce(inputValue, props.delay || 500)
+    const [inputValue, setInputValue] = useState('');
+    const [debouncedInputValue] = useDebounce(inputValue, props.delay || 500);
 
     const getOptions = useAsync(
         () => props.getOptions(debouncedInputValue), [debouncedInputValue]
-    )
+    );
 
     const handleInputChange = (_event: React.ChangeEvent<unknown>, value: string) => {
-        setInputValue(value)
-    }
+        setInputValue(value);
+    };
 
     return (
         <Autocomplete
@@ -117,5 +116,5 @@ export default function AsyncAutocomplete<T>(props: AsyncAutocompleteProps<T>) {
                 />
             )}
         />
-    )
+    );
 }

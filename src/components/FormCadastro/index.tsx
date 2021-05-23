@@ -1,12 +1,5 @@
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import createStyles from '@material-ui/core/styles/createStyles';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import api from '../../services/api';
 import SelectInput from '../SelectInput';
 import TextInput from '../TextInput';
@@ -72,41 +65,24 @@ interface FormCadastroProps {
         },
         arquivo?: boolean
     },
-    handleChange: (e: React.ChangeEvent<any>) => void;
-    handleBlur: (e: React.FocusEvent<any>) => void;
+    handleChange: (e: React.ChangeEvent<unknown>) => void;
+    handleBlur: (e: React.FocusEvent<unknown>) => void;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     resetCidade?: (reset: boolean) => void;
     setFotoDocumento?: (url: string) => void;
     setArquivoDocumento?: (arquivo: File) => void;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    formControl: {
-        width: '100%'
-    },
-    root: {
-        height: '4rem',
-        color: "var(--cor-texto-claro)",
-        background: 'transparent',
-        border: '1px solid var(--cor-borda-campos)',
-        borderRadius: '0.8rem',
-        font: '400 1.7rem Roboto',
-        padding: '0'
-    }
-  }),
-);
-
 function FormCadastro (props: FormCadastroProps) {
     const [grauDeFormacao, setGrauDeFormacao] = useState('');
-    const [statusList, setStatusList] = useState([{id: 0, nome: ''}]);
-    const [estados, setEstados] = useState([{id: 0, nome: ''}]);
-    const [cidades, setCidades] = useState([{id: 0, nome: ''}]);
+    const [statusList, setStatusList] = useState([{ id: 0, nome: '' }]);
+    const [estados, setEstados] = useState([{ id: 0, nome: '' }]);
+    const [cidades, setCidades] = useState([{ id: 0, nome: '' }]);
     const [fotoDocumento, setFotoDocumento] = useState<string>();
     const [erro, setErro] = useState(false);
     const [mensagemErro, setMensagemErro] = useState('');
 
-    useEffect(() =>{
+    useEffect(() => {
         setErro(!!props.mensagemErro ||
             (!!props.errors.usuario?.nome && !!props.touched.usuario?.nome) ||
             (!!props.errors.usuario?.sobrenome && !!props.touched.usuario?.sobrenome) ||
@@ -133,7 +109,7 @@ function FormCadastro (props: FormCadastroProps) {
             (props.touched.arquivo && props.errors.arquivo) || '');
     }, [props.mensagemErro, props.errors, props.touched]);
 
-    async function listarEstados() {
+    async function listarEstados () {
         try {
             const response = await axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome');
             setEstados(response.data);
@@ -142,15 +118,14 @@ function FormCadastro (props: FormCadastroProps) {
         }
     }
 
-    async function listarGrauDeFormacao() {
+    async function listarGrauDeFormacao () {
         try {
-            const response = await api.get(`/tipos`, {
+            const response = await api.get('/tipos', {
                 params: { tipo: 'formacao' }
-            })
-            setStatusList(response.data)
+            });
+            setStatusList(response.data);
         } catch (error) {
             console.log(error);
-
         }
     }
 
@@ -159,12 +134,12 @@ function FormCadastro (props: FormCadastroProps) {
         listarGrauDeFormacao();
     }, [props.etapa === 1]);
 
-    async function listarCidades() {
+    async function listarCidades () {
         const idEstado = estados.find(estado => estado.nome === props.values.informacoesUsuario.estado)?.id;
+
         try {
             const response = await axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${idEstado}/municipios?orderBy=nome`);
             setCidades(response.data);
-
         } catch (error) {
             console.log(error);
         }
@@ -176,12 +151,12 @@ function FormCadastro (props: FormCadastroProps) {
 
     const handleChangePhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
-            let img = event.target.files[0]
+            const img = event.target.files[0];
             setFotoDocumento(URL.createObjectURL(img));
             props.setFotoDocumento && props.setFotoDocumento(URL.createObjectURL(img));
             props.setArquivoDocumento && props.setArquivoDocumento(img);
         }
-    }
+    };
 
     return (
         <div className="modal-cadastro">
@@ -189,7 +164,7 @@ function FormCadastro (props: FormCadastroProps) {
                 <div className="titulo">
                     <h1>{props.mensagemErro || props.titulo}</h1>
                 </div>
-                <div className="subtitulo" style={erro ? { color: "var(--cor-vermelha-warning)"} : {color: "var(--cor-texto-claro)"}}>
+                <div className="subtitulo" style={erro ? { color: 'var(--cor-vermelha-warning)' } : { color: 'var(--cor-texto-claro)' }}>
                     <h3>{mensagemErro || props.subtitulo}</h3>
                 </div>
                 <div className="conteudo">
@@ -238,7 +213,7 @@ function FormCadastro (props: FormCadastroProps) {
                                 />
                             </div>
                             <p className="rodape">{props.rodape}</p>
-                            <button style={{background: "#A1E09E"}} type="submit">{props.textoBotao}</button>
+                            <button style={{ background: '#A1E09E' }} type="submit">{props.textoBotao}</button>
                         </>
                     )}
                     {props.etapa === 1 && (
@@ -275,8 +250,10 @@ function FormCadastro (props: FormCadastroProps) {
                                     error={!!props.errors.informacoesUsuario?.grauDeFormacao && !!props.touched.informacoesUsuario?.grauDeFormacao}
                                     default="Grau de formação"
                                     handleChange={(e) => {
-                                        setGrauDeFormacao(e.target.value);
-                                        e.target.value = statusList?.find(stat => stat.nome === e.target.value)?.id;
+                                        const value = (e.target as HTMLSelectElement).value;
+                                        setGrauDeFormacao(value);
+                                        const event = e as React.ChangeEvent<HTMLSelectElement>;
+                                        event.target.value = statusList?.find(stat => stat.nome === value)?.id.toString() || '';
                                         props.handleChange(e);
                                     }}
                                     handleBlur={props.handleBlur}
@@ -317,7 +294,7 @@ function FormCadastro (props: FormCadastroProps) {
                                     handleBlur={props.handleBlur}
                                 />
                             </div>
-                            <button style={{background: "#7BB2ED"}} type="submit">{props.textoBotao}</button>
+                            <button style={{ background: '#7BB2ED' }} type="submit">{props.textoBotao}</button>
                         </>
                     )}
                     {props.etapa === 2 && (
@@ -347,7 +324,7 @@ function FormCadastro (props: FormCadastroProps) {
                                     onChange={handleChangePhoto}
                                 />
                             </div>
-                            <button style={{background: "#FCE37F"}} type="submit">{props.textoBotao}</button>
+                            <button style={{ background: '#FCE37F' }} type="submit">{props.textoBotao}</button>
                         </>
                     )}
                     {props.etapa === 5 && (
@@ -355,7 +332,7 @@ function FormCadastro (props: FormCadastroProps) {
                             <div className="termos">
                                 <p>{props.termos}</p>
                             </div>
-                            <button style={{background: "#FF817C"}} type="submit">{props.textoBotao}</button>
+                            <button style={{ background: '#FF817C' }} type="submit">{props.textoBotao}</button>
                         </>
                     )}
                 </div>

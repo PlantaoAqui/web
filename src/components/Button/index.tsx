@@ -11,7 +11,7 @@ function Button (props: ButtonProps) {
     const { background, texto, type } = props;
     return (
         <div className="styled-button">
-            <button style={{background}} type={type}>{texto}</button>
+            <button style={{ background }} type={type}>{texto}</button>
         </div>
     );
 }

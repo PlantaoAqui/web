@@ -3,7 +3,7 @@ import React from 'react';
 
 type FontSize = {
     size?: 'large' | 'small';
-}
+};
 
 function IconeEstrelaCheia ({ size }: FontSize) {
     return (
@@ -22,7 +22,8 @@ function IconeEstrelaCheia ({ size }: FontSize) {
                 4.82715C1.30536 4.89941 1.21063 5.00586 1.15985 5.14648C1.10907 5.29492 1.12079
                 5.43848 1.19501 5.57715C1.26923 5.71582 1.39618 5.85156 1.57587 5.98438L4.50555
                 8.08203L3.35712 11.498C3.2868 11.709 3.26434 11.8906 3.28973 12.043C3.31512 12.1953
-                3.38837 12.3184 3.50946 12.4121Z" fill="#FFB400" stroke="#FFB400" strokeWidth="0.5"/>
+                3.38837 12.3184 3.50946 12.4121Z" fill="#FFB400" stroke="#FFB400" strokeWidth="0.5"
+            />
         </SvgIcon>
     );
 }

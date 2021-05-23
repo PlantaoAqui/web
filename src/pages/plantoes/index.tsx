@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useAsync } from 'react-async-hook';
 import CardHospital from '../../components/CardHospital';
 import FiltrosPesquisa from '../../components/FiltrosPesquisa';
 import NavBar from '../../components/NavBar';
@@ -28,7 +27,7 @@ function Plantoes () {
     const [hospitais, setHospitais] = useState<Hospital[]>();
     const [blurBackground, setBlurBackground] = useState(false);
 
-    async function pesquisarHospitais(filtro: number) {
+    async function pesquisarHospitais (filtro: number) {
         try {
             const response = await api.get('hospitais', {
                 params: {
@@ -42,12 +41,11 @@ function Plantoes () {
         }
     }
 
-    async function listarHospitais() {
+    async function listarHospitais () {
         try {
             const response = await api.get('hospitais');
 
             setHospitais(response.data);
-
         } catch (error) {
             console.log(error);
         }
@@ -58,7 +56,7 @@ function Plantoes () {
     }, []);
 
     return (
-        <div className="page-plantoes" style={blurBackground ? {filter: 'blur(3px)'} : {}}>
+        <div className="page-plantoes" style={blurBackground ? { filter: 'blur(3px)' } : {}}>
             <NavBar tipoLinks="default" aba={1}/>
             <div className="pesquisaplantoes">
                 <FiltrosPesquisa hospitais={hospitais} pesquisa={pesquisarHospitais}/>
@@ -71,20 +69,20 @@ function Plantoes () {
                         itemHeight={125}
                         gutterWidth={13}
                         gutterHeight={13}
-                        springConfig={{stiffness: 170, damping: 26}}
+                        springConfig={{ stiffness: 170, damping: 26 }}
                     >
                         {Array.isArray(hospitais) && hospitais.map(cardHospital => {
-                            return(
-                            <li key={cardHospital.idCard}>
-                                <CardHospital
-                                    idHospital={cardHospital.id}
-                                    nomeHospital={cardHospital.nome}
-                                    tipoPlantao={cardHospital.tipo}
-                                    notaHospital={cardHospital.nota}
-                                    mediaSalarialHospital={cardHospital.salario}
-                                    blurBackground={setBlurBackground}
-                                />
-                            </li>
+                            return (
+                                <li key={cardHospital.idCard}>
+                                    <CardHospital
+                                        idHospital={cardHospital.id}
+                                        nomeHospital={cardHospital.nome}
+                                        tipoPlantao={cardHospital.tipo}
+                                        notaHospital={cardHospital.nota}
+                                        mediaSalarialHospital={cardHospital.salario}
+                                        blurBackground={setBlurBackground}
+                                    />
+                                </li>
 
                             );
                         })}

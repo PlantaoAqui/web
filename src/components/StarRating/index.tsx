@@ -1,12 +1,6 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React from 'react';
 import Rating from '@material-ui/lab/Rating';
 import './styles.css';
-import { withStyles } from '@material-ui/core/styles';
-import iconeEstrela from "../../assets/images/icones/reviewStar.svg"
-import {ReactComponent as iconeEstrelaCheio} from "../../assets/images/icones/reviewStarFull.svg"
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import SvgIcon from '@material-ui/core/SvgIcon';
 import IconeEstrelaCheia from '../../assets/images/icones/iconeEstrelaCheia';
 import IconeEstrela from '../../assets/images/icones/iconeEstrela';
 
@@ -14,7 +8,7 @@ interface StarRatingProps {
     name?: string;
     value: number;
     setValue?: (value: number) => void;
-    handleChange?: (event: React.ChangeEvent<{}>, value: number | null) => void;
+    handleChange?: (event: React.ChangeEvent<unknown>, value: number | null) => void;
     readonly?: boolean;
     precision?: number;
     size?: 'large' | 'small';

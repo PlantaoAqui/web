@@ -1,11 +1,3 @@
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import createStyles from '@material-ui/core/styles/createStyles';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import TextInput from '../TextInput';
 import './styles.css';
@@ -28,8 +20,8 @@ interface FormCadastroLogin {
         email?: boolean,
         senha?: boolean
     };
-    handleChange: (e: React.ChangeEvent<any>) => void;
-    handleBlur: (e: React.FocusEvent<any>) => void;
+    handleChange: (e: React.ChangeEvent<unknown>) => void;
+    handleBlur: (e: React.FocusEvent<unknown>) => void;
     handleSubmit: () => void;
 }
 
@@ -37,7 +29,7 @@ function FormLogin (props: FormCadastroLogin) {
     const [erro, setErro] = useState(false);
     const [mensagemErro, setMensagemErro] = useState('');
 
-    useEffect(() =>{
+    useEffect(() => {
         setErro(!!props.mensagemErro ||
             (!!props.errors.email && !!props.touched.email) ||
             (!!props.errors.senha && !!props.touched.senha));
@@ -53,7 +45,7 @@ function FormLogin (props: FormCadastroLogin) {
                     <h1>{props.titulo}</h1>
                 </div>
                 {props.subtitulo && (
-                    <div className="subtitulo" style={erro ? { color: "var(--cor-vermelha-warning)"} : {color: "var(--cor-texto-claro)"}}>
+                    <div className="subtitulo" style={erro ? { color: 'var(--cor-vermelha-warning)' } : { color: 'var(--cor-texto-claro)' }}>
                         <h3>{mensagemErro || props.subtitulo}</h3>
                     </div>
                 )}
@@ -66,7 +58,7 @@ function FormLogin (props: FormCadastroLogin) {
                         error={!!props.errors.email && !!props.touched.email}
                         handleChange={props.handleChange}
                         handleBlur={props.handleBlur}
-                        />
+                    />
                     <TextInput
                         type="password"
                         name="senha"
@@ -76,7 +68,7 @@ function FormLogin (props: FormCadastroLogin) {
                         handleChange={props.handleChange}
                         handleBlur={props.handleBlur}
                     />
-                    <button style={{background: "#A1E09E"}} type="submit">{props.textoBotao}</button>
+                    <button style={{ background: '#A1E09E' }} type="submit">{props.textoBotao}</button>
                 </div>
             </form>
         </div>

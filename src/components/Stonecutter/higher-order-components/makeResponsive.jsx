@@ -1,62 +1,63 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-mixed-operators */
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { commonDefaultProps } from '../utils/commonProps';
 
 const enquire = typeof window !== 'undefined' ? require('enquire.js') : null;
 
 export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4, widthCoef } = {}) =>
-  class extends Component {
+    class extends Component {
     static defaultProps = {
-      gutterWidth: commonDefaultProps.gutterWidth
+        gutterWidth: commonDefaultProps.gutterWidth
     };
 
-    setWidth(i) {
-      this.setState({ columns: i + 1 });
+    setWidth (i) {
+        this.setState({ columns: i + 1 });
     }
 
-    componentDidMount() {
-      const { columnWidth, gutterWidth } = this.props;
+    componentDidMount () {
+        const { columnWidth, gutterWidth } = this.props;
 
-      const breakpoints = [];
-      const getWidth = i =>
-        widthCoef * (i * (columnWidth + gutterWidth) - gutterWidth + minPadding);
+        const breakpoints = [];
+        const getWidth = i =>
+            widthCoef * (i * (columnWidth + gutterWidth) - gutterWidth + minPadding);
 
-      for (
-        let i = 2;
-        getWidth(i) <= maxWidth + columnWidth + gutterWidth;
-        i++
-      ) {
-        breakpoints.push(getWidth(i));
-      }
+        for (
+            let i = 2;
+            getWidth(i) <= maxWidth + columnWidth + gutterWidth;
+            i++
+        ) {
+            breakpoints.push(getWidth(i));
+        }
 
-      this.breakpoints = breakpoints
-        .map((width, i, arr) =>
-          [
-            'screen',
-            i  > 0 && `(min-width: ${arr[i - 1]}px)`,
-            i  < arr.length - 1 && `(max-width: ${width}px)`
-          ]
-            .filter(Boolean)
-            .join(' and '))
-        .map((breakpoint, i) => ({
-          breakpoint,
-          handler: () => this.setWidth(i)
-        }));
+        this.breakpoints = breakpoints
+            .map((width, i, arr) =>
+                [
+                    'screen',
+                    i > 0 && `(min-width: ${arr[i - 1]}px)`,
+                    i < arr.length - 1 && `(max-width: ${width}px)`
+                ]
+                    .filter(Boolean)
+                    .join(' and '))
+            .map((breakpoint, i) => ({
+                breakpoint,
+                handler: () => this.setWidth(i)
+            }));
 
-      this.breakpoints.forEach(({ breakpoint, handler }) =>
-        enquire.register(breakpoint, { match: handler }));
+        this.breakpoints.forEach(({ breakpoint, handler }) =>
+            enquire.register(breakpoint, { match: handler }));
     }
 
-    componentWillUnmount() {
-      this.breakpoints.forEach(({ breakpoint, handler }) =>
-        enquire.unregister(breakpoint, handler));
+    componentWillUnmount () {
+        this.breakpoints.forEach(({ breakpoint, handler }) =>
+            enquire.unregister(breakpoint, handler));
     }
 
     state = {
-      columns: defaultColumns
+        columns: defaultColumns
     };
 
-    render() {
-      return <Grid {...this.props} {...this.state} />;
+    render () {
+        return <Grid {...this.props} {...this.state} />;
     }
-  };
+    };

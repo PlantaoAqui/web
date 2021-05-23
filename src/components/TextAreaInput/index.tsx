@@ -1,5 +1,5 @@
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import React, { ChangeEvent, ChangeEventHandler } from 'react';
+import React, { ChangeEventHandler } from 'react';
 import './styles.css';
 
 interface TextAreaInputProps {
