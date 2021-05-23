@@ -1,6 +1,6 @@
 .page-landing {
     width: 100%;
-    background: var(--cor-fundo-landing);
+    background: var(--cor-fundo-principal);
     overflow-x: hidden;
 }
 
@@ -80,7 +80,7 @@
 #entrada .texto .secao-acesso .campo-email button {
     width: 50%;
     background: #FF817C;
-    color: var(--cor-fundo-landing);
+    color: var(--cor-fundo-principal);
     font: 400 1.7rem SFProText;
     outline: none;
     border: none;
@@ -140,7 +140,7 @@
 }
 
 #sobrenos .secao {
-    border: 1px solid var(--cor-fundo-landing);
+    border: 1px solid var(--cor-fundo-principal);
     border-radius: 2.4rem;
     padding: 2.2rem 2rem;
     margin-top: 3rem;
@@ -308,7 +308,7 @@
 #contato .acesso .campo-email button {
     flex: 1;
     background: #A1E09E;
-    color: var(--cor-fundo-landing);
+    color: var(--cor-fundo-principal);
     font: 400 1.7rem SFProText;
     outline: none;
     border: none;

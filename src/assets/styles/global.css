@@ -1,5 +1,5 @@
 :root {
-    --cor-fundo-principal: #D7D7D7;
+    --cor-fundo-principal: #F8F8F8;
     --cor-texto-claro: #707070;
     --cor-texto-escuro: #3E3E3E;
     --cor-borda-campos: #707070;
@@ -8,7 +8,6 @@
     --cor-fundo-card-hover: #DDDDDD;
     --cor-vermelha-warning: #f44336;
 
-    --cor-fundo-landing: #F8F8F8;
     --cor-borda-campos-landing: #DDDDDD;
     font-size: 60%;
 }
