@@ -2,12 +2,18 @@ import React, { useState } from 'react';
 
 import LogoPlantaoFacil from '../../assets/images/logos/plantaoFacil.svg';
 import { Link } from 'react-router-dom';
-import { AppBar, createStyles, Hidden, IconButton, makeStyles, Theme, Toolbar } from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
 
 import { Link as LinkScroll } from 'react-scroll';
 
 import IconeMenu from '../../assets/images/icones/hamburguerMenu.svg';
 import DrawerMobile from './components/DrawerMobile';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import ModalAvaliacaoHospital from '../ModalAvaliacaoHospital';
 
 interface LinksNavbar {
     aba?: number;
@@ -66,7 +72,10 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: '0.4rem 0',
             font: '400 1.6rem SFProText',
             color: 'var(--cor-texto-escuro)',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            border: 'none',
+            outline: 'none',
+            background: 'transparent'
         }
     })
 );
@@ -74,6 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function NavBar ({ aba, tipoLinks }: LinksNavbar) {
     const classes = useStyles();
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [modalAvaliacaoHospitalAberto, setModalAvaliacaoHospitalAberto] = useState(false);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -126,11 +136,9 @@ function NavBar ({ aba, tipoLinks }: LinksNavbar) {
                 Ofertas
             </div>
         </Link>
-        <Link to="/plantoes" style={aba === 4 ? { borderBottom: '2px solid black' } : {}}>
-            <div className={classes.link} style={aba === 4 ? { color: 'black' } : { color: '#3E3E3E' }}>
-                Nova Avaliação
-            </div>
-        </Link>
+        <button className={classes.link} onClick={() => setModalAvaliacaoHospitalAberto(true)}>
+            Nova Avaliação
+        </button>
         <Link to="/plantoes" style={aba === 5 ? { borderBottom: '2px solid black' } : {}}>
             <div className={classes.link} style={aba === 5 ? { color: 'black' } : { color: '#3E3E3E' }}>
                 Minha conta
@@ -140,28 +148,50 @@ function NavBar ({ aba, tipoLinks }: LinksNavbar) {
     };
 
     return (
-        <AppBar className={classes.appBar} elevation={4}>
-            <Toolbar className={classes.toolbar}>
-                <div className={classes.logo}>
-                    <img src={LogoPlantaoFacil} alt="PlantaoFacil"/>
-                </div>
-                <Hidden mdDown>
-                    {links[tipoLinks]}
-                </Hidden>
+        <>
+            <AppBar className={classes.appBar} elevation={4}>
+                <Toolbar className={classes.toolbar}>
+                    <div className={classes.logo}>
+                        <img src={LogoPlantaoFacil} alt="PlantaoFacil"/>
+                    </div>
+                    <Hidden mdDown>
+                        {links[tipoLinks]}
+                    </Hidden>
+                    <Hidden lgUp>
+                        <IconButton onClick={handleDrawerToggle}>
+                            <img src={IconeMenu} alt="Menu" />
+                        </IconButton>
+                    </Hidden>
+                </Toolbar>
                 <Hidden lgUp>
-                    <IconButton onClick={handleDrawerToggle}>
-                        <img src={IconeMenu} alt="Menu" />
-                    </IconButton>
+                    <DrawerMobile
+                        open={mobileOpen}
+                        tipoLinks={tipoLinks}
+                        handleDrawerToggle={handleDrawerToggle}
+                    />
                 </Hidden>
-            </Toolbar>
-            <Hidden lgUp>
-                <DrawerMobile
-                    open={mobileOpen}
-                    tipoLinks={tipoLinks}
-                    handleDrawerToggle={handleDrawerToggle}
+            </AppBar>
+            <Dialog
+                open={modalAvaliacaoHospitalAberto}
+                onClose={() => { setModalAvaliacaoHospitalAberto(false); }}
+                scroll="body"
+                aria-labelledby="scroll-dialog-title"
+                aria-describedby="scroll-dialog-description"
+                PaperProps={{
+                    style: {
+                        backgroundColor: 'transparent',
+                        maxWidth: '720px',
+                        minWidth: '500px',
+                        width: '35vw',
+                        outline: '0'
+                    }
+                }}
+            >
+                <ModalAvaliacaoHospital
+                    onClose={() => { setModalAvaliacaoHospitalAberto(false); }}
                 />
-            </Hidden>
-        </AppBar>
+            </Dialog>
+        </>
     );
 }
 

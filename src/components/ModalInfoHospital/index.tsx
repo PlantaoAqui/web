@@ -474,8 +474,6 @@ function ModalInfoHospital (props: InterfaceCardHospital) {
                         maxWidth: '720px',
                         minWidth: '500px',
                         width: '35vw',
-                        // marginLeft: 'calc(22% - 20px)',
-                        // marginTop: '11rem',
                         outline: '0'
                     }
                 }}
