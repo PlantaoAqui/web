@@ -24,8 +24,8 @@ interface FormCadastroProps {
         informacoesUsuario: {
             crm: string,
             grauDeFormacao: number,
-            estado: string,
-            cidade: string,
+            uf: number,
+            municipio: number,
             instituicaoDeEnsino: string,
             dataDeNascimento: string
         },
@@ -41,8 +41,8 @@ interface FormCadastroProps {
         informacoesUsuario?: {
             crm?: string,
             grauDeFormacao?: string,
-            estado?: string,
-            cidade?: string,
+            uf?: string,
+            municipio?: string,
             instituicaoDeEnsino?: string,
             dataDeNascimento?: string
         },
@@ -58,8 +58,8 @@ interface FormCadastroProps {
         informacoesUsuario?: {
             crm?: boolean,
             grauDeFormacao?: boolean,
-            estado?: boolean,
-            cidade?: boolean,
+            uf?: boolean,
+            municipio?: boolean,
             instituicaoDeEnsino?: boolean,
             dataDeNascimento?: boolean
         },
@@ -74,6 +74,8 @@ interface FormCadastroProps {
 }
 
 function FormCadastro (props: FormCadastroProps) {
+    const [uf, setUF] = useState('');
+    const [municipio, setMunicipio] = useState('');
     const [grauDeFormacao, setGrauDeFormacao] = useState('');
     const [statusList, setStatusList] = useState([{ id: 0, nome: '' }]);
     const [estados, setEstados] = useState([{ id: 0, nome: '' }]);
@@ -89,9 +91,9 @@ function FormCadastro (props: FormCadastroProps) {
             (!!props.errors.usuario?.email && !!props.touched.usuario?.email) ||
             (!!props.errors.usuario?.senha && !!props.touched.usuario?.senha) ||
             (!!props.errors.informacoesUsuario?.crm && !!props.touched.informacoesUsuario?.crm) ||
-            (!!props.errors.informacoesUsuario?.estado && !!props.touched.informacoesUsuario?.estado) ||
+            (!!props.errors.informacoesUsuario?.uf && !!props.touched.informacoesUsuario?.uf) ||
             (!!props.errors.informacoesUsuario?.grauDeFormacao && !!props.touched.informacoesUsuario?.grauDeFormacao) ||
-            (!!props.errors.informacoesUsuario?.cidade && !!props.touched.informacoesUsuario?.cidade) ||
+            (!!props.errors.informacoesUsuario?.municipio && !!props.touched.informacoesUsuario?.municipio) ||
             (!!props.errors.informacoesUsuario?.instituicaoDeEnsino && !!props.touched.informacoesUsuario?.instituicaoDeEnsino) ||
             (!!props.errors.informacoesUsuario?.dataDeNascimento && !!props.touched.informacoesUsuario?.dataDeNascimento) ||
             (!!props.errors.arquivo && !!props.touched.arquivo));
@@ -101,9 +103,9 @@ function FormCadastro (props: FormCadastroProps) {
             (props.touched.usuario?.email && props.errors.usuario?.email) ||
             (props.touched.usuario?.senha && props.errors.usuario?.senha) ||
             (props.touched.informacoesUsuario?.crm && props.errors.informacoesUsuario?.crm) ||
-            (props.touched.informacoesUsuario?.estado && props.errors.informacoesUsuario?.estado) ||
+            (props.touched.informacoesUsuario?.uf && props.errors.informacoesUsuario?.uf) ||
             (props.touched.informacoesUsuario?.grauDeFormacao && props.errors.informacoesUsuario?.grauDeFormacao) ||
-            (props.touched.informacoesUsuario?.cidade && props.errors.informacoesUsuario?.cidade) ||
+            (props.touched.informacoesUsuario?.municipio && props.errors.informacoesUsuario?.municipio) ||
             (props.touched.informacoesUsuario?.instituicaoDeEnsino && props.errors.informacoesUsuario?.instituicaoDeEnsino) ||
             (props.touched.informacoesUsuario?.dataDeNascimento && props.errors.informacoesUsuario?.dataDeNascimento) ||
             (props.touched.arquivo && props.errors.arquivo) || '');
@@ -135,10 +137,8 @@ function FormCadastro (props: FormCadastroProps) {
     }, [props.etapa === 1]);
 
     async function listarCidades () {
-        const idEstado = estados.find(estado => estado.nome === props.values.informacoesUsuario.estado)?.id;
-
         try {
-            const response = await axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${idEstado}/municipios?orderBy=nome`);
+            const response = await axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${props.values.informacoesUsuario.uf}/municipios?orderBy=nome`);
             setCidades(response.data);
         } catch (error) {
             console.log(error);
@@ -147,7 +147,7 @@ function FormCadastro (props: FormCadastroProps) {
 
     useEffect(() => {
         listarCidades();
-    }, [props.values.informacoesUsuario.estado, props.etapa === 1]);
+    }, [props.values.informacoesUsuario.uf, props.etapa === 1]);
 
     const handleChangePhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
@@ -229,12 +229,15 @@ function FormCadastro (props: FormCadastroProps) {
                                     handleBlur={props.handleBlur}
                                 />
                                 <SelectInput
-                                    name="informacoesUsuario.estado"
+                                    name="informacoesUsuario.uf"
                                     default="Estado"
-                                    value={props.values.informacoesUsuario.estado}
-                                    error={!!props.errors.informacoesUsuario?.estado && !!props.touched.informacoesUsuario?.estado}
+                                    value={uf}
+                                    error={!!props.errors.informacoesUsuario?.uf && !!props.touched.informacoesUsuario?.uf}
                                     handleChange={(e) => {
+                                        setUF(e.target.value);
+                                        e.target.value = estados.find(estado => estado.nome === e.target.value)?.id.toString() || '';
                                         props.handleChange(e);
+                                        setMunicipio('');
                                         props.resetCidade && props.resetCidade(true);
                                     }}
                                     handleBlur={props.handleBlur}
@@ -250,10 +253,8 @@ function FormCadastro (props: FormCadastroProps) {
                                     error={!!props.errors.informacoesUsuario?.grauDeFormacao && !!props.touched.informacoesUsuario?.grauDeFormacao}
                                     default="Grau de formação"
                                     handleChange={(e) => {
-                                        const value = (e.target as HTMLSelectElement).value;
-                                        setGrauDeFormacao(value);
-                                        const event = e as React.ChangeEvent<HTMLSelectElement>;
-                                        event.target.value = statusList?.find(stat => stat.nome === value)?.id.toString() || '';
+                                        setGrauDeFormacao(e.target.value);
+                                        e.target.value = statusList?.find(stat => stat.nome === e.target.value)?.id.toString() || '';
                                         props.handleChange(e);
                                     }}
                                     handleBlur={props.handleBlur}
@@ -262,11 +263,15 @@ function FormCadastro (props: FormCadastroProps) {
                                     valueMap={status => status.nome}
                                 />
                                 <SelectInput
-                                    name="informacoesUsuario.cidade"
-                                    value={props.values.informacoesUsuario.cidade}
-                                    error={!!props.errors.informacoesUsuario?.cidade && !!props.touched.informacoesUsuario?.cidade}
+                                    name="informacoesUsuario.municipio"
+                                    value={municipio}
+                                    error={!!props.errors.informacoesUsuario?.municipio && !!props.touched.informacoesUsuario?.municipio}
                                     default="Cidade"
-                                    handleChange={props.handleChange}
+                                    handleChange={(e) => {
+                                        setMunicipio(e.target.value);
+                                        e.target.value = cidades.find(cidade => cidade.nome === e.target.value)?.id.toString() || '';
+                                        props.handleChange(e);
+                                    }}
                                     handleBlur={props.handleBlur}
                                     items={cidades}
                                     keyMap={cidade => cidade.id}

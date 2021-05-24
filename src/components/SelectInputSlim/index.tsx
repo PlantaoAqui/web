@@ -40,6 +40,7 @@ function SelectInputSlim<T> (props: SelectInputSlimProps<T>) {
             onChange={props.handleChange}
             onBlur={props.handleBlur}
             defaultValue={props.defaultValue}
+            value={props.value}
         >
             {props.placeholder && <option disabled selected value="">{props.placeholder}</option>}
             {props.items && props.items.length > 0 && props.items.map(record => {

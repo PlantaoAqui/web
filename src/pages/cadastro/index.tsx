@@ -24,8 +24,8 @@ const validationSchema = [
         informacoesUsuario: Yup.object({
             crm: Yup.string().required(mensagemCampoObrigatorio),
             grauDeFormacao: Yup.number().positive(mensagemCampoObrigatorio).required(mensagemCampoObrigatorio),
-            estado: Yup.string().required(mensagemCampoObrigatorio),
-            cidade: Yup.string().required(mensagemCampoObrigatorio),
+            uf: Yup.number().positive().required(mensagemCampoObrigatorio),
+            municipio: Yup.number().positive().required(mensagemCampoObrigatorio),
             instituicaoDeEnsino: Yup.string().required(mensagemCampoObrigatorio),
             dataDeNascimento: Yup.string().required(mensagemCampoObrigatorio)
         })
@@ -50,8 +50,8 @@ function Cadastro () {
             informacoesUsuario: {
                 crm: '',
                 grauDeFormacao: 0,
-                estado: '',
-                cidade: '',
+                uf: 0,
+                municipio: 0,
                 instituicaoDeEnsino: '',
                 dataDeNascimento: ''
             },
@@ -71,7 +71,7 @@ function Cadastro () {
 
     function ResetCidade (reset: boolean) {
         if (reset) {
-            formik.setFieldValue('informacoesUsuario.cidade', '');
+            formik.setFieldValue('informacoesUsuario.municipio', '');
         }
     }
 
