@@ -5,6 +5,7 @@ import SelectInputSlim from '../../SelectInputSlim';
 import axios from 'axios';
 import StarRating from '../../StarRating';
 import Slider from '@material-ui/core/Slider';
+import api from '../../../services/api';
 
 interface FiltroBaseProps {
     estado: string;
@@ -117,8 +118,20 @@ function FiltroBase (props: FiltroBaseProps) {
         }
     }
 
+    async function obterLocalidade () {
+        try {
+            const { data } = await api.get('/usuarios', { params: { filtro: 'localidade' } });
+            props.setEstado(data.estado);
+            setCidades([{ id: 0, nome: data.cidade }]);
+            props.setCidade(data.cidade);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         listarEstados();
+        obterLocalidade();
     }, []);
 
     async function listarCidades () {
