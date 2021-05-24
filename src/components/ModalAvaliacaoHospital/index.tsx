@@ -146,9 +146,12 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
     async function obterLocalidade () {
         try {
             const { data } = await api.get('/usuarios', { params: { filtro: 'localidade' } });
-            setEstado(data.estado);
-            setCidades([{ id: 0, nome: data.cidade }]);
-            setCidade(data.cidade);
+            setEstado(data.uf.nomeUF);
+            setCidades([{
+                id: data.municipio.idMunicipio,
+                nome: data.municipio.nomeMunicipio
+            }]);
+            setCidade(data.municipio.nomeMunicipio);
         } catch (error) {
             console.log(error);
         }
