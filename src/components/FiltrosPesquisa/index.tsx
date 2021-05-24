@@ -145,7 +145,7 @@ function FiltrosPesquisa ({ hospitais, pesquisa }: HospitaisPesquisados) {
             >
                 Filtrar por Categorias de Plantão
             </Typography>
-            {tipoPlantao?.map(tipo => {
+            {tipoPlantao && tipoPlantao.length > 0 && tipoPlantao.map(tipo => {
                 return (
                     <Filtro
                         key={tipo.id}
