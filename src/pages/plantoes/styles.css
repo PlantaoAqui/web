@@ -19,3 +19,16 @@
     padding: 0;
     margin: 0 auto 6rem auto;
 }
+
+.page-plantoes .sem-resultados {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    margin: 20vh auto;
+}
+
+.page-plantoes .sem-resultados img {
+    margin-bottom: 1.2rem;
+}

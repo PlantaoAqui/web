@@ -60,6 +60,8 @@ function Plantoes () {
             <NavBar tipoLinks="default" aba={1}/>
             <div className="pesquisaplantoes">
                 <FiltrosPesquisa hospitais={hospitais} pesquisa={pesquisarHospitais}/>
+                {Array.isArray(hospitais) && hospitais.length > 0
+                    ? (
                 <span className="gridcontainer">
                     <Grid
                         className="grid"
@@ -71,7 +73,7 @@ function Plantoes () {
                         gutterHeight={13}
                         springConfig={{ stiffness: 170, damping: 26 }}
                     >
-                        {Array.isArray(hospitais) && hospitais.map(cardHospital => {
+                                {hospitais.map(cardHospital => {
                             return (
                                 <li key={cardHospital.idCard}>
                                     <CardHospital
@@ -88,6 +90,16 @@ function Plantoes () {
                         })}
                     </Grid>
                 </span>
+                    )
+                    : (
+                        <div className="sem-resultados">
+                            <img src={logoCinza} alt="Plantão Fácil" />
+                            <Typography variant="subtitle1" color="textSecondary">
+                                Nenhum plantão foi encontrado para essa pesquisa
+                            </Typography>
+                        </div>
+                    )
+                }
             </div>
         </div>
     );
