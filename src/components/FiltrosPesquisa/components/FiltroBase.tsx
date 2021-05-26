@@ -7,14 +7,6 @@ import StarRating from '../../StarRating';
 import Slider from '@material-ui/core/Slider';
 import api from '../../../services/api';
 
-interface FiltroBaseProps {
-    estado: string;
-    setEstado: (estado: string) => void;
-    cidade: string;
-    setCidade: (cidade: string) => void;
-
-}
-
 const useStyles = makeStyles(() =>
     createStyles({
         root: {
@@ -35,6 +27,9 @@ const useStyles = makeStyles(() =>
             marginTop: '-.4rem',
             borderTop: '1px solid #B7B8BA',
             borderBottom: '1px solid #B7B8BA',
+            padding: '.7rem 0'
+        },
+        remuneracao: {
             padding: '.7rem 0'
         },
         faixaPreco: {
@@ -102,8 +97,10 @@ const IOSSlider = withStyles({
     }
 })(Slider);
 
-function FiltroBase (props: FiltroBaseProps) {
+function FiltroBase () {
     const classes = useStyles();
+    const [estado, setEstado] = useState('');
+    const [cidade, setCidade] = useState('');
     const [estados, setEstados] = useState([{ id: 0, nome: '' }]);
     const [cidades, setCidades] = useState([{ id: 0, nome: '' }]);
     const [nota, setNota] = useState(0);
@@ -121,9 +118,9 @@ function FiltroBase (props: FiltroBaseProps) {
     async function obterLocalidade () {
         try {
             const { data } = await api.get('/usuarios', { params: { filtro: 'localidade' } });
-            props.setEstado(data.estado);
-            setCidades([{ id: 0, nome: data.cidade }]);
-            props.setCidade(data.cidade);
+            setEstado(data.uf.nomeUF);
+            setCidades([{ id: data.municipio.idMunicipio, nome: data.municipio.nomeMunicipio }]);
+            setCidade(data.municipio.nomeMunicipio);
         } catch (error) {
             console.log(error);
         }
@@ -135,7 +132,7 @@ function FiltroBase (props: FiltroBaseProps) {
     }, []);
 
     async function listarCidades () {
-        const idEstado = estados.find(estado => estado.nome === props.estado)?.id;
+        const idEstado = estados.find(uf => uf.nome === estado)?.id;
 
         try {
             const response = await axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${idEstado}/municipios?orderBy=nome`);
@@ -147,8 +144,7 @@ function FiltroBase (props: FiltroBaseProps) {
 
     useEffect(() => {
         listarCidades();
-        console.log(props.estado);
-    }, [props.estado]);
+    }, [estado]);
 
     return (
         <div className={classes.root}>
@@ -157,10 +153,10 @@ function FiltroBase (props: FiltroBaseProps) {
                     Estado
                 </Typography>
                 <SelectInputSlim
-                    value={props.estado}
+                    value={estado}
                     placeholder='Estados'
                     fullwidth
-                    handleChange={(e) => props.setEstado((e.target as HTMLSelectElement).value)}
+                    handleChange={(e) => setEstado((e.target as HTMLSelectElement).value)}
                     items={estados}
                     keyMap={(estado) => estado.id}
                     valueMap={(estado) => estado.nome}
@@ -171,10 +167,10 @@ function FiltroBase (props: FiltroBaseProps) {
                     Cidade
                 </Typography>
                 <SelectInputSlim
-                    value={props.cidade}
+                    value={cidade}
                     placeholder='Cidades'
                     fullwidth
-                    handleChange={(e) => props.setCidade((e.target as HTMLSelectElement).value)}
+                    handleChange={(e) => setCidade((e.target as HTMLSelectElement).value)}
                     items={cidades}
                     keyMap={(cidade) => cidade.id}
                     valueMap={(cidade) => cidade.nome}
@@ -191,18 +187,23 @@ function FiltroBase (props: FiltroBaseProps) {
                     precision={1} size="large"
                 />
             </div>
-            <IOSSlider
-                value={value}
-                onChange={(_, value) => setValue(value as number[])}
-                valueLabelDisplay="off" max={3000}
-            />
-            <div className={classes.faixaPreco}>
-                <Typography color="textSecondary" variant="h6">
-                    R$ {value[0]}
+            <div className={classes.remuneracao}>
+                <Typography color="textPrimary" variant="h6" gutterBottom>
+                    Remuneração/ Hora
                 </Typography>
-                <Typography color="textSecondary" variant="h6">
-                    R$ {value[1]}
-                </Typography>
+                <IOSSlider
+                    value={value}
+                    onChange={(_, value) => setValue(value as number[])}
+                    valueLabelDisplay="off" max={3000}
+                />
+                <div className={classes.faixaPreco}>
+                    <Typography color="textSecondary" variant="h6">
+                        R$ {value[0]}
+                    </Typography>
+                    <Typography color="textSecondary" variant="h6">
+                        R$ {value[1]}
+                    </Typography>
+                </div>
             </div>
         </div>
     );

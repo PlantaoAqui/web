@@ -38,11 +38,10 @@ type ConfiguracaoGraficos = {
     }
 };
 
-function ModalInfoHospital (props: InterfaceCardHospital) {
-    const { idHospital, nomeHospital, tipoPlantao, notaHospital, mediaSalarialHospital } = props;
+function ModalInfoHospital ({ hospital }: InterfaceCardHospital) {
     const [modalAvaliacaoHospitalAberto, setModalAvaliacaoHospitalAberto] = useState(false);
     const [informacoes, setInformacoes] = useState<DetalhesHospital>({
-        nome: nomeHospital,
+        nome: hospital.nome,
         endereco: '',
         cnpj: '',
         responsavel: '',
@@ -56,13 +55,13 @@ function ModalInfoHospital (props: InterfaceCardHospital) {
 
     async function loadInfo () {
         try {
-            const response = await api.get(`hospitais/${idHospital}`, {
+            const response = await api.get(`hospitais/${hospital.idPlantao}`, {
                 params: {
-                    tipo: tipoPlantao
+                    tipo: hospital.tipo
                 }
             });
 
-            setInformacoes({ idHospital, ...response.data[0] });
+            setInformacoes({ ...response.data[0] });
         } catch (error) {
             console.log(error);
         }
@@ -222,7 +221,7 @@ function ModalInfoHospital (props: InterfaceCardHospital) {
             <div className="informacoes">
                 <div className="detalhes">
                     <div className="nome">
-                        <p className="secao">{nomeHospital}</p>
+                        <p className="secao">{hospital.nome}</p>
                         <img src={iconeDptoEmergencia} alt="Hospital"/>
                     </div>
                     <div className="endereco">
@@ -317,7 +316,7 @@ function ModalInfoHospital (props: InterfaceCardHospital) {
                         </div>
                         <div className="item">
                             <div className="rotulo">Média Salarial</div>
-                            <div className="avaliacao">R$ {mediaSalarialHospital}/12H</div>
+                            <div className="avaliacao">R$ {hospital.media_salarial}/12H</div>
                         </div>
                     </div>
                     <hr/>
@@ -325,10 +324,10 @@ function ModalInfoHospital (props: InterfaceCardHospital) {
                         <div className="rotulo">Avaliação</div>
                         <div className="classificacao">
                             <div className="nota">
-                                <div className="valor">{notaHospital}</div>
+                                <div className="valor">{hospital.nota}</div>
                                 <div className="rodape">/5</div>
                             </div>
-                            <StarRating value={notaHospital} readonly size='large'/>
+                            <StarRating value={hospital.nota} readonly size='large'/>
                         </div>
                     </div>
                 </div>
@@ -336,7 +335,7 @@ function ModalInfoHospital (props: InterfaceCardHospital) {
                     <div className="sumario">Análise salarial</div>
                     <div className="media">
                         <div className="rotulo">Média Salarial</div>
-                        <div className="avaliacao">R$ {mediaSalarialHospital}/12H</div>
+                        <div className="avaliacao">R$ {hospital.media_salarial}/12H</div>
                     </div>
                     <div className="salario-mes">
                         <Line data={dados.salarioMes.data} options={dados.salarioMes.options} />
@@ -479,10 +478,10 @@ function ModalInfoHospital (props: InterfaceCardHospital) {
                 }}
             >
                 <ModalAvaliacaoHospital
-                    tipo={tipoPlantao}
-                    idHospital={idHospital}
-                    nomeHospital={nomeHospital}
-                    onClose={() => { setModalAvaliacaoHospitalAberto(false); }}
+                    tipo={hospital.tipo}
+                    idHospital={hospital.idPlantao}
+                    nomeHospital={hospital.nome}
+                    onClose={setModalAvaliacaoHospitalAberto}
                 />
             </Dialog>
         </div>

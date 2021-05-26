@@ -1,46 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './styles.css';
 
-import iconeDptoEmergencia from '../../assets/images/icones/tipoplantao/dptoemergencia.svg';
-import iconePacientesInternados from '../../assets/images/icones/tipoplantao/pacientesinternados.svg';
-import iconeTransporteInterhospitalar from '../../assets/images/icones/tipoplantao/transporteinterhospitalar.svg';
-import iconeAmbulancia from '../../assets/images/icones/tipoplantao/ambulancia.svg';
 import { Dialog } from '@material-ui/core';
 import ModalInfoHospital from '../ModalInfoHospital';
+import { Hospital } from '../../pages/plantoes';
 
 export interface InterfaceCardHospital {
-    idHospital: number;
-    nomeHospital: string;
-    tipoPlantao: number;
-    notaHospital: number;
-    mediaSalarialHospital: number;
+    hospital: Hospital;
     blurBackground: (e: boolean) => void;
 }
 
-function CardHospital ({ idHospital, nomeHospital, tipoPlantao: tipoHospital, notaHospital, mediaSalarialHospital, blurBackground }: InterfaceCardHospital) {
-    const [nomeHospitalCard, setNomeHospitalCard] = useState(nomeHospital);
-    const [iconeHospital, setIconeHospital] = useState('');
+function CardHospital ({ hospital, blurBackground }: InterfaceCardHospital) {
+    const [nomeHospitalCard, setNomeHospitalCard] = useState(hospital.nome);
     const [modalInfoCardAberto, setModalInfoCardAberto] = useState(false);
     const refInfoCardHospital = useRef<HTMLElement>(null);
-
-    useEffect(() => {
-        switch (tipoHospital) {
-        case 1:
-            setIconeHospital(iconeDptoEmergencia);
-            break;
-        case 2:
-            setIconeHospital(iconePacientesInternados);
-            break;
-        case 3:
-            setIconeHospital(iconeTransporteInterhospitalar);
-            break;
-        case 4:
-            setIconeHospital(iconeAmbulancia);
-            break;
-        default:
-            break;
-        }
-    }, [tipoHospital]);
 
     useEffect(() => {
         if (modalInfoCardAberto) {
@@ -72,15 +45,15 @@ function CardHospital ({ idHospital, nomeHospital, tipoPlantao: tipoHospital, no
                 <button onClick={() => { setModalInfoCardAberto(true); }}>Mostrar mais +</button>
             </div>
             <div className="parteinferior">
-                <img src={iconeHospital} alt={nomeHospital}/>
+                <img src={hospital.icone} alt={hospital.nome}/>
                 <div className="dadoshospital">
                     <div className="nota">
                         <p className="descricao">Nota</p>
-                        <p className="valor">{notaHospital}/5</p>
+                        <p className="valor">{hospital.nota}/5</p>
                     </div>
                     <div className="mediasalarial">
                         <p className="descricao">Média Salarial</p>
-                        <p className="valor">R$ {mediaSalarialHospital}/12H</p>
+                        <p className="valor">R$ {hospital.media_salarial}/12H</p>
                     </div>
                 </div>
             </div>
@@ -104,11 +77,7 @@ function CardHospital ({ idHospital, nomeHospital, tipoPlantao: tipoHospital, no
                 }}
             >
                 <ModalInfoHospital
-                    idHospital={idHospital}
-                    nomeHospital={nomeHospital}
-                    tipoPlantao={tipoHospital}
-                    notaHospital={notaHospital}
-                    mediaSalarialHospital={mediaSalarialHospital}
+                    hospital={hospital}
                     blurBackground={blurBackground}
                 />
             </Dialog>

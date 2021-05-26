@@ -8,13 +8,16 @@ import SpringGrid from '../../components/Stonecutter/SpringGrid';
 import api from '../../services/api';
 import './styles.css';
 
+import logoCinza from '../../assets/images/logos/plantaoFacilCinza.svg';
+import { Typography } from '@material-ui/core';
+
 export interface Hospital {
-    idCard: number;
-    id: number;
+    idPlantao: number;
     nome: string;
     tipo: number;
+    icone: string;
     nota: number;
-    salario: number;
+    media_salarial: number;
 }
 
 const Grid = makeResponsive(measureItems(SpringGrid), {
@@ -27,23 +30,9 @@ function Plantoes () {
     const [hospitais, setHospitais] = useState<Hospital[]>();
     const [blurBackground, setBlurBackground] = useState(false);
 
-    async function pesquisarHospitais (filtro: number) {
+    async function pesquisarHospitais () {
         try {
-            const response = await api.get('hospitais', {
-                params: {
-                    filtro
-                }
-            });
-
-            setHospitais(response.data);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    async function listarHospitais () {
-        try {
-            const response = await api.get('hospitais');
+            const response = await api.get('plantoes');
 
             setHospitais(response.data);
         } catch (error) {
@@ -52,7 +41,7 @@ function Plantoes () {
     }
 
     useEffect(() => {
-        listarHospitais();
+        pesquisarHospitais();
     }, []);
 
     return (
@@ -62,34 +51,30 @@ function Plantoes () {
                 <FiltrosPesquisa hospitais={hospitais} pesquisa={pesquisarHospitais}/>
                 {Array.isArray(hospitais) && hospitais.length > 0
                     ? (
-                <span className="gridcontainer">
-                    <Grid
-                        className="grid"
-                        component="ul"
-                        columns={2}
-                        columnWidth={250}
-                        itemHeight={125}
-                        gutterWidth={13}
-                        gutterHeight={13}
-                        springConfig={{ stiffness: 170, damping: 26 }}
-                    >
+                        <span className="gridcontainer">
+                            <Grid
+                                className="grid"
+                                component="ul"
+                                columns={2}
+                                columnWidth={250}
+                                itemHeight={125}
+                                gutterWidth={13}
+                                gutterHeight={13}
+                                springConfig={{ stiffness: 170, damping: 26 }}
+                            >
                                 {hospitais.map(cardHospital => {
-                            return (
-                                <li key={cardHospital.idCard}>
-                                    <CardHospital
-                                        idHospital={cardHospital.id}
-                                        nomeHospital={cardHospital.nome}
-                                        tipoPlantao={cardHospital.tipo}
-                                        notaHospital={cardHospital.nota}
-                                        mediaSalarialHospital={cardHospital.salario}
-                                        blurBackground={setBlurBackground}
-                                    />
-                                </li>
+                                    return (
+                                        <li key={cardHospital.idPlantao}>
+                                            <CardHospital
+                                                hospital={cardHospital}
+                                                blurBackground={setBlurBackground}
+                                            />
+                                        </li>
 
-                            );
-                        })}
-                    </Grid>
-                </span>
+                                    );
+                                })}
+                            </Grid>
+                        </span>
                     )
                     : (
                         <div className="sem-resultados">

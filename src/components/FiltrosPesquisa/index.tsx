@@ -81,8 +81,6 @@ function FiltrosPesquisa ({ hospitais, pesquisa }: HospitaisPesquisados) {
     const [tipoPlantao, setTipoPlantao] = useState<TipoPlantao[] | null>(null);
     const [filtrosExpanded, setFiltrosExpanded] = useState<number | false>(false);
     const [ordenarPor, setOrdenarPor] = useState<OrdenarPor>(OrdenarPor.Relevancia);
-    const [estado, setEstado] = useState('');
-    const [cidade, setCidade] = useState('');
 
     const handleClickAccordionFiltros = (tipo: number) => {
         setFiltrosExpanded(filtrosExpanded === tipo ? false : tipo);
@@ -134,12 +132,7 @@ function FiltrosPesquisa ({ hospitais, pesquisa }: HospitaisPesquisados) {
             >
                 Filtros
             </Typography>
-            <FiltroBase
-                estado={estado}
-                setEstado={setEstado}
-                cidade={cidade}
-                setCidade={setCidade}
-            />
+            <FiltroBase/>
             <Typography variant="h5" gutterBottom
                 className={classes.indices}
             >

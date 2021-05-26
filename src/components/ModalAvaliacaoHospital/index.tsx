@@ -16,7 +16,7 @@ interface ModalAvaliacaoHospitalProps {
     tipo?: number;
     idHospital?: number;
     nomeHospital?: string;
-    onClose: (event: unknown) => void;
+    onClose: (close: boolean) => void;
 }
 
 type itemSelect = {
@@ -34,7 +34,7 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
     const formik = useFormik({
         initialValues: {
             id_hospital: props.idHospital || 0,
-            id_tipo: props.tipo || 0,
+            id_subcategoria: props.tipo || 0,
             avaliacao: {
                 valor_recebido: 0,
                 id_horas: 0,
@@ -53,7 +53,7 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
         },
         validationSchema: Yup.object({
             id_hospital: Yup.number().positive().required(),
-            id_tipo: Yup.number().positive().required(),
+            id_subcategoria: Yup.number().positive().required(),
             avaliacao: Yup.object({
                 valor_recebido: Yup.number().positive().required(),
                 id_horas: Yup.number().positive().required(),
@@ -70,9 +70,10 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
                 comentario: Yup.string().optional()
             })
         }),
-        onSubmit: async (event, values) => {
-            await api.post('/avaliacoes', values);
-            props.onClose(event);
+        onSubmit: async () => {
+            await api.post('/avaliacoes', formik.values)
+                .then(() => props.onClose(true))
+                .catch((error) => console.log(error));
         }
     });
     const [tipo, setTipo] = useState('');
@@ -134,7 +135,7 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
                 }
             });
 
-            if (like === '') {
+            if (like === '' && props.nomeHospital) {
                 response.data.unshift({ id: 0, nome: props.nomeHospital });
             }
             return response.data;
@@ -162,7 +163,7 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
             const response = await api.get('/avaliacoes', {
                 params: {
                     id_hospital: props.idHospital,
-                    id_tipo: props.tipo
+                    id_subcategoria: props.tipo
                 }
             });
             formik.setValues({
@@ -182,7 +183,7 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
         listarTiposPlantao();
         listarHorasPlantao();
         props.nomeHospital && setInstituicao({ id: 0, nome: props.nomeHospital });
-        obterAvaliacao();
+        props.idHospital && props.tipo && obterAvaliacao();
     }, []);
 
     async function listarCidades () {
@@ -210,13 +211,19 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
                 <div className="instituicao">
                     <div className="linha">
                         <SelectInput
-                            name="id_tipo"
+                            name="id_subcategoria"
                             value={tipo}
                             group
                             default="Tipo de Plantão"
                             handleChange={(e) => {
                                 setTipo(e.target.value);
-                                e.target.value = tiposPlantao?.find(group => group.subcategorias.find(sub => sub.nome === e.target.value))?.id.toString() || '';
+                                e.target.value = tiposPlantao?.find(group =>
+                                    group.subcategorias.find(sub =>
+                                        sub.nome === e.target.value
+                                    )
+                                )?.subcategorias.find(sub =>
+                                    sub.nome === e.target.value
+                                )?.id.toString() || '';
                                 formik.handleChange(e);
                             }}
                             items={tiposPlantao}
@@ -351,13 +358,13 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
                         handleChange={formik.handleChange}
                         pergunta
                         textoPergunta="Pagamento dentro do prazo?"
-                        valorPergunta={formik.values.avaliacaoFixa.atrasado}
+                        valorPergunta={!formik.values.avaliacaoFixa.atrasado}
                         handleChangePergunta={(_, value) => {
                             formik.setValues({
                                 ...formik.values,
                                 avaliacaoFixa: {
                                     ...formik.values.avaliacaoFixa,
-                                    atrasado: value === 'true'
+                                    atrasado: value !== 'true'
                                 }
                             });
                         }}
@@ -369,7 +376,7 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
                         onChange={formik.handleChange}
                         value={formik.values.avaliacaoFixa.comentario}
                     />
-                    <Button background="#C7E2EB" texto="Submeter avaliação" type="submit"/>
+                    <Button background="#7BB2ED" texto="Submeter avaliação" type="submit"/>
                 </div>
             </form>
         </div>
