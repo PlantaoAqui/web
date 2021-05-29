@@ -489,7 +489,7 @@ function ModalInfoPlantao ({ plantao }: InterfaceCardPlantao) {
             >
                 <ModalAvaliacaoPlantao
                     subcategoria={plantao.subcategoria}
-                    idHospital={plantao.idPlantao}
+                    idPlantao={plantao.idPlantao}
                     nomeHospital={plantao.nome}
                     onClose={setModalAvaliacaoPlantaoAberto}
                 />

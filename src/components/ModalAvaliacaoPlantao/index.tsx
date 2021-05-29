@@ -14,7 +14,7 @@ import AsyncAutocomplete from '../AsyncAutocomplete';
 
 interface ModalAvaliacaoPlantaoProps {
     subcategoria?: number;
-    idHospital?: number;
+    idPlantao?: number;
     nomeHospital?: string;
     onClose: (close: boolean) => void;
 }
@@ -33,7 +33,7 @@ type groupSelect = {
 function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
     const formik = useFormik({
         initialValues: {
-            id_hospital: props.idHospital || 0,
+            id_hospital: props.idPlantao || 0,
             id_subcategoria: props.subcategoria || 0,
             avaliacao: {
                 valor_recebido: 0,
@@ -168,7 +168,7 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
         try {
             const response = await api.get('/avaliacoes', {
                 params: {
-                    id_hospital: props.idHospital,
+                    id_avaliacao: props.idPlantao,
                     id_subcategoria: props.subcategoria
                 }
             });
@@ -189,7 +189,7 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
         listarTiposPlantao();
         listarHorasPlantao();
         props.nomeHospital && setInstituicao({ id: 0, nome: props.nomeHospital });
-        props.idHospital && props.subcategoria && obterAvaliacao();
+        props.idPlantao && props.subcategoria && obterAvaliacao();
     }, []);
 
     async function listarCidades () {
