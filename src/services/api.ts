@@ -2,6 +2,7 @@ import axios from 'axios';
 import history from '../services/history';
 
 const api = axios.create({
+    baseURL: 'https://api.plantaofacil.com'
 });
 
 api.interceptors.request.use(
@@ -29,9 +30,9 @@ api.interceptors.response.use(
 
         if ((error.response.status === 401 || error.response.status === 404) &&
             originalRequest.url === '/autenticar/atualizar-token') {
-                sessionStorage.clear();
-                history.push('/');
-                return Promise.reject(error);
+            sessionStorage.clear();
+            history.push('/');
+            return Promise.reject(error);
         }
 
         if (error.response.status === 401 && !originalRequest._retry) {
