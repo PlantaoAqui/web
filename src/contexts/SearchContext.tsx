@@ -9,16 +9,16 @@ export enum OrdenarPor {
 export type SearchContextProps = {
     dados: {
         like: string;
-        tipo: number | null;
+        tipo: number;
         ordenarPor: OrdenarPor;
-        uf: number | null;
-        municipio: number | null;
+        uf: number;
+        municipio: number;
         nota: number;
         intervaloRemuneracao: number[];
     },
     setDados: {
         setLike: (like: string) => void;
-        setTipo: (tipo: number | null) => void;
+        setTipo: (tipo: number) => void;
         setOrdenarPor: (n: number) => void;
         setUF: (uf: number) => void;
         setMunicipio: (municipio: number) => void;
@@ -36,8 +36,8 @@ const searchContext = createContext<SearchContextProps>({
         like: '',
         tipo: 0,
         ordenarPor: OrdenarPor.Relevancia,
-        uf: null,
-        municipio: null,
+        uf: 0,
+        municipio: 0,
         nota: 0,
         intervaloRemuneracao: []
     },

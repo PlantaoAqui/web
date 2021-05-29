@@ -8,10 +8,10 @@ interface SearchContextProviderProps {
 
 function SearchContextProvider ({ intervaloRemuneracaoDefault, children }: SearchContextProviderProps) {
     const [like, setLike] = useState('');
-    const [tipo, setTipo] = useState<number | null>(null);
+    const [tipo, setTipo] = useState<number>(0);
     const [ordenarPor, setOrdenarPor] = useState(OrdenarPor.Relevancia);
-    const [uf, setUF] = useState<number | null>(null);
-    const [municipio, setMunicipio] = useState<number | null>(null);
+    const [uf, setUF] = useState<number>(0);
+    const [municipio, setMunicipio] = useState<number>(0);
     const [nota, setNota] = useState(0);
     const [intervaloRemuneracao, setIntervaloRemuneracao] = useState(intervaloRemuneracaoDefault);
 
