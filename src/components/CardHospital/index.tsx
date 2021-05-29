@@ -2,16 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import './styles.css';
 
 import { Dialog } from '@material-ui/core';
-import ModalInfoHospital from '../ModalInfoHospital';
+import ModalInfoPlantao from '../ModalInfoPlantao';
 import { Plantao } from '../../pages/plantoes';
 
-export interface InterfaceCardHospital {
-    hospital: Plantao;
+export interface InterfaceCardPlantao {
+    plantao: Plantao;
     blurBackground: (e: boolean) => void;
 }
 
-function CardHospital ({ hospital, blurBackground }: InterfaceCardHospital) {
-    const [nomeHospitalCard, setNomeHospitalCard] = useState(hospital.nome);
+function CardHospital ({ plantao, blurBackground }: InterfaceCardPlantao) {
+    const [nomeHospitalCard, setNomeHospitalCard] = useState(plantao.nome);
     const [modalInfoCardAberto, setModalInfoCardAberto] = useState(false);
     const refInfoCardHospital = useRef<HTMLElement>(null);
 
@@ -45,15 +45,15 @@ function CardHospital ({ hospital, blurBackground }: InterfaceCardHospital) {
                 <button onClick={() => { setModalInfoCardAberto(true); }}>Mostrar mais +</button>
             </div>
             <div className="parteinferior">
-                <img src={hospital.icone} alt={hospital.nome}/>
+                <img src={plantao.icone} alt={plantao.nome}/>
                 <div className="dadoshospital">
                     <div className="nota">
                         <p className="descricao">Nota</p>
-                        <p className="valor">{hospital.nota}/5</p>
+                        <p className="valor">{plantao.nota}/5</p>
                     </div>
                     <div className="mediasalarial">
                         <p className="descricao">Média Salarial</p>
-                        <p className="valor">R$ {hospital.media_salarial}/12H</p>
+                        <p className="valor">R$ {plantao.media_salarial}/12H</p>
                     </div>
                 </div>
             </div>
@@ -76,8 +76,8 @@ function CardHospital ({ hospital, blurBackground }: InterfaceCardHospital) {
                     }
                 }}
             >
-                <ModalInfoHospital
-                    hospital={hospital}
+                <ModalInfoPlantao
+                    plantao={plantao}
                     blurBackground={blurBackground}
                 />
             </Dialog>

@@ -13,7 +13,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-import ModalAvaliacaoHospital from '../ModalAvaliacaoHospital';
+import ModalAvaliacaoPlantao from '../ModalAvaliacaoPlantao';
 
 interface LinksNavbar {
     aba?: number;
@@ -187,7 +187,7 @@ function NavBar ({ aba, tipoLinks }: LinksNavbar) {
                     }
                 }}
             >
-                <ModalAvaliacaoHospital
+                <ModalAvaliacaoPlantao
                     onClose={() => { setModalAvaliacaoHospitalAberto(false); }}
                 />
             </Dialog>

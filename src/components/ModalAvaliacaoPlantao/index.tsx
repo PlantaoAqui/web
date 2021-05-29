@@ -12,8 +12,8 @@ import axios from 'axios';
 import api from '../../services/api';
 import AsyncAutocomplete from '../AsyncAutocomplete';
 
-interface ModalAvaliacaoHospitalProps {
-    tipo?: number;
+interface ModalAvaliacaoPlantaoProps {
+    subcategoria?: number;
     idHospital?: number;
     nomeHospital?: string;
     onClose: (close: boolean) => void;
@@ -30,11 +30,11 @@ type groupSelect = {
     subcategorias: Array<itemSelect>;
 };
 
-function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
+function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
     const formik = useFormik({
         initialValues: {
             id_hospital: props.idHospital || 0,
-            id_subcategoria: props.tipo || 0,
+            id_subcategoria: props.subcategoria || 0,
             avaliacao: {
                 valor_recebido: 0,
                 id_horas: 0,
@@ -105,8 +105,14 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
             })
                 .then(response => {
                     setTiposPlantao(response.data);
-                    setTipo(response.data.find((tipo: groupSelect) =>
-                        tipo.id === props.tipo)?.nome || '');
+                    const sub = (response.data as groupSelect[]).find(group =>
+                        group.subcategorias.find(sub =>
+                            sub.id === props.subcategoria
+                        )
+                    )?.subcategorias.find(sub =>
+                        sub.id === props.subcategoria
+                    );
+                    sub && setTipo(sub.nome);
                 });
         } catch (error) {
             console.log(error);
@@ -163,7 +169,7 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
             const response = await api.get('/avaliacoes', {
                 params: {
                     id_hospital: props.idHospital,
-                    id_subcategoria: props.tipo
+                    id_subcategoria: props.subcategoria
                 }
             });
             formik.setValues({
@@ -183,7 +189,7 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
         listarTiposPlantao();
         listarHorasPlantao();
         props.nomeHospital && setInstituicao({ id: 0, nome: props.nomeHospital });
-        props.idHospital && props.tipo && obterAvaliacao();
+        props.idHospital && props.subcategoria && obterAvaliacao();
     }, []);
 
     async function listarCidades () {
@@ -203,7 +209,7 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
     }, [estado]);
 
     return (
-        <div className="modalavaliacaohospital">
+        <div className="modalavaliacaoplantao">
             <div className="cabecalho">
                 <h1>Inserir Nova Avalição</h1>
             </div>
@@ -383,4 +389,4 @@ function ModalAvaliacaoHospital (props: ModalAvaliacaoHospitalProps) {
     );
 }
 
-export default ModalAvaliacaoHospital;
+export default ModalAvaliacaoPlantao;

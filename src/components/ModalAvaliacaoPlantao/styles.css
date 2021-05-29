@@ -1,11 +1,11 @@
-.modalavaliacaohospital {
+.modalavaliacaoplantao {
     width: calc(100%);
     background:var(--cor-fundo-card);
     border-radius: 8px;
     padding: 1rem;
 }
 
-.modalavaliacaohospital .cabecalho {
+.modalavaliacaoplantao .cabecalho {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -13,17 +13,17 @@
     margin-bottom: 3.2rem;
 }
 
-.modalavaliacaohospital .cabecalho h1 {
+.modalavaliacaoplantao .cabecalho h1 {
     font: bold 2.8rem SFProText;
     color: var(--cor-texto-escuro);
 }
 
-.modalavaliacaohospital .cabecalho p {
+.modalavaliacaoplantao .cabecalho p {
     font: 400 1.4rem SFProText;
     color: var(--cor-texto-claro);
 }
 
-.modalavaliacaohospital .instituicao .linha {
+.modalavaliacaoplantao .instituicao .linha {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -31,24 +31,24 @@
     margin-bottom: 1.3rem;
 }
 
-.modalavaliacaohospital .instituicao .linha > * {
+.modalavaliacaoplantao .instituicao .linha > * {
     width: calc((100% - 1.2rem) / 2 );
 }
 
-.modalavaliacaohospital .instituicao .linha > *:first-child {
+.modalavaliacaoplantao .instituicao .linha > *:first-child {
     margin-right: 1.2rem;
 }
 
-.modalavaliacaohospital .instituicao .linha > p {
+.modalavaliacaoplantao .instituicao .linha > p {
     max-width: 48.75%;
     font: 400 1rem SFProText;
     margin: auto;
 }
 
-.modalavaliacaohospital .instituicao .linha > p a {
+.modalavaliacaoplantao .instituicao .linha > p a {
     text-decoration: none;
 }
 
-.modalavaliacaohospital .avaliacao {
+.modalavaliacaoplantao .avaliacao {
     margin-top: 2.4rem;
 }

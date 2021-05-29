@@ -5,26 +5,33 @@ import './styles.css';
 
 import Avatar from '@material-ui/core/Avatar';
 import Dialog from '@material-ui/core/Dialog';
-import { InterfaceCardHospital } from '../CardHospital';
+import { InterfaceCardPlantao } from '../CardHospital';
 import api from '../../services/api';
 
 import iconeDptoEmergencia from '../../assets/images/icones/tipoplantao/dptoemergencia.svg';
 import iconePacientesInternados from '../../assets/images/icones/tipoplantao/pacientesinternados.svg';
 import iconeTransporteInterhospitalar from '../../assets/images/icones/tipoplantao/transporteinterhospitalar.svg';
-import ModalAvaliacaoHospital from '../ModalAvaliacaoHospital';
+import ModalAvaliacaoPlantao from '../ModalAvaliacaoPlantao';
 import StarRating from '../StarRating';
 
-type DetalhesHospital = {
+type DetalhesPlantao = {
     nome: string;
-    endereco: string;
     cnpj: string;
-    responsavel: string;
-    numero_avaliacoes: number;
+    endereco: string;
+    numero: number;
+    bairro: string;
+    subcategoria: string;
+    tipo: number;
+    icone: string;
+    nota: number;
+    numeroAvaliacoes: number;
     infraestrutura: number;
     equipamento: number;
     equipe: number;
     pagamento: number;
     seguranca: number;
+    atrasado: number;
+    mediaSalarial: number;
 };
 
 type ConfiguracaoGraficos = {
@@ -38,28 +45,31 @@ type ConfiguracaoGraficos = {
     }
 };
 
-function ModalInfoHospital ({ hospital }: InterfaceCardHospital) {
-    const [modalAvaliacaoHospitalAberto, setModalAvaliacaoHospitalAberto] = useState(false);
-    const [informacoes, setInformacoes] = useState<DetalhesHospital>({
-        nome: hospital.nome,
-        endereco: '',
+function ModalInfoPlantao ({ plantao }: InterfaceCardPlantao) {
+    const [modalAvaliacaoPlantaoAberto, setModalAvaliacaoPlantaoAberto] = useState(false);
+    const [informacoes, setInformacoes] = useState<DetalhesPlantao>({
+        nome: plantao.nome,
         cnpj: '',
-        responsavel: '',
-        numero_avaliacoes: 0,
+        endereco: '',
+        numero: 0,
+        bairro: '',
+        subcategoria: '',
+        tipo: plantao.tipo,
+        icone: '',
+        nota: 0,
+        numeroAvaliacoes: 0,
         infraestrutura: 0,
         equipamento: 0,
         equipe: 0,
         pagamento: 0,
-        seguranca: 0
+        seguranca: 0,
+        atrasado: 0,
+        mediaSalarial: 0
     });
 
     async function loadInfo () {
         try {
-            const response = await api.get(`hospitais/${hospital.idPlantao}`, {
-                params: {
-                    tipo: hospital.tipo
-                }
-            });
+            const response = await api.get(`plantoes/${plantao.idPlantao}`);
 
             setInformacoes({ ...response.data[0] });
         } catch (error) {
@@ -217,16 +227,16 @@ function ModalInfoHospital ({ hospital }: InterfaceCardHospital) {
     };
 
     return (
-        <div className="modalinfohospital" style={modalAvaliacaoHospitalAberto ? { display: 'none' } : {}}>
+        <div className="modalinfoplantao" style={modalAvaliacaoPlantaoAberto ? { display: 'none' } : {}}>
             <div className="informacoes">
                 <div className="detalhes">
                     <div className="nome">
-                        <p className="secao">{hospital.nome}</p>
-                        <img src={iconeDptoEmergencia} alt="Hospital"/>
+                        <p className="secao">{plantao.nome}</p>
+                        <img src={plantao.icone} alt="Plantao"/>
                     </div>
                     <div className="endereco">
                         <p className="secao">Endereço</p>
-                        <p className="descricao">{informacoes.endereco}</p>
+                        <p className="descricao">{informacoes.endereco}, {informacoes.numero}</p>
                     </div>
                     <div className="inferior">
                         <div className="subdados">
@@ -235,8 +245,8 @@ function ModalInfoHospital ({ hospital }: InterfaceCardHospital) {
                                 <div className="descricao">{informacoes.cnpj}</div>
                             </div>
                             <div className="administrador">
-                                <div className="secao">Administrador do Plantão</div>
-                                <div className="descricao">{informacoes.responsavel}</div>
+                                <div className="secao">Bairro</div>
+                                <div className="descricao">{informacoes.bairro}</div>
                             </div>
                         </div>
                         <div className="linkicones">
@@ -258,7 +268,7 @@ function ModalInfoHospital ({ hospital }: InterfaceCardHospital) {
                             </div>
                         </div>
                     </div>
-                    <button onClick={() => setModalAvaliacaoHospitalAberto(true)}>
+                    <button onClick={() => setModalAvaliacaoPlantaoAberto(true)}>
                         Nova Avaliação
                     </button>
                 </div>
@@ -266,11 +276,11 @@ function ModalInfoHospital ({ hospital }: InterfaceCardHospital) {
                     <div className="sumario">Avaliações</div>
                     <div className="itens">
                         <div className="numeroavaliacoes">
-                            {informacoes.numero_avaliacoes === 0
+                            {informacoes.numeroAvaliacoes === 0
                                 ? 'Nenhuma avaliação'
-                                : informacoes.numero_avaliacoes === 1
+                                : informacoes.numeroAvaliacoes === 1
                                     ? '1 avaliação'
-                                    : `${informacoes.numero_avaliacoes} avaliações`}
+                                    : `${informacoes.numeroAvaliacoes} avaliações`}
                         </div>
                         <div className="item">
                             <div className="rotulo">Infraestrutura</div>
@@ -310,24 +320,24 @@ function ModalInfoHospital ({ hospital }: InterfaceCardHospital) {
                         <div className="item">
                             <div className="rotulo">Pagamento em dia</div>
                             <div className="avaliacao">
-                                3,0
-                                <StarRating value={5} readonly/>
+                                {(1 - informacoes.atrasado) * 100}%
+                                <StarRating value={(1 - informacoes.atrasado) * 5} readonly/>
                             </div>
                         </div>
                         <div className="item">
                             <div className="rotulo">Média Salarial</div>
-                            <div className="avaliacao">R$ {hospital.media_salarial}/12H</div>
+                            <div className="avaliacao">R$ {plantao.media_salarial}/12H</div>
                         </div>
                     </div>
                     <hr/>
-                    <div className="avaliacao-hospital">
+                    <div className="avaliacao-plantao">
                         <div className="rotulo">Avaliação</div>
                         <div className="classificacao">
                             <div className="nota">
-                                <div className="valor">{hospital.nota}</div>
+                                <div className="valor">{plantao.nota}</div>
                                 <div className="rodape">/5</div>
                             </div>
-                            <StarRating value={hospital.nota} readonly size='large'/>
+                            <StarRating value={plantao.nota} readonly size='large'/>
                         </div>
                     </div>
                 </div>
@@ -335,7 +345,7 @@ function ModalInfoHospital ({ hospital }: InterfaceCardHospital) {
                     <div className="sumario">Análise salarial</div>
                     <div className="media">
                         <div className="rotulo">Média Salarial</div>
-                        <div className="avaliacao">R$ {hospital.media_salarial}/12H</div>
+                        <div className="avaliacao">R$ {plantao.media_salarial}/12H</div>
                     </div>
                     <div className="salario-mes">
                         <Line data={dados.salarioMes.data} options={dados.salarioMes.options} />
@@ -462,8 +472,8 @@ function ModalInfoHospital ({ hospital }: InterfaceCardHospital) {
                 </div>
             </div>
             <Dialog
-                open={modalAvaliacaoHospitalAberto}
-                onClose={() => { setModalAvaliacaoHospitalAberto(false); }}
+                open={modalAvaliacaoPlantaoAberto}
+                onClose={() => { setModalAvaliacaoPlantaoAberto(false); }}
                 scroll="body"
                 aria-labelledby="scroll-dialog-title"
                 aria-describedby="scroll-dialog-description"
@@ -477,15 +487,15 @@ function ModalInfoHospital ({ hospital }: InterfaceCardHospital) {
                     }
                 }}
             >
-                <ModalAvaliacaoHospital
-                    tipo={hospital.tipo}
-                    idHospital={hospital.idPlantao}
-                    nomeHospital={hospital.nome}
-                    onClose={setModalAvaliacaoHospitalAberto}
+                <ModalAvaliacaoPlantao
+                    subcategoria={plantao.subcategoria}
+                    idHospital={plantao.idPlantao}
+                    nomeHospital={plantao.nome}
+                    onClose={setModalAvaliacaoPlantaoAberto}
                 />
             </Dialog>
         </div>
     );
 }
 
-export default ModalInfoHospital;
+export default ModalInfoPlantao;
