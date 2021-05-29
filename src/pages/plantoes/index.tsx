@@ -17,6 +17,7 @@ export interface Plantao {
     idPlantao: number;
     nome: string;
     tipo: number;
+    subcategoria: number;
     icone: string;
     nota: number;
     media_salarial: number;
@@ -37,6 +38,8 @@ function Plantoes () {
     async function pesquisarPlantoes () {
         const { ordenarPor, uf, municipio, nota, tipo } = search.dados;
         const { intervaloRemuneracao, like } = debouncedSearch;
+
+        if (uf === 0 || municipio === 0) return;
 
         try {
             const response = await api.get('plantoes', {
@@ -86,11 +89,11 @@ function Plantoes () {
                                 gutterHeight={13}
                                 springConfig={{ stiffness: 170, damping: 26 }}
                             >
-                                {plantoes.map(cardHospital => {
+                                {plantoes.map(cardPlantao => {
                                     return (
-                                        <li key={cardHospital.idPlantao}>
+                                        <li key={cardPlantao.idPlantao}>
                                             <CardHospital
-                                                hospital={cardHospital}
+                                                plantao={cardPlantao}
                                                 blurBackground={setBlurBackground}
                                             />
                                         </li>
