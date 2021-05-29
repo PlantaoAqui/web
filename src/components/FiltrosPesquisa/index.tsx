@@ -2,28 +2,23 @@ import React, { useEffect, useState } from 'react';
 import './styles.css';
 
 import { Typography } from '@material-ui/core';
-import { Hospital } from '../../pages/plantoes';
+import { Plantao } from '../../pages/plantoes';
 import Filtro from './components/Filtro';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import SelectInputSlim from '../SelectInputSlim';
 import FiltroBase from './components/FiltroBase';
 import api from '../../services/api';
+import useSearch from '../../hooks/use-search';
 
-export interface HospitaisPesquisados {
-    hospitais: Array<Hospital> | undefined;
-    pesquisa: (p: number) => void;
+export interface PlantoesPesquisadosProps {
+    plantoes: Array<Plantao>;
+    setPlantoes: (plantoes: Array<Plantao>) => void;
 }
 
-enum OrdenarPor {
-    Relevancia = 'Mais relevantes',
-    Nota = 'Nota de avaliação',
-    Remuneracao = 'Remuneração'
-}
-
-const ordenarPorValues: OrdenarPor[] = [
-    OrdenarPor.Relevancia,
-    OrdenarPor.Nota,
-    OrdenarPor.Remuneracao
+const ordenarPorValues: string[] = [
+    'Mais relevantes',
+    'Nota de avaliação',
+    'Remuneração'
 ];
 
 export type TipoPlantao = {
@@ -76,15 +71,15 @@ const useStyles = makeStyles(() =>
     })
 );
 
-function FiltrosPesquisa ({ hospitais, pesquisa }: HospitaisPesquisados) {
+function FiltrosPesquisa ({ plantoes }: PlantoesPesquisadosProps) {
     const classes = useStyles();
+    const search = useSearch();
     const [tipoPlantao, setTipoPlantao] = useState<TipoPlantao[] | null>(null);
     const [filtrosExpanded, setFiltrosExpanded] = useState<number | false>(false);
-    const [ordenarPor, setOrdenarPor] = useState<OrdenarPor>(OrdenarPor.Relevancia);
 
     const handleClickAccordionFiltros = (tipo: number) => {
         setFiltrosExpanded(filtrosExpanded === tipo ? false : tipo);
-        pesquisa(filtrosExpanded ? 0 : tipo);
+        search.setDados.setTipo(filtrosExpanded === tipo ? 0 : tipo);
     };
 
     async function listarTiposPlantao () {
@@ -110,17 +105,20 @@ function FiltrosPesquisa ({ hospitais, pesquisa }: HospitaisPesquisados) {
             <div className={classes.resultados}>
                 <div className={classes.linhaSimples}>
                     <p className={classes.textoClaro}>Plantões encontrados</p>
-                    <p className={classes.textoEscuro}>{hospitais === undefined || !Array.isArray(hospitais)
+                    <p className={classes.textoEscuro}>{plantoes === undefined || !Array.isArray(plantoes)
                         ? 0
-                        : hospitais.length} plantões
+                        : plantoes.length} plantões
                     </p>
                 </div>
                 <div className={classes.linhaSimples}>
                     <p className={classes.textoEscuro}>Ordenar por</p>
                     <SelectInputSlim
-                        value={ordenarPor}
-                        defaultValue={OrdenarPor.Relevancia}
-                        handleChange={(e) => setOrdenarPor((e.target as HTMLSelectElement).value as OrdenarPor)}
+                        value={ordenarPorValues[search.dados.ordenarPor]}
+                        handleChange={(e) => {
+                            const value = (e.target as HTMLSelectElement).value;
+                            const index = ordenarPorValues.indexOf(value);
+                            search.setDados.setOrdenarPor(index);
+                        }}
                         items={ordenarPorValues}
                         keyMap={(item) => item}
                         valueMap={(item) => item}

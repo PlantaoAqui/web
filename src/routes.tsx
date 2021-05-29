@@ -1,5 +1,6 @@
 import React from 'react';
 import { Router, Route } from 'react-router-dom';
+import SearchContextProvider from './contexts/SearchContextProvider';
 import Cadastro from './pages/cadastro';
 import Landing from './pages/landing';
 import Login from './pages/login';
@@ -12,7 +13,13 @@ function Routes () {
             <Route path="/" exact component={Landing}></Route>
             <Route path="/login" component={Login}></Route>
             <Route path="/cadastro" component={Cadastro} />
-            <Route path="/plantoes" component={Plantoes} />
+            <Route path="/plantoes">
+                <SearchContextProvider
+                    intervaloRemuneracaoDefault={[300, 2500]}
+                >
+                    <Plantoes/>
+                </SearchContextProvider>
+            </Route>
         </Router>
     );
 }

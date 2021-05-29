@@ -5,13 +5,15 @@ import NavBar from '../../components/NavBar';
 import makeResponsive from '../../components/Stonecutter/higher-order-components/makeResponsive';
 import measureItems from '../../components/Stonecutter/higher-order-components/measureItems';
 import SpringGrid from '../../components/Stonecutter/SpringGrid';
-import api from '../../services/api';
 import './styles.css';
 
 import logoCinza from '../../assets/images/logos/plantaoFacilCinza.svg';
 import { Typography } from '@material-ui/core';
+import api from '../../services/api';
+import useSearch from '../../hooks/use-search';
+import { useDebounce } from 'use-debounce/lib';
 
-export interface Hospital {
+export interface Plantao {
     idPlantao: number;
     nome: string;
     tipo: number;
@@ -27,29 +29,51 @@ const Grid = makeResponsive(measureItems(SpringGrid), {
 });
 
 function Plantoes () {
-    const [hospitais, setHospitais] = useState<Hospital[]>();
+    const search = useSearch();
+    const [debouncedSearch] = useDebounce(search.dados, 500);
+    const [plantoes, setPlantoes] = useState<Plantao[]>([]);
     const [blurBackground, setBlurBackground] = useState(false);
 
-    async function pesquisarHospitais () {
-        try {
-            const response = await api.get('plantoes');
+    async function pesquisarPlantoes () {
+        const { ordenarPor, uf, municipio, nota, tipo } = search.dados;
+        const { intervaloRemuneracao, like } = debouncedSearch;
 
-            setHospitais(response.data);
+        try {
+            const response = await api.get('plantoes', {
+                params: {
+                    remuneracaoMin: intervaloRemuneracao[0],
+                    remuneracaoMax: intervaloRemuneracao[1],
+                    ordenarPor,
+                    like,
+                    uf,
+                    municipio,
+                    nota,
+                    tipo
+                }
+            });
+            setPlantoes(response.data);
         } catch (error) {
             console.log(error);
         }
     }
 
     useEffect(() => {
-        pesquisarHospitais();
-    }, []);
+        pesquisarPlantoes();
+    }, [
+        debouncedSearch,
+        search.dados.ordenarPor,
+        search.dados.uf,
+        search.dados.municipio,
+        search.dados.nota,
+        search.dados.tipo
+    ]);
 
     return (
         <div className="page-plantoes" style={blurBackground ? { filter: 'blur(3px)' } : {}}>
             <NavBar tipoLinks="default" aba={1}/>
             <div className="pesquisaplantoes">
-                <FiltrosPesquisa hospitais={hospitais} pesquisa={pesquisarHospitais}/>
-                {Array.isArray(hospitais) && hospitais.length > 0
+                <FiltrosPesquisa plantoes={plantoes} setPlantoes={setPlantoes}/>
+                {Array.isArray(plantoes) && plantoes.length > 0
                     ? (
                         <span className="gridcontainer">
                             <Grid
@@ -62,7 +86,7 @@ function Plantoes () {
                                 gutterHeight={13}
                                 springConfig={{ stiffness: 170, damping: 26 }}
                             >
-                                {hospitais.map(cardHospital => {
+                                {plantoes.map(cardHospital => {
                                     return (
                                         <li key={cardHospital.idPlantao}>
                                             <CardHospital

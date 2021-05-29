@@ -3,10 +3,10 @@ import './styles.css';
 
 import { Dialog } from '@material-ui/core';
 import ModalInfoHospital from '../ModalInfoHospital';
-import { Hospital } from '../../pages/plantoes';
+import { Plantao } from '../../pages/plantoes';
 
 export interface InterfaceCardHospital {
-    hospital: Hospital;
+    hospital: Plantao;
     blurBackground: (e: boolean) => void;
 }
 

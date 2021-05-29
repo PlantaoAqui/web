@@ -6,6 +6,7 @@ import axios from 'axios';
 import StarRating from '../../StarRating';
 import Slider from '@material-ui/core/Slider';
 import api from '../../../services/api';
+import useSearch from '../../../hooks/use-search';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -99,12 +100,11 @@ const IOSSlider = withStyles({
 
 function FiltroBase () {
     const classes = useStyles();
+    const search = useSearch();
     const [estado, setEstado] = useState('');
     const [cidade, setCidade] = useState('');
     const [estados, setEstados] = useState([{ id: 0, nome: '' }]);
     const [cidades, setCidades] = useState([{ id: 0, nome: '' }]);
-    const [nota, setNota] = useState(0);
-    const [value, setValue] = useState<number[]>([300, 2500]);
 
     async function listarEstados () {
         try {
@@ -119,8 +119,10 @@ function FiltroBase () {
         try {
             const { data } = await api.get('/usuarios', { params: { filtro: 'localidade' } });
             setEstado(data.uf.nomeUF);
+            search.setDados.setUF(data.uf.idUF);
             setCidades([{ id: data.municipio.idMunicipio, nome: data.municipio.nomeMunicipio }]);
             setCidade(data.municipio.nomeMunicipio);
+            search.setDados.setMunicipio(data.municipio.idMunicipio);
         } catch (error) {
             console.log(error);
         }
@@ -156,7 +158,12 @@ function FiltroBase () {
                     value={estado}
                     placeholder='Estados'
                     fullwidth
-                    handleChange={(e) => setEstado((e.target as HTMLSelectElement).value)}
+                    handleChange={(e) => {
+                        const estado = (e.target as HTMLSelectElement).value;
+                        setEstado(estado);
+                        const uf = estados.find(uf => uf.nome === estado)?.id;
+                        uf && search.setDados.setUF(uf);
+                    }}
                     items={estados}
                     keyMap={(estado) => estado.id}
                     valueMap={(estado) => estado.nome}
@@ -170,7 +177,12 @@ function FiltroBase () {
                     value={cidade}
                     placeholder='Cidades'
                     fullwidth
-                    handleChange={(e) => setCidade((e.target as HTMLSelectElement).value)}
+                    handleChange={(e) => {
+                        const cidade = (e.target as HTMLSelectElement).value;
+                        setCidade(cidade);
+                        const municipio = cidades.find(municipio => municipio.nome === cidade)?.id;
+                        municipio && search.setDados.setMunicipio(municipio);
+                    }}
                     items={cidades}
                     keyMap={(cidade) => cidade.id}
                     valueMap={(cidade) => cidade.nome}
@@ -182,8 +194,8 @@ function FiltroBase () {
                 </Typography>
                 <StarRating
                     name="nota"
-                    value={nota}
-                    handleChange={(_, value) => setNota(value || 0)}
+                    value={search.dados.nota}
+                    handleChange={(_, value) => search.setDados.setNota(value || 0)}
                     precision={1} size="large"
                 />
             </div>
@@ -192,16 +204,16 @@ function FiltroBase () {
                     Remuneração/ Hora
                 </Typography>
                 <IOSSlider
-                    value={value}
-                    onChange={(_, value) => setValue(value as number[])}
+                    value={search.dados.intervaloRemuneracao}
+                    onChange={(_, value) => search.setDados.setIntervaloRemuneracao(value as number[])}
                     valueLabelDisplay="off" max={3000}
                 />
                 <div className={classes.faixaPreco}>
                     <Typography color="textSecondary" variant="h6">
-                        R$ {value[0]}
+                        R$ {search.dados.intervaloRemuneracao[0]}
                     </Typography>
                     <Typography color="textSecondary" variant="h6">
-                        R$ {value[1]}
+                        R$ {search.dados.intervaloRemuneracao[1]}
                     </Typography>
                 </div>
             </div>
