@@ -43,20 +43,3 @@
 .modal-login form .conteudo input {
     margin-bottom: 1.3rem;
 }
-
-.modal-login form .conteudo button {
-    height: 4rem;
-    bottom: -5rem;
-    left: 0;
-    width: -webkit-fill-available;
-    border: none;
-    border-radius: 0.8rem;
-    outline: none;
-    text-align: center;
-    font: 400 2.4rem SFProText;
-    color: var(--cor-texto-escuro);
-}
-
-.modal-login form .conteudo button:hover {
-    cursor: pointer;
-}

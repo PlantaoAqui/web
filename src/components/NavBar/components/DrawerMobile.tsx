@@ -13,6 +13,7 @@ interface DrawerMobileProps {
     open: boolean;
     tipoLinks: 'none' | 'landing' | 'default';
     handleDrawerToggle: () => void;
+    abrirModalAvaliacao: () => void;
 }
 
 const useStyles = makeStyles((theme) =>
@@ -38,7 +39,8 @@ const useStyles = makeStyles((theme) =>
             height: 'fit-content',
             padding: '0.4rem 0',
             font: '400 1.6rem SFProText',
-            color: 'var(--cor-texto-escuro)'
+            color: 'var(--cor-texto-escuro)',
+            cursor: 'pointer'
         },
         espaco: {
             flexGrow: 1
@@ -61,7 +63,7 @@ const useStyles = makeStyles((theme) =>
     })
 );
 
-function DrawerMobile ({ open, tipoLinks, handleDrawerToggle }: DrawerMobileProps) {
+function DrawerMobile ({ open, tipoLinks, handleDrawerToggle, abrirModalAvaliacao }: DrawerMobileProps) {
     const classes = useStyles();
 
     const links: Record<'none' | 'landing' | 'default', JSX.Element> = {
@@ -121,7 +123,7 @@ function DrawerMobile ({ open, tipoLinks, handleDrawerToggle }: DrawerMobileProp
                 Ofertas
             </Typography>
         </Link>
-        <Link href="/plantoes" className={classes.linkSecao}>
+        <Link onClick={abrirModalAvaliacao} className={classes.linkSecao}>
             <Typography variant="h4" gutterBottom>
                 Nova Avaliação
             </Typography>

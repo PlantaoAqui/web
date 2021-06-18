@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Button from '../Button';
 import TextInput from '../TextInput';
 import './styles.css';
 
@@ -68,7 +69,12 @@ function FormLogin (props: FormCadastroLogin) {
                         handleChange={props.handleChange}
                         handleBlur={props.handleBlur}
                     />
-                    <button style={{ background: '#A1E09E' }} type="submit">{props.textoBotao}</button>
+                    <Button
+                        background='#A1E09E'
+                        type="submit"
+                        texto={props.textoBotao}
+                        tamanhoTexto="big"
+                    />
                 </div>
             </form>
         </div>

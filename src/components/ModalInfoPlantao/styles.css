@@ -1,37 +1,25 @@
-.modalinfoplantao .informacoes {
+.informacoes {
     width: 100%;
     max-height: 475px;
     display: flex;
     flex-direction: row;
     align-items: stretch;
     justify-content: space-between;
+    margin-bottom: 1.2rem;
 }
 
-.modalinfoplantao .informacoes .detalhes {
-    background:var(--cor-fundo-card);
-    max-height: 475px;
-    max-width: 350px;
-    border-radius: 8px;
-    width: calc((100% - 30px)/3);
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.modalinfoplantao .informacoes .detalhes .secao {
+.informacoes .detalhes .secao {
     color: var(--cor-texto-escuro);
     font: 500 1.2rem SFProText;
     margin-bottom: 4px;
 }
 
-.modalinfoplantao .informacoes .detalhes .descricao {
+.informacoes .detalhes .descricao {
     font: 400 1.2rem SFProText;
     margin-bottom: 1.2rem;
 }
 
-.modalinfoplantao .informacoes .detalhes .nome {
+.informacoes .detalhes .nome {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -39,34 +27,34 @@
     width: 100%;
 }
 
-.modalinfoplantao .informacoes .detalhes .nome p {
+.informacoes .detalhes .nome p {
     font-size: 2rem;
     max-width: 80%;
 }
 
-.modalinfoplantao .informacoes .detalhes .nome img {
+.informacoes .detalhes .nome img {
     width: 4.2rem;
     height: auto;
 }
 
-.modalinfoplantao .informacoes .detalhes .endereco {
+.informacoes .detalhes .endereco {
     margin-top: 2.8rem;
     align-self: flex-start;
 }
 
-.modalinfoplantao .informacoes .detalhes .inferior {
+.informacoes .detalhes .inferior {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
 }
 
-.modalinfoplantao .informacoes .detalhes .subdados {
+.informacoes .detalhes .subdados {
     flex: 1;
     margin-right: 2rem;
 }
 
-.modalinfoplantao .informacoes .detalhes .linkicones {
+.informacoes .detalhes .linkicones {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -74,14 +62,14 @@
     justify-content: space-between;
 }
 
-.modalinfoplantao .informacoes .detalhes .icones {
+.informacoes .detalhes .icones {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-bottom: 1.2rem;
 }
 
-.modalinfoplantao .informacoes .detalhes .icones .icone {
+.informacoes .detalhes .icones .icone {
     background: var(--cor-fundo-campos);
     width: 3.2rem;
     height: 3.2rem;
@@ -89,13 +77,13 @@
     margin-right: 0.4rem;
 }
 
-.modalinfoplantao .informacoes .detalhes .icones img {
+.informacoes .detalhes .icones img {
     width: 3.2rem;
     height: auto;
     margin-right: 0.4rem;
 }
 
-.modalinfoplantao .informacoes .detalhes button {
+.informacoes .detalhes button {
     width: 100%;
     background: var(--cor-fundo-card-hover);
     outline: none;
@@ -106,7 +94,7 @@
     font: 400 1.4rem SFProText;
 }
 
-.modalinfoplantao .informacoes .sobre {
+.informacoes .sobre {
     background: var(--cor-fundo-card);
     max-height: 475px;
     max-width: 350px;
@@ -115,19 +103,26 @@
     padding: 1rem;
 }
 
-.modalinfoplantao .informacoes .sobre .sumario {
-    color: var(--cor-texto-escuro);
-    font: 500 1.4rem SFProText;
+.informacoes .sobre .sumario {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
     margin-bottom: 1.6rem;
 }
 
-.modalinfoplantao .informacoes .sobre .numeroavaliacoes {
+.informacoes .sobre .sumario p {
+    color: var(--cor-texto-escuro);
+    font: 500 1.4rem SFProText;
+}
+
+.informacoes .sobre .numeroavaliacoes {
     color: var(--cor-texto-claro);
     font: 400 1.2rem SFProText;
     margin-bottom: 1.2rem;
 }
 
-.modalinfoplantao .informacoes .sobre .item {
+.informacoes .sobre .item {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -135,18 +130,18 @@
     margin-bottom: 1rem;
 }
 
-.modalinfoplantao .informacoes .sobre .item:last-child {
+.informacoes .sobre .item:last-child {
     margin-top: 3.6rem;
 }
 
-.modalinfoplantao .informacoes .sobre .item .rotulo {
+.informacoes .sobre .item .rotulo {
     flex: 1;
     color: var(--cor-texto-escuro);
     font: 400 1.2rem SFProText;
     margin-right: 1rem;
 }
 
-.modalinfoplantao .informacoes .sobre .item .avaliacao {
+.informacoes .sobre .item .avaliacao {
     flex: 1;
     color: var(--cor-texto-claro);
     font: 400 1.2rem SFProText;
@@ -156,7 +151,7 @@
     justify-content: space-between;
 }
 
-.modalinfoplantao .informacoes .sobre .avaliacao-plantao {
+.informacoes .sobre .avaliacao-plantao {
     margin-top: 2rem;
     display: flex;
     flex-direction: row;
@@ -164,35 +159,35 @@
     justify-content: space-between;
 }
 
-.modalinfoplantao .informacoes .sobre .avaliacao-plantao .rotulo {
+.informacoes .sobre .avaliacao-plantao .rotulo {
     color: var(--cor-texto-escuro);
     font: 400 1.2rem SFProText;
 }
 
-.modalinfoplantao .informacoes .sobre .avaliacao-plantao .classificacao {
+.informacoes .sobre .avaliacao-plantao .classificacao {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
 }
 
-.modalinfoplantao .informacoes .sobre .avaliacao-plantao .classificacao .nota {
+.informacoes .sobre .avaliacao-plantao .classificacao .nota {
     display: flex;
     flex-direction: row;
     align-items: baseline;
 }
 
-.modalinfoplantao .informacoes .sobre .avaliacao-plantao .classificacao .nota .valor {
+.informacoes .sobre .avaliacao-plantao .classificacao .nota .valor {
     color: var(--cor-texto-escuro);
     font: 400 4.6rem SFProText;
 }
 
-.modalinfoplantao .informacoes .sobre .avaliacao-plantao .classificacao .nota .rodape {
+.informacoes .sobre .avaliacao-plantao .classificacao .nota .rodape {
     color: var(--cor-texto-escuro);
     font: 400 1.4rem SFProText;
 }
 
-.modalinfoplantao .informacoes .analise-salarial {
+.informacoes .analise-salarial {
     background: var(--cor-fundo-card);
     max-height: 475px;
     max-width: 350px;
@@ -205,13 +200,13 @@
     justify-content: space-between;
 }
 
-.modalinfoplantao .informacoes .analise-salarial .sumario {
+.informacoes .analise-salarial .sumario {
     color: var(--cor-texto-escuro);
     font: 500 1.2rem Roboto;
     margin-bottom: 1.6rem;
 }
 
-.modalinfoplantao .informacoes .analise-salarial .media {
+.informacoes .analise-salarial .media {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -219,45 +214,45 @@
     justify-content: space-between;
 }
 
-.modalinfoplantao .informacoes .analise-salarial .media .rotulo {
+.informacoes .analise-salarial .media .rotulo {
     font: 400 1.2rem Roboto;
     color: var(--cor-texto-escuro);
 }
 
-.modalinfoplantao .informacoes .analise-salarial .media .avaliacao {
+.informacoes .analise-salarial .media .avaliacao {
     font: 400 1.2rem Roboto;
     color: var(--cor-texto-claro);
 }
 
-.modalinfoplantao .informacoes .analise-salarial canvas {
+.informacoes .analise-salarial canvas {
     height: 100%;
     width: 100%;
 }
 
-.modalinfoplantao .informacoes .analise-salarial .salario-mes {
+.informacoes .analise-salarial .salario-mes {
     margin-top: 1.6rem;
 }
 
-.modalinfoplantao .informacoes .analise-salarial .salario-dia-semana {
+.informacoes .analise-salarial .salario-dia-semana {
     margin-top: 1.6rem;
     flex: 1;
 }
 
-.modalinfoplantao .secaocomentarios {
+.secaocomentarios {
     margin-top: 1.6rem;
     padding: 2.4rem 2.2rem 1.6rem 2.2rem;
     background: var(--cor-fundo-card);
     border-radius: 8px;
 }
 
-.modalinfoplantao .secaocomentarios .sumario {
+.secaocomentarios .sumario {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
-.modalinfoplantao .secaocomentarios .comentarios {
+.secaocomentarios .comentarios {
     margin-top: 2.6rem;
     display: flex;
     flex-direction: row;
@@ -265,12 +260,12 @@
     flex-wrap: wrap;
 }
 
-.modalinfoplantao .secaocomentarios .comentarios .comentario {
+.secaocomentarios .comentarios .comentario {
     width: calc((100% - 2.2rem)/2);
     margin-bottom: 1.6rem;
 }
 
-.modalinfoplantao .secaocomentarios .comentarios .comentario .sumario {
+.secaocomentarios .comentarios .comentario .sumario {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -278,20 +273,20 @@
     margin: 0.6rem;
 }
 
-.modalinfoplantao .secaocomentarios .comentarios .comentario .sumario .pessoa {
+.secaocomentarios .comentarios .comentario .sumario .pessoa {
     display: flex;
     flex-direction: row;
     align-items: center;
     color: var(--cor-texto-escuro);
 }
 
-.modalinfoplantao .secaocomentarios .comentarios .comentario .sumario .pessoa .MuiAvatar-root {
+.secaocomentarios .comentarios .comentario .sumario .pessoa .MuiAvatar-root {
     height: 2.2rem;
     width: 2.2rem;
     margin-right: 1rem;
 }
 
-.modalinfoplantao .secaocomentarios .comentarios .comentario .textocomentario {
+.secaocomentarios .comentarios .comentario .textocomentario {
     text-align: justify;
     margin-bottom: 1.2rem;
     color: var(--cor-texto-escuro);

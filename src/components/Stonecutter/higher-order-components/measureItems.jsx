@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import partition from 'lodash.partition';
 import debounce from 'lodash.debounce';
@@ -100,6 +99,7 @@ export default (Grid, { measureImages, background } = {}) =>
     };
 
     render () {
+        // eslint-disable-next-line react/prop-types
         const { component, children, columnWidth } = this.props;
         const { rects } = this.state;
 

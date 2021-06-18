@@ -168,6 +168,7 @@ function NavBar ({ aba, tipoLinks }: LinksNavbar) {
                         open={mobileOpen}
                         tipoLinks={tipoLinks}
                         handleDrawerToggle={handleDrawerToggle}
+                        abrirModalAvaliacao={() => setModalAvaliacaoHospitalAberto(true)}
                     />
                 </Hidden>
             </AppBar>

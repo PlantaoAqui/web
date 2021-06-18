@@ -1,16 +1,45 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import './styles.css';
 
 import { Dialog } from '@material-ui/core';
 import ModalInfoPlantao from '../ModalInfoPlantao';
 import { Plantao } from '../../pages/plantoes';
+import theme from '../../assets/styles/theme';
 
 export interface InterfaceCardPlantao {
     plantao: Plantao;
     blurBackground: (e: boolean) => void;
 }
 
+const useStyles = makeStyles(() =>
+    createStyles({
+        container: {
+            [theme.breakpoints.down('lg')]: {
+                // height: 'unset'
+            }
+        },
+        dialogPaper: {
+            backgroundColor: 'transparent',
+            width: '80vw',
+            maxWidth: '930px',
+            minWidth: '720px',
+            marginTop: '11.2rem',
+            outline: '0',
+            boxShadow: 'none',
+            [theme.breakpoints.up('lg')]: {
+                width: 'calc(58.4vw - 1.2rem)',
+                margin: '11.2rem 21.6vw 0 calc(31.6vw + 1.2rem)'
+            },
+            [theme.breakpoints.up('xl')]: {
+                margin: '11.2rem 21.6vw 0 31.6vw'
+            }
+        }
+    })
+);
+
 function CardHospital ({ plantao, blurBackground }: InterfaceCardPlantao) {
+    const classes = useStyles();
     const [nomeHospitalCard, setNomeHospitalCard] = useState(plantao.nome);
     const [modalInfoCardAberto, setModalInfoCardAberto] = useState(false);
     const refInfoCardHospital = useRef<HTMLElement>(null);
@@ -63,17 +92,9 @@ function CardHospital ({ plantao, blurBackground }: InterfaceCardPlantao) {
                 scroll="body"
                 aria-labelledby="scroll-dialog-title"
                 aria-describedby="scroll-dialog-description"
+                classes={{ container: classes.container }}
                 PaperProps={{
-                    style: {
-                        backgroundColor: 'transparent',
-                        maxWidth: '1080px',
-                        minWidth: '720px',
-                        width: '57vw',
-                        marginLeft: '22%',
-                        marginTop: '11rem',
-                        outline: '0',
-                        boxShadow: 'none'
-                    }
+                    className: classes.dialogPaper
                 }}
             >
                 <ModalInfoPlantao

@@ -15,6 +15,7 @@ import AsyncAutocomplete from '../AsyncAutocomplete';
 interface ModalAvaliacaoPlantaoProps {
     subcategoria?: number;
     idPlantao?: number;
+    idHospital?: number;
     nomeHospital?: string;
     onClose: (close: boolean) => void;
 }
@@ -33,7 +34,7 @@ type groupSelect = {
 function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
     const formik = useFormik({
         initialValues: {
-            id_hospital: props.idPlantao || 0,
+            id_hospital: props.idHospital || 0,
             id_subcategoria: props.subcategoria || 0,
             avaliacao: {
                 valor_recebido: 0,
@@ -76,6 +77,7 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
                 .catch((error) => console.log(error));
         }
     });
+
     const [tipo, setTipo] = useState('');
     const [dataPlantao, setDataPlantao] = useState('');
     const [estado, setEstado] = useState('');
@@ -142,7 +144,7 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
             });
 
             if (like === '' && props.nomeHospital) {
-                response.data.unshift({ id: 0, nome: props.nomeHospital });
+                response.data.unshift({ id: props.idHospital, nome: props.nomeHospital });
             }
             return response.data;
         } catch (error) {
@@ -382,7 +384,11 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
                         onChange={formik.handleChange}
                         value={formik.values.avaliacaoFixa.comentario}
                     />
-                    <Button background="#7BB2ED" texto="Submeter avaliação" type="submit"/>
+                    <Button
+                        background="#7BB2ED"
+                        texto="Submeter avaliação"
+                        type="submit"
+                    />
                 </div>
             </form>
         </div>

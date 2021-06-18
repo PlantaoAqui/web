@@ -5,6 +5,7 @@ import SelectInput from '../SelectInput';
 import TextInput from '../TextInput';
 import CampoDocumentoIcon from '../../assets/images/icones/campoDocumento.svg';
 import './styles.css';
+import Button from '../Button';
 
 interface FormCadastroProps {
     titulo: string;
@@ -213,7 +214,12 @@ function FormCadastro (props: FormCadastroProps) {
                                 />
                             </div>
                             <p className="rodape">{props.rodape}</p>
-                            <button style={{ background: '#A1E09E' }} type="submit">{props.textoBotao}</button>
+                            <Button
+                                background='#A1E09E'
+                                type="submit"
+                                texto={props.textoBotao}
+                                tamanhoTexto="big"
+                            />
                         </>
                     )}
                     {props.etapa === 1 && (
@@ -299,7 +305,12 @@ function FormCadastro (props: FormCadastroProps) {
                                     handleBlur={props.handleBlur}
                                 />
                             </div>
-                            <button style={{ background: '#7BB2ED' }} type="submit">{props.textoBotao}</button>
+                            <Button
+                                background='#7BB2ED'
+                                type="submit"
+                                texto={props.textoBotao}
+                                tamanhoTexto="big"
+                            />
                         </>
                     )}
                     {props.etapa === 2 && (
@@ -329,7 +340,12 @@ function FormCadastro (props: FormCadastroProps) {
                                     onChange={handleChangePhoto}
                                 />
                             </div>
-                            <button style={{ background: '#FCE37F' }} type="submit">{props.textoBotao}</button>
+                            <Button
+                                background='#FCE37F'
+                                type="submit"
+                                texto={props.textoBotao}
+                                tamanhoTexto="big"
+                            />
                         </>
                     )}
                     {props.etapa === 5 && (
@@ -337,7 +353,12 @@ function FormCadastro (props: FormCadastroProps) {
                             <div className="termos">
                                 <p>{props.termos}</p>
                             </div>
-                            <button style={{ background: '#FF817C' }} type="submit">{props.textoBotao}</button>
+                            <Button
+                                background='#FF817C'
+                                type="submit"
+                                texto={props.textoBotao}
+                                tamanhoTexto="big"
+                            />
                         </>
                     )}
                 </div>
