@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) =>
             color: theme.palette.text.primary
         },
         textoCurtida: {
-            color: '#163e91',
+            color: '#FF817C',
             fontWeight: 500
         }
     })
@@ -33,7 +33,7 @@ function BotaoCurtida (props: BotaoCurtidaProps) {
             onClick={props.handleCurtida}
         >
             <Typography
-                variant="subtitle1" gutterBottom
+                variant="subtitle1"
                 className={props.curtida ? classes.textoCurtida : classes.texto}
             >
                 Curtir

@@ -6,6 +6,7 @@ import Avatar from '@material-ui/core/Avatar';
 // import Link from '@material-ui/core/Link';
 // import Collapse from '@material-ui/core/Collapse';
 import BotaoCurtida from './BotaoCurtida';
+import IconeCurtida from '../../../assets/images/icones/curtida.svg';
 import api from '../../../services/api';
 
 interface ComentarioProps {
@@ -54,7 +55,8 @@ const useStyles = makeStyles(() =>
         interacaoComentario: {
             marginTop: '1.2rem',
             display: 'flex',
-            flexDirection: 'row'
+            flexDirection: 'row',
+            alignItems: 'center'
         },
         botaoCurtida: {
             marginRight: '1.2rem',
@@ -63,7 +65,14 @@ const useStyles = makeStyles(() =>
         botaoCurtidaAtivo: {
             background: 'red'
         },
-        textoCurtida: {},
+        numeroCurtidas: {
+            marginRight: '0.4rem',
+            color: '#FF817C'
+        },
+        iconeCurtidas: {
+            width: '1.4rem',
+            height: 'auto'
+        },
         respostas: {
             display: 'flex',
             flexDirection: 'column',
@@ -84,6 +93,7 @@ const useStyles = makeStyles(() =>
 function Comentario ({ comentario }: ComentarioProps) {
     const classes = useStyles();
     const [curtiu, setCurtiu] = useState(comentario.euCurti);
+    const [numeroCurtidas, setNumeroCurtidas] = useState(comentario.curtidas);
     // const [abrir, setAbrir] = useState(false);
 
     async function handleCurtida () {
@@ -94,9 +104,11 @@ function Comentario ({ comentario }: ComentarioProps) {
                 switch (response.status) {
                 case 200:
                     setCurtiu(false);
+                    setNumeroCurtidas(comentario.curtidas - (comentario.euCurti ? 1 : 0));
                     break;
                 case 201:
                     setCurtiu(true);
+                    setNumeroCurtidas(comentario.curtidas + 1 - (comentario.euCurti ? 1 : 0));
                     break;
                 default:
                     break;
@@ -178,6 +190,17 @@ function Comentario ({ comentario }: ComentarioProps) {
                         curtida={curtiu}
                         handleCurtida={handleCurtida}
                     />
+                    {numeroCurtidas > 0 && (
+                        <>
+                            <Typography
+                                variant="subtitle1"
+                                className={classes.numeroCurtidas}
+                            >
+                                {numeroCurtidas}
+                            </Typography>
+                            <img src={IconeCurtida} className={classes.iconeCurtidas}/>
+                        </>
+                    )}
                     {/* <Link
                         component="button"
                         variant="subtitle1"
@@ -188,7 +211,7 @@ function Comentario ({ comentario }: ComentarioProps) {
                         >
                             Responder
                         </Typography>
-                    </Link> */}
+                    </Link>
                     {comentario.respostas.length > 0 && (
                         <Typography
                             variant="subtitle1" gutterBottom
@@ -198,44 +221,44 @@ function Comentario ({ comentario }: ComentarioProps) {
                                 : comentario.respostas.length + ' respostas'
                             }
                         </Typography>
-                    )}
+                    )} */}
                 </div>
             </div>
-            {comentario.respostas.length > 0 && (
-                <div className={classes.respostas}>
-                    {comentario.respostas.map(resposta => {
-                        return (
-                            <div key={resposta.idResposta}>
-                                <div className={classes.usuario}>
-                                    <Avatar className={classes.avatar}>
-                                        {resposta.nomeUsuario.charAt(0)}
-                                    </Avatar>
-                                    <div className={classes.nomeUsuario}>
-                                        <Typography
-                                            variant="h6"
-                                        >
-                                            {resposta.nomeUsuario}
-                                        </Typography>
-                                        <Typography
-                                            variant="body1"
-                                        >
-                                            {formatarData(resposta.data)}
-                                        </Typography>
+            {/* {comentario.respostas.length > 0 && (
+                <Collapse in={!abrir}>
+                    <div className={classes.respostas}>
+                        {comentario.respostas.map(resposta => {
+                            return (
+                                <div key={resposta.idResposta}>
+                                    <div className={classes.usuario}>
+                                        <Avatar className={classes.avatar}>
+                                            {resposta.nomeUsuario.charAt(0)}
+                                        </Avatar>
+                                        <div className={classes.nomeUsuario}>
+                                            <Typography
+                                                variant="h6"
+                                            >
+                                                {resposta.nomeUsuario}
+                                            </Typography>
+                                            <Typography
+                                                variant="body1"
+                                            >
+                                                {formatarData(resposta.data)}
+                                            </Typography>
+                                        </div>
                                     </div>
+                                    <Typography
+                                        variant="body1" gutterBottom
+                                        className={classes.textoResposta}
+                                    >
+                                        {resposta.texto}
+                                    </Typography>
                                 </div>
-                                <Typography
-                                    variant="body1" gutterBottom
-                                    className={classes.textoResposta}
-                                >
-                                    {resposta.texto}
-                                </Typography>
-                            </div>
-                        );
-                    })}
-                </div>
-                // <Collapse in={!abrir}>
-                // </Collapse>
-            )}
+                            );
+                        })}
+                    </div>
+                </Collapse>
+            )} */}
         </div>
     );
 }
