@@ -70,7 +70,7 @@ const useStyles = makeStyles(() =>
             color: '#FF817C'
         },
         iconeCurtidas: {
-            width: '1.4rem',
+            width: '1.2rem',
             height: 'auto'
         },
         respostas: {
