@@ -72,6 +72,8 @@ function Plantoes () {
         console.log(pesquisarPlantoes.result?.data);
     }, [pesquisarPlantoes.result]);
 
+    useEffect(() => { console.log(search.dados.uf); }, [search.dados.uf]);
+
     return (
         <div className="page-plantoes" style={blurBackground ? { filter: 'blur(3px)' } : {}}>
             <NavBar tipoLinks="default" aba={1}/>
