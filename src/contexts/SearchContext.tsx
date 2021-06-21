@@ -10,6 +10,7 @@ export type SearchContextProps = {
     dados: {
         like: string;
         tipo: number;
+        subcategoria: number[];
         ordenarPor: OrdenarPor;
         uf: number;
         municipio: number;
@@ -19,6 +20,7 @@ export type SearchContextProps = {
     setDados: {
         setLike: (like: string) => void;
         setTipo: (tipo: number) => void;
+        setSubcategoria: (tipos: number[]) => void;
         setOrdenarPor: (n: number) => void;
         setUF: (uf: number) => void;
         setMunicipio: (municipio: number) => void;
@@ -35,6 +37,7 @@ const searchContext = createContext<SearchContextProps>({
     dados: {
         like: '',
         tipo: 0,
+        subcategoria: [],
         ordenarPor: OrdenarPor.Relevancia,
         uf: 0,
         municipio: 0,
@@ -44,6 +47,7 @@ const searchContext = createContext<SearchContextProps>({
     setDados: {
         setLike: searchContextSemProvider,
         setTipo: searchContextSemProvider,
+        setSubcategoria: searchContextSemProvider,
         setOrdenarPor: searchContextSemProvider,
         setUF: searchContextSemProvider,
         setMunicipio: searchContextSemProvider,

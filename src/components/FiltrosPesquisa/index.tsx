@@ -5,21 +5,15 @@ import { Typography } from '@material-ui/core';
 import { Plantao } from '../../pages/plantoes';
 import Filtro from './components/Filtro';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import SelectInputSlim from '../SelectInputSlim';
 import FiltroBase from './components/FiltroBase';
 import api from '../../services/api';
 import useSearch from '../../hooks/use-search';
+import Button from '../Button';
 
 export interface PlantoesPesquisadosProps {
     plantoes: Array<Plantao>;
     setPlantoes: (plantoes: Array<Plantao>) => void;
 }
-
-const ordenarPorValues: string[] = [
-    'Mais relevantes',
-    'Nota de avaliação',
-    'Remuneração'
-];
 
 export type TipoPlantao = {
     id: number;
@@ -37,23 +31,15 @@ type Subcategoria = {
 const useStyles = makeStyles(() =>
     createStyles({
         resultados: {
-            height: '6rem',
             width: '100%',
             padding: '0.7rem 1.3rem',
             background: 'var(--cor-fundo-card)',
             borderRadius: '8px',
-            marginBottom: '1.3rem',
+            margin: '1.3rem 0',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            alignContent: 'stretch'
-        },
-        linhaSimples: {
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            alignContent: 'center',
-            justifyContent: 'space-between'
+            alignContent: 'flex-start'
         },
         textoClaro: {
             color: 'var(--cor-texto-claro)',
@@ -80,6 +66,7 @@ function FiltrosPesquisa ({ plantoes }: PlantoesPesquisadosProps) {
     const handleClickAccordionFiltros = (tipo: number) => {
         setFiltrosExpanded(filtrosExpanded === tipo ? false : tipo);
         search.setDados.setTipo(filtrosExpanded === tipo ? 0 : tipo);
+        search.setDados.setSubcategoria([]);
     };
 
     async function listarTiposPlantao () {
@@ -102,28 +89,24 @@ function FiltrosPesquisa ({ plantoes }: PlantoesPesquisadosProps) {
 
     return (
         <div className="filtrospesquisa">
+            <Button
+                type="button"
+                background="#A1E09E"
+                texto="Nova Avaliação"
+            />
             <div className={classes.resultados}>
-                <div className={classes.linhaSimples}>
-                    <p className={classes.textoClaro}>Plantões encontrados</p>
-                    <p className={classes.textoEscuro}>{plantoes === undefined || !Array.isArray(plantoes)
+                <Typography variant="h5"
+                    color="textSecondary"
+                >
+                    Plantoes encontrados
+                </Typography>
+                <Typography variant="h5"
+                    color="textPrimary"
+                >
+                    {plantoes === undefined || !Array.isArray(plantoes)
                         ? 0
                         : plantoes.length} plantões
-                    </p>
-                </div>
-                <div className={classes.linhaSimples}>
-                    <p className={classes.textoEscuro}>Ordenar por</p>
-                    <SelectInputSlim
-                        value={ordenarPorValues[search.dados.ordenarPor]}
-                        handleChange={(e) => {
-                            const value = (e.target as HTMLSelectElement).value;
-                            const index = ordenarPorValues.indexOf(value);
-                            search.setDados.setOrdenarPor(index);
-                        }}
-                        items={ordenarPorValues}
-                        keyMap={(item) => item}
-                        valueMap={(item) => item}
-                    />
-                </div>
+                </Typography>
             </div>
             <Typography variant="h5" gutterBottom
                 className={classes.indices}

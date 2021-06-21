@@ -98,6 +98,12 @@ const IOSSlider = withStyles({
     }
 })(Slider);
 
+const ordenarPorValues: string[] = [
+    'Mais relevantes',
+    'Nota de avaliação',
+    'Remuneração'
+];
+
 function FiltroBase () {
     const classes = useStyles();
     const search = useSearch();
@@ -150,6 +156,23 @@ function FiltroBase () {
 
     return (
         <div className={classes.root}>
+            <div className={classes.selectBox}>
+                <Typography color="textPrimary" variant="h6">
+                    Ordenar por
+                </Typography>
+                <SelectInputSlim
+                    value={ordenarPorValues[search.dados.ordenarPor]}
+                    handleChange={(e) => {
+                        const value = (e.target as HTMLSelectElement).value;
+                        const index = ordenarPorValues.indexOf(value);
+                        search.setDados.setOrdenarPor(index);
+                    }}
+                    fullwidth
+                    items={ordenarPorValues}
+                    keyMap={(item) => item}
+                    valueMap={(item) => item}
+                />
+            </div>
             <div className={classes.selectBox}>
                 <Typography color="textPrimary" variant="h6">
                     Estado

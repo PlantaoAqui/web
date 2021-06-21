@@ -36,7 +36,7 @@ function Plantoes () {
     const [blurBackground, setBlurBackground] = useState(false);
 
     async function pesquisarPlantoes () {
-        const { ordenarPor, uf, municipio, nota, tipo } = search.dados;
+        const { ordenarPor, uf, municipio, nota, tipo, subcategoria } = search.dados;
         const { intervaloRemuneracao, like } = debouncedSearch;
 
         if (uf === 0 || municipio === 0) return;
@@ -51,7 +51,8 @@ function Plantoes () {
                     uf,
                     municipio,
                     nota,
-                    tipo
+                    tipo,
+                    subcategoria
                 }
             });
             setPlantoes(response.data);
@@ -63,12 +64,14 @@ function Plantoes () {
     useEffect(() => {
         pesquisarPlantoes();
     }, [
-        debouncedSearch,
+        debouncedSearch.intervaloRemuneracao,
+        debouncedSearch.like,
         search.dados.ordenarPor,
         search.dados.uf,
         search.dados.municipio,
         search.dados.nota,
-        search.dados.tipo
+        search.dados.tipo,
+        search.dados.subcategoria
     ]);
 
     return (

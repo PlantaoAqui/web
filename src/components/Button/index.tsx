@@ -39,6 +39,7 @@ function Button (props: ButtonProps) {
             variant='contained'
             className={classes.botao}
             onClick={onClick}
+            disableElevation
             style={{
                 background,
                 fontSize
