@@ -104,13 +104,18 @@ const ordenarPorValues: string[] = [
     'Remuneração'
 ];
 
+type selectItem = {
+    id: number;
+    nome: string;
+};
+
 function FiltroBase () {
     const classes = useStyles();
     const search = useSearch();
     const [estado, setEstado] = useState('');
     const [cidade, setCidade] = useState('');
-    const [estados, setEstados] = useState([{ id: 0, nome: '' }]);
-    const [cidades, setCidades] = useState([{ id: 0, nome: '' }]);
+    const [estados, setEstados] = useState<selectItem[] | null>(null);
+    const [cidades, setCidades] = useState<selectItem[] | null>(null);
 
     async function listarEstados () {
         try {
@@ -135,12 +140,12 @@ function FiltroBase () {
     }
 
     useEffect(() => {
-        listarEstados();
-        obterLocalidade();
+        listarEstados()
+            .then(() => obterLocalidade());
     }, []);
 
     async function listarCidades () {
-        const idEstado = estados.find(uf => uf.nome === estado)?.id;
+        const idEstado = estados?.find(uf => uf.nome === estado)?.id;
 
         try {
             const response = await axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${idEstado}/municipios?orderBy=nome`);
@@ -152,7 +157,11 @@ function FiltroBase () {
 
     useEffect(() => {
         listarCidades();
-    }, [estado]);
+    }, [estado, estados]);
+
+    useEffect(() => {
+        console.log(`Estado: ${estado} Cidade: ${cidade}`);
+    }, [estado, cidade]);
 
     return (
         <div className={classes.root}>
@@ -184,7 +193,8 @@ function FiltroBase () {
                     handleChange={(e) => {
                         const estado = (e.target as HTMLSelectElement).value;
                         setEstado(estado);
-                        const uf = estados.find(uf => uf.nome === estado)?.id;
+                        setCidade('');
+                        const uf = estados?.find(uf => uf.nome === estado)?.id;
                         uf && search.setDados.setUF(uf);
                     }}
                     items={estados}
@@ -203,7 +213,7 @@ function FiltroBase () {
                     handleChange={(e) => {
                         const cidade = (e.target as HTMLSelectElement).value;
                         setCidade(cidade);
-                        const municipio = cidades.find(municipio => municipio.nome === cidade)?.id;
+                        const municipio = cidades?.find(municipio => municipio.nome === cidade)?.id;
                         municipio && search.setDados.setMunicipio(municipio);
                     }}
                     items={cidades}
