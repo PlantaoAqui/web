@@ -113,7 +113,9 @@ function Filtro ({ tipo, expanded, resultados, handleChange }: FiltroProps) {
                         </Typography>
                         {tipo.subcategorias.map(sub => {
                             return (
-                                <div key={sub.id} className={classes.subOpcao}>
+                                <div key={sub.id} className={classes.subOpcao}
+                                    onClick={() => handleChangeCheckbox(sub.id)}
+                                >
                                     <FormControlLabel
                                         control={
                                             <Checkbox
@@ -144,8 +146,7 @@ function Filtro ({ tipo, expanded, resultados, handleChange }: FiltroProps) {
                                                 {sub.nome}
                                             </Typography>
                                         }
-                                        labelPlacement="start"
-                                        style={{ flex: 1 }}
+                                        style={{ margin: 0 }}
                                         classes={{
                                             label: classes.labelCheckbox
                                         }}
