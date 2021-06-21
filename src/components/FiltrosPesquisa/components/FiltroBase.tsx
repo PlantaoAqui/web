@@ -159,10 +159,6 @@ function FiltroBase () {
         listarCidades();
     }, [estado, estados]);
 
-    useEffect(() => {
-        console.log(`Estado: ${estado} Cidade: ${cidade}`);
-    }, [estado, cidade]);
-
     return (
         <div className={classes.root}>
             <div className={classes.selectBox}>

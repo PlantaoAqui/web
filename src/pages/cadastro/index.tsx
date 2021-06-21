@@ -6,7 +6,6 @@ import FormCadastro from '../../components/FormCadastro';
 import NavBar from '../../components/NavBar';
 import api from '../../services/api';
 import * as Yup from 'yup';
-import './styles.css';
 
 const mensagemCampoObrigatorio = 'Preencha os campos obrigatórios';
 

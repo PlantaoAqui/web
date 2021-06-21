@@ -15,9 +15,18 @@ import useSearch from '../../../hooks/use-search';
 interface FiltroProps {
     tipo: TipoPlantao;
     expanded: boolean;
-    resultados: number;
+    resultados?: resultados;
     handleChange: (n: number) => void;
 }
+
+export type resultados = {
+    tipo: number;
+    count: number;
+    subcategoria: Array<{
+        subcategoria: number;
+        count: number;
+    }>;
+};
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -100,7 +109,7 @@ function Filtro ({ tipo, expanded, resultados, handleChange }: FiltroProps) {
                         <img src={tipo.icone} alt={tipo.nome}/>
                         <div>
                             <p className={classes.nomeFiltro}>{tipo.nome}</p>
-                            <p className={classes.resultados}>{resultados} plantões encontrados</p>
+                            <p className={classes.resultados}>{resultados?.count || 0} plantões encontrados</p>
                         </div>
                     </div>
                 </AccordionSummary>
@@ -159,7 +168,9 @@ function Filtro ({ tipo, expanded, resultados, handleChange }: FiltroProps) {
                                         <Typography
                                             variant="h5"
                                         >
-                                            12
+                                            {resultados?.subcategoria.find(item => {
+                                                return item.subcategoria === sub.id;
+                                            })?.count || 0}
                                         </Typography>
                                     </div>
                                 </div>

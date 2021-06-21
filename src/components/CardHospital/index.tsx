@@ -4,8 +4,8 @@ import './styles.css';
 
 import { Dialog } from '@material-ui/core';
 import ModalInfoPlantao from '../ModalInfoPlantao';
-import { Plantao } from '../../pages/plantoes';
 import theme from '../../assets/styles/theme';
+import { Plantao } from '../../pages/plantoes/plantoes';
 
 export interface InterfaceCardPlantao {
     plantao: Plantao;

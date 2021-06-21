@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 import './styles.css';
 
 import { Typography } from '@material-ui/core';
-import { Plantao } from '../../pages/plantoes';
-import Filtro from './components/Filtro';
+import Filtro, { resultados } from './components/Filtro';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import FiltroBase from './components/FiltroBase';
 import api from '../../services/api';
 import useSearch from '../../hooks/use-search';
 import Button from '../Button';
+import Dialog from '@material-ui/core/Dialog';
+import ModalAvaliacaoPlantao from '../ModalAvaliacaoPlantao';
 
 export interface PlantoesPesquisadosProps {
-    plantoes: Array<Plantao>;
-    setPlantoes: (plantoes: Array<Plantao>) => void;
+    resultados: number;
+    count: resultados[];
 }
 
 export type TipoPlantao = {
@@ -57,11 +58,12 @@ const useStyles = makeStyles(() =>
     })
 );
 
-function FiltrosPesquisa ({ plantoes }: PlantoesPesquisadosProps) {
+function FiltrosPesquisa ({ resultados, count }: PlantoesPesquisadosProps) {
     const classes = useStyles();
     const search = useSearch();
     const [tipoPlantao, setTipoPlantao] = useState<TipoPlantao[] | null>(null);
     const [filtrosExpanded, setFiltrosExpanded] = useState<number | false>(false);
+    const [modalAvaliacaoHospitalAberto, setModalAvaliacaoHospitalAberto] = useState(false);
 
     const handleClickAccordionFiltros = (tipo: number) => {
         setFiltrosExpanded(filtrosExpanded === tipo ? false : tipo);
@@ -93,6 +95,7 @@ function FiltrosPesquisa ({ plantoes }: PlantoesPesquisadosProps) {
                 type="button"
                 background="#A1E09E"
                 texto="Nova Avaliação"
+                onClick={() => setModalAvaliacaoHospitalAberto(true)}
             />
             <div className={classes.resultados}>
                 <Typography variant="h5"
@@ -103,9 +106,9 @@ function FiltrosPesquisa ({ plantoes }: PlantoesPesquisadosProps) {
                 <Typography variant="h5"
                     color="textPrimary"
                 >
-                    {plantoes === undefined || !Array.isArray(plantoes)
+                    {resultados === 0
                         ? 0
-                        : plantoes.length} plantões
+                        : resultados} plantões
                 </Typography>
             </div>
             <Typography variant="h5" gutterBottom
@@ -125,11 +128,33 @@ function FiltrosPesquisa ({ plantoes }: PlantoesPesquisadosProps) {
                         key={tipo.id}
                         tipo={tipo}
                         expanded={filtrosExpanded === tipo.id}
-                        resultados={10}
+                        resultados={count.find(res => {
+                            return res.tipo === tipo.id;
+                        })}
                         handleChange={() => handleClickAccordionFiltros(tipo.id)}
                     />
                 );
             })}
+            <Dialog
+                open={modalAvaliacaoHospitalAberto}
+                onClose={() => { setModalAvaliacaoHospitalAberto(false); }}
+                scroll="body"
+                aria-labelledby="scroll-dialog-title"
+                aria-describedby="scroll-dialog-description"
+                PaperProps={{
+                    style: {
+                        backgroundColor: 'transparent',
+                        maxWidth: '720px',
+                        minWidth: '500px',
+                        width: '35vw',
+                        outline: '0'
+                    }
+                }}
+            >
+                <ModalAvaliacaoPlantao
+                    onClose={() => { setModalAvaliacaoHospitalAberto(false); }}
+                />
+            </Dialog>
         </div>
     );
 }
