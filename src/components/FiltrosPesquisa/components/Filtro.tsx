@@ -33,7 +33,7 @@ const useStyles = makeStyles(() =>
         root: {
             width: '100%',
             marginBottom: '1.3rem',
-            padding: '0.7rem 1.3rem',
+            padding: '1.2rem',
             background: 'var(--cor-fundo-card)',
             border: '1px solid var(--cor-fundo-card)',
             borderRadius: '8px',
@@ -75,14 +75,18 @@ const useStyles = makeStyles(() =>
             cursor: 'pointer'
         },
         labelCheckbox: {
-            flex: 1
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center'
         },
         iconeCheckbox: {
             width: '1.6rem',
             height: 'auto'
         },
         inputCheckbox: {
-            padding: '4px'
+            padding: '4px',
+            left: '-4px'
         }
     })
 );
@@ -122,9 +126,7 @@ function Filtro ({ tipo, expanded, resultados, handleChange }: FiltroProps) {
                         </Typography>
                         {tipo.subcategorias.map(sub => {
                             return (
-                                <div key={sub.id} className={classes.subOpcao}
-                                    onClick={() => handleChangeCheckbox(sub.id)}
-                                >
+                                <div key={sub.id} className={classes.subOpcao}>
                                     <FormControlLabel
                                         control={
                                             <Checkbox
@@ -148,31 +150,28 @@ function Filtro ({ tipo, expanded, resultados, handleChange }: FiltroProps) {
                                             />
                                         }
                                         label={
-                                            <Typography
-                                                variant="h5"
-                                                color="textPrimary"
-                                            >
-                                                {sub.nome}
-                                            </Typography>
+                                            <>
+                                                <Typography
+                                                    variant="h5"
+                                                    color="textPrimary"
+                                                    style={{ flex: 1 }}
+                                                >
+                                                    {sub.nome}
+                                                </Typography>
+                                                <Typography
+                                                    variant="h5"
+                                                >
+                                                    {resultados?.subcategoria.find(item => {
+                                                        return item.subcategoria === sub.id;
+                                                    })?.count || 0}
+                                                </Typography>
+                                            </>
                                         }
-                                        style={{ margin: 0 }}
+                                        style={{ margin: 0, flex: 1 }}
                                         classes={{
                                             label: classes.labelCheckbox
                                         }}
                                     />
-                                    <div
-                                        style={{
-                                            margin: 'auto 0 auto 1.2rem'
-                                        }}
-                                    >
-                                        <Typography
-                                            variant="h5"
-                                        >
-                                            {resultados?.subcategoria.find(item => {
-                                                return item.subcategoria === sub.id;
-                                            })?.count || 0}
-                                        </Typography>
-                                    </div>
                                 </div>
                             );
                         })}
