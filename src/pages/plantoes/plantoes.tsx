@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import CardHospital from '../../components/CardHospital';
 import FiltrosPesquisa from '../../components/FiltrosPesquisa';
 import NavBar from '../../components/NavBar';
@@ -35,24 +35,26 @@ function Plantoes () {
     const [debouncedSearch] = useDebounce(search.dados, 500);
     const [blurBackground, setBlurBackground] = useState(false);
 
-    useEffect(() => {
-        setBlurBackground(false);
-    }, []);
+    const obterPlantoes = async () => {
+        if (search.dados.uf !== 0 && search.dados.municipio !== 0) {
+            return await api.get('plantoes', {
+                params: {
+                    remuneracaoMin: debouncedSearch.intervaloRemuneracao[0],
+                    remuneracaoMax: debouncedSearch.intervaloRemuneracao[1],
+                    like: debouncedSearch.like,
+                    ordenarPor: search.dados.ordenarPor,
+                    uf: search.dados.uf,
+                    municipio: search.dados.municipio,
+                    nota: search.dados.nota,
+                    tipo: search.dados.tipo,
+                    subcategoria: search.dados.subcategoria
+                }
+            });
+        }
+    };
 
     const pesquisarPlantoes = useAsync(
-        () => api.get('plantoes', {
-            params: {
-                remuneracaoMin: debouncedSearch.intervaloRemuneracao[0],
-                remuneracaoMax: debouncedSearch.intervaloRemuneracao[1],
-                like: debouncedSearch.like,
-                ordenarPor: search.dados.ordenarPor,
-                uf: search.dados.uf,
-                municipio: search.dados.municipio,
-                nota: search.dados.nota,
-                tipo: search.dados.tipo,
-                subcategoria: search.dados.subcategoria
-            }
-        }),
+        obterPlantoes,
         [
             debouncedSearch.intervaloRemuneracao,
             debouncedSearch.like,
@@ -68,59 +70,53 @@ function Plantoes () {
         }
     );
 
-    useEffect(() => {
-        console.log(pesquisarPlantoes.result?.data);
-    }, [pesquisarPlantoes.result]);
-
-    useEffect(() => { console.log(search.dados.uf); }, [search.dados.uf]);
-
     return (
         <div className="page-plantoes" style={blurBackground ? { filter: 'blur(3px)' } : {}}>
             <NavBar tipoLinks="default" aba={1}/>
-            {pesquisarPlantoes.result?.data && (
-                <div className="pesquisaplantoes">
-                    <FiltrosPesquisa
-                        resultados={pesquisarPlantoes.result.data.resultados}
-                        count={pesquisarPlantoes.result.data.count}
-                    />
-                    {pesquisarPlantoes.result.data.resultados > 0
-                        ? (
-                            <span className="gridcontainer">
-                                <Grid
-                                    className="grid"
-                                    component="ul"
-                                    columns={2}
-                                    columnWidth={250}
-                                    itemHeight={125}
-                                    gutterWidth={13}
-                                    gutterHeight={13}
-                                    springConfig={{ stiffness: 170, damping: 26 }}
-                                >
-                                    {(pesquisarPlantoes.result.data.plantoes as Plantao[]).map(cardPlantao => {
-                                        return (
-                                            <li key={cardPlantao.idPlantao}>
-                                                <CardHospital
-                                                    plantao={cardPlantao}
-                                                    blurBackground={setBlurBackground}
-                                                />
-                                            </li>
+            <div className="pesquisaplantoes">
+                <FiltrosPesquisa
+                    resultados={pesquisarPlantoes.result?.data.resultados}
+                    count={pesquisarPlantoes.result?.data.count}
+                />
+                {pesquisarPlantoes.result?.data &&
+                    pesquisarPlantoes.result.data.resultados > 0
+                    ? (
+                        <span className="gridcontainer">
+                            <Grid
+                                className="grid"
+                                component="ul"
+                                columns={2}
+                                columnWidth={250}
+                                itemHeight={125}
+                                gutterWidth={13}
+                                gutterHeight={13}
+                                springConfig={{ stiffness: 170, damping: 26 }}
+                            >
+                                {(pesquisarPlantoes.result.data.plantoes as Plantao[]).map(cardPlantao => {
+                                    return (
+                                        <li key={cardPlantao.idPlantao}>
+                                            <CardHospital
+                                                plantao={cardPlantao}
+                                                blurBackground={setBlurBackground}
+                                            />
+                                        </li>
 
-                                        );
-                                    })}
-                                </Grid>
-                            </span>
-                        )
-                        : (
-                            <div className="sem-resultados">
-                                <img src={logoCinza} alt="Plantão Fácil" />
-                                <Typography variant="subtitle1" color="textSecondary">
-                                    Nenhum plantão foi encontrado para essa pesquisa
-                                </Typography>
-                            </div>
-                        )
-                    }
-                </div>
-            )}
+                                    );
+                                })}
+                            </Grid>
+                        </span>
+                    )
+                    : (
+                        <div className="sem-resultados">
+                            <img src={logoCinza} alt="Plantão Fácil" />
+                            <Typography variant="subtitle1" color="textSecondary">
+                                Nenhum plantão foi encontrado para essa pesquisa
+                            </Typography>
+                        </div>
+                    )
+                }
+                {/* )} */}
+            </div>
         </div>
     );
 }

@@ -12,8 +12,8 @@ import Dialog from '@material-ui/core/Dialog';
 import ModalAvaliacaoPlantao from '../ModalAvaliacaoPlantao';
 
 export interface PlantoesPesquisadosProps {
-    resultados: number;
-    count: resultados[];
+    resultados?: number;
+    count?: resultados[];
 }
 
 export type TipoPlantao = {
@@ -128,7 +128,7 @@ function FiltrosPesquisa ({ resultados, count }: PlantoesPesquisadosProps) {
                         key={tipo.id}
                         tipo={tipo}
                         expanded={filtrosExpanded === tipo.id}
-                        resultados={count.find(res => {
+                        resultados={count?.find(res => {
                             return res.tipo === tipo.id;
                         })}
                         handleChange={() => handleClickAccordionFiltros(tipo.id)}
