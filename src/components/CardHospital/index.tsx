@@ -6,6 +6,8 @@ import { Dialog } from '@material-ui/core';
 import ModalInfoPlantao from '../ModalInfoPlantao';
 import theme from '../../assets/styles/theme';
 import { Plantao } from '../../pages/plantoes/plantoes';
+import Typography from '@material-ui/core/Typography';
+import StarRating from '../StarRating';
 
 export interface InterfaceCardPlantao {
     plantao: Plantao;
@@ -14,6 +16,54 @@ export interface InterfaceCardPlantao {
 
 const useStyles = makeStyles(() =>
     createStyles({
+        root: {
+            width: '250px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            background: 'var(--cor-fundo-card)',
+            borderRadius: '12px',
+            padding: '12px',
+            transition: '0.4s',
+            cursor: 'pointer',
+            border: 'none',
+            '&:hover': {
+                background: 'var(--cor-fundo-card-hover)'
+            }
+        },
+        sumario: {
+            width: '100%',
+            height: '6rem',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            '& img': {
+                height: '100%',
+                width: 'auto',
+                marginRight: '1.2rem'
+            }
+        },
+        descricao: {
+            marginTop: '2.4rem',
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+        },
+        item: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start'
+        },
+        titulo: {
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: '-webkit-box',
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: 'vertical'
+        },
         container: {
             [theme.breakpoints.down('lg')]: {
                 // height: 'unset'
@@ -68,24 +118,42 @@ function CardHospital ({ plantao, blurBackground }: InterfaceCardPlantao) {
     }, [nomeHospitalCard]);
 
     return (
-        <div className="cardhospital">
-            <div className="partesuperior">
-                <h5>{nomeHospitalCard}</h5>
-                <button onClick={() => { setModalInfoCardAberto(true); }}>Mostrar mais +</button>
-            </div>
-            <div className="parteinferior">
-                <img src={plantao.icone} alt={plantao.nome}/>
-                <div className="dadoshospital">
-                    <div className="nota">
-                        <p className="descricao">Nota</p>
-                        <p className="valor">{plantao.nota}/5</p>
-                    </div>
-                    <div className="mediasalarial">
-                        <p className="descricao">Média Salarial</p>
-                        <p className="valor">R$ {plantao.media_salarial}/12H</p>
+        <>
+            <button className={classes.root} onClick={() => setModalInfoCardAberto(true)}>
+                <div className={classes.sumario}>
+                    <img src={plantao.icone} alt={plantao.nome}/>
+                    <div>
+                        <Typography
+                            variant="h5"
+                            align="left" className={classes.titulo}
+                        >
+                            {plantao.nome}
+                        </Typography>
                     </div>
                 </div>
-            </div>
+                <div className={classes.descricao}>
+                    <div className={classes.item}>
+                        <Typography
+                            variant="body1" gutterBottom
+                        >
+                            Nota
+                        </Typography>
+                        <StarRating value={plantao.nota} readonly/>
+                    </div>
+                    <div className={classes.item}>
+                        <Typography
+                            variant="body1" gutterBottom
+                        >
+                            Média Salarial
+                        </Typography>
+                        <Typography
+                            variant="body1" gutterBottom
+                        >
+                            R$ {plantao.media_salarial}/12H
+                        </Typography>
+                    </div>
+                </div>
+            </button>
             <Dialog
                 open={modalInfoCardAberto}
                 onClose={() => { setModalInfoCardAberto(false); }}
@@ -102,7 +170,7 @@ function CardHospital ({ plantao, blurBackground }: InterfaceCardPlantao) {
                     blurBackground={blurBackground}
                 />
             </Dialog>
-        </div>
+        </>
     );
 }
 

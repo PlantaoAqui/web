@@ -87,7 +87,7 @@ function Plantoes () {
                                 component="ul"
                                 columns={2}
                                 columnWidth={250}
-                                itemHeight={125}
+                                itemHeight={145}
                                 gutterWidth={13}
                                 gutterHeight={13}
                                 springConfig={{ stiffness: 170, damping: 26 }}
