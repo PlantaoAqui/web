@@ -50,7 +50,7 @@ const useStyles = makeStyles(() =>
             justifyContent: 'space-between'
         },
         texto: {
-            marginTop: theme.spacing(5),
+            marginTop: theme.spacing(2),
             marginLeft: '4.2rem'
         },
         interacaoComentario: {

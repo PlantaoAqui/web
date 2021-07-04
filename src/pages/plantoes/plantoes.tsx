@@ -55,7 +55,11 @@ const useStyles = makeStyles(theme =>
             alignItems: 'center',
             justifyContent: 'center',
             width: 'max-content',
-            margin: '35vh auto'
+            margin: '35vh auto',
+            textAlign: 'center',
+            '& img': {
+                marginBottom: theme.spacing(3)
+            }
         }
     })
 );
@@ -140,8 +144,11 @@ function Plantoes () {
                     : (
                         <div className={classes.semResultados}>
                             <img src={logoCinza} alt="Plantão Fácil" />
-                            <Typography variant="subtitle1" color="textSecondary">
-                                Nenhum plantão foi encontrado para essa pesquisa
+                            <Typography
+                                variant="subtitle1" color="textSecondary"
+                                style={{ lineHeight: 1.25 }}
+                            >
+                                Nenhum plantão foi encontrado <br /> para essa pesquisa
                             </Typography>
                         </div>
                     )

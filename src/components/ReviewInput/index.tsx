@@ -70,7 +70,7 @@ function ReviewInput (props: ReviewInputProps) {
             {props.pergunta && (
                 <div className={classes.review}>
                     <Typography color="textPrimary"
-                        variant="subtitle2"
+                        variant="body1" style={{ fontWeight: 500 }}
                     >
                         {props.textoPergunta}
                     </Typography>
