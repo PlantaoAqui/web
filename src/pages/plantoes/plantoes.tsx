@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CardHospital from '../../components/CardHospital';
 import FiltrosPesquisa from '../../components/FiltrosPesquisa';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import NavBar from '../../components/NavBar';
 import makeResponsive from '../../components/Stonecutter/higher-order-components/makeResponsive';
 import measureItems from '../../components/Stonecutter/higher-order-components/measureItems';
@@ -30,8 +31,38 @@ const Grid = makeResponsive(measureItems(SpringGrid), {
     widthCoef: 1.6
 });
 
+const useStyles = makeStyles(theme =>
+    createStyles({
+        root: {
+            width: '250px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            background: 'var(--cor-fundo-card)',
+            borderRadius: '12px',
+            padding: theme.spacing(3),
+            transition: '0.4s',
+            cursor: 'pointer',
+            border: 'none',
+            '&:hover': {
+                background: 'var(--cor-fundo-card-hover)'
+            }
+        },
+        semResultados: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 'max-content',
+            margin: '35vh auto'
+        }
+    })
+);
+
 function Plantoes () {
     const search = useSearch();
+    const classes = useStyles();
     const [debouncedSearch] = useDebounce(search.dados, 500);
     const [blurBackground, setBlurBackground] = useState(false);
 
@@ -87,7 +118,7 @@ function Plantoes () {
                                 component="ul"
                                 columns={2}
                                 columnWidth={250}
-                                itemHeight={145}
+                                itemHeight={133}
                                 gutterWidth={13}
                                 gutterHeight={13}
                                 springConfig={{ stiffness: 170, damping: 26 }}
@@ -107,7 +138,7 @@ function Plantoes () {
                         </span>
                     )
                     : (
-                        <div className="sem-resultados">
+                        <div className={classes.semResultados}>
                             <img src={logoCinza} alt="Plantão Fácil" />
                             <Typography variant="subtitle1" color="textSecondary">
                                 Nenhum plantão foi encontrado para essa pesquisa
@@ -115,7 +146,6 @@ function Plantoes () {
                         </div>
                     )
                 }
-                {/* )} */}
             </div>
         </div>
     );

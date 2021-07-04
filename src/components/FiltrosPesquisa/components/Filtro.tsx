@@ -28,7 +28,7 @@ export type resultados = {
     }>;
 };
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
     createStyles({
         root: {
             width: '100%',
@@ -64,7 +64,7 @@ const useStyles = makeStyles(() =>
         },
         detalhes: {
             width: '100%',
-            borderTop: '1px solid var(--cor-borda-campos)',
+            borderTop: `1px solid ${theme.palette.divider}`,
             paddingTop: '0.6rem'
         },
         subOpcao: {
@@ -112,15 +112,19 @@ function Filtro ({ tipo, expanded, resultados, handleChange }: FiltroProps) {
                     <div className={classes.filtro}>
                         <img src={tipo.icone} alt={tipo.nome}/>
                         <div>
-                            <p className={classes.nomeFiltro}>{tipo.nome}</p>
-                            <p className={classes.resultados}>{resultados?.count || 0} plantões encontrados</p>
+                            <Typography variant="body1" color="textPrimary" gutterBottom>
+                                {tipo.nome}
+                            </Typography>
+                            <Typography variant="body1" color="textSecondary" gutterBottom>
+                                {resultados?.count || 0} plantões encontrados
+                            </Typography>
                         </div>
                     </div>
                 </AccordionSummary>
                 <AccordionDetails className={classes.rootDetails}>
                     <div className={classes.detalhes}>
                         <Typography gutterBottom
-                            variant="h5" color="textSecondary"
+                            variant="body1" color="textSecondary"
                         >
                             Subcategorias
                         </Typography>
@@ -152,14 +156,15 @@ function Filtro ({ tipo, expanded, resultados, handleChange }: FiltroProps) {
                                         label={
                                             <>
                                                 <Typography
-                                                    variant="h5"
+                                                    variant="body1"
                                                     color="textPrimary"
                                                     style={{ flex: 1 }}
                                                 >
                                                     {sub.nome}
                                                 </Typography>
                                                 <Typography
-                                                    variant="h5"
+                                                    variant="body1"
+                                                    color="textSecondary"
                                                 >
                                                     {resultados?.subcategoria.find(item => {
                                                         return item.subcategoria === sub.id;

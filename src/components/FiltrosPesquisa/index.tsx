@@ -98,12 +98,12 @@ function FiltrosPesquisa ({ resultados, count }: PlantoesPesquisadosProps) {
                 onClick={() => setModalAvaliacaoHospitalAberto(true)}
             />
             <div className={classes.resultados}>
-                <Typography variant="h5"
+                <Typography variant="body1"
                     color="textSecondary"
                 >
                     Plantoes encontrados
                 </Typography>
-                <Typography variant="h5"
+                <Typography variant="body1"
                     color="textPrimary"
                 >
                     {resultados === 0
@@ -111,13 +111,13 @@ function FiltrosPesquisa ({ resultados, count }: PlantoesPesquisadosProps) {
                         : resultados} plantões
                 </Typography>
             </div>
-            <Typography variant="h5" gutterBottom
+            <Typography variant="subtitle1" gutterBottom
                 className={classes.indices}
             >
                 Filtros
             </Typography>
             <FiltroBase/>
-            <Typography variant="h5" gutterBottom
+            <Typography variant="subtitle1" gutterBottom
                 className={classes.indices}
             >
                 Filtrar por Categorias de Plantão

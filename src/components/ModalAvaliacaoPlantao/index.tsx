@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import ReviewInput from '../ReviewInput';
 import TextInput from '../TextInput';
-import './styles.css';
 import TextAreaInput from '../TextAreaInput';
 import Button from '../Button';
 import SelectInput from '../SelectInput';
@@ -11,13 +11,17 @@ import CurrencyInput from 'react-currency-input-field';
 import axios from 'axios';
 import api from '../../services/api';
 import AsyncAutocomplete from '../AsyncAutocomplete';
+import Typography from '@material-ui/core/Typography';
+import { useSnackbar } from 'notistack';
+import { IconButton } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 
 interface ModalAvaliacaoPlantaoProps {
     subcategoria?: number;
     idPlantao?: number;
     idHospital?: number;
     nomeHospital?: string;
-    onClose: (close: boolean) => void;
+    onClose: () => void;
 }
 
 type itemSelect = {
@@ -31,7 +35,76 @@ type groupSelect = {
     subcategorias: Array<itemSelect>;
 };
 
+const useStyles = makeStyles(theme =>
+    createStyles({
+        root: {
+            background: theme.palette.background.paper,
+            borderRadius: theme.spacing(2),
+            padding: theme.spacing(3),
+            position: 'relative'
+        },
+        titulo: {
+            fontWeight: 500,
+            marginBottom: theme.spacing(6)
+        },
+        plantao: {
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            gap: theme.spacing(3),
+            marginBottom: theme.spacing(3)
+        },
+        colunaCampos: {
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch',
+            gap: theme.spacing(2)
+        },
+        tituloColunaCampos: {
+            marginBottom: '-0.6rem',
+            fontWeight: 500
+        },
+        textoColuna: {
+            padding: theme.spacing(2)
+        },
+        observacoes: {
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            gap: theme.spacing(2),
+            marginBottom: theme.spacing(3)
+        },
+        avaliacoes: {
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch',
+            gap: theme.spacing(2),
+            border: `1px solid ${theme.palette.divider}`,
+            borderRadius: theme.spacing(2),
+            padding: theme.spacing(2)
+        },
+        closeButtonContainer: {
+            position: 'absolute',
+            top: -theme.spacing(4),
+            left: -theme.spacing(3),
+            width: '2.8rem',
+            height: '2.8rem',
+            borderRadius: '50%',
+            background: theme.palette.grey[400]
+        },
+        closeButton: {
+            width: '100%',
+            height: '100%'
+        }
+    })
+);
+
 function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
+    const classes = useStyles();
+    const { enqueueSnackbar } = useSnackbar();
     const formik = useFormik({
         initialValues: {
             id_hospital: props.idHospital || 0,
@@ -73,11 +146,20 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
         }),
         onSubmit: async () => {
             await api.post('/avaliacoes', formik.values)
-                .then(() => props.onClose(true))
-                .catch((error) => console.log(error));
+                .then(() => {
+                    enqueueSnackbar('Plantão registrado com sucesso',
+                        { variant: 'success' });
+                    props.onClose();
+                })
+                .catch((error) => {
+                    enqueueSnackbar('Ocorreu um erro ao registrar o palntão',
+                        { variant: 'error' });
+                    console.log(error);
+                });
         }
     });
 
+    const [jaAvaliado, setJaAvaliado] = useState(false);
     const [tipo, setTipo] = useState('');
     const [dataPlantao, setDataPlantao] = useState('');
     const [estado, setEstado] = useState('');
@@ -181,6 +263,7 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
                     atrasado: Boolean(response.data.atrasado)
                 }
             });
+            setJaAvaliado(true);
         } catch (error) {
             console.log(error);
         }
@@ -211,13 +294,67 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
     }, [estado]);
 
     return (
-        <div className="modalavaliacaoplantao">
-            <div className="cabecalho">
-                <h1>Inserir Nova Avalição</h1>
-            </div>
+        <div className={classes.root}>
+            <Typography color="textPrimary" variant="h4"
+                className={classes.titulo}
+            >
+                {jaAvaliado ? 'Inserir Novo Plantão' : 'Inserir Nova Avalição'}
+            </Typography>
             <form onSubmit={formik.handleSubmit}>
-                <div className="instituicao">
-                    <div className="linha">
+                <div className={classes.plantao}>
+                    <div className={classes.colunaCampos}>
+                        <Typography color="textPrimary" variant="subtitle1"
+                            className={classes.tituloColunaCampos}
+                        >
+                            Instituição avaliada
+                        </Typography>
+                        <SelectInput
+                            value={estado}
+                            default="Estado"
+                            handleChange={(e) => {
+                                setEstado(e.target.value);
+                                setCidade('');
+                            }}
+                            items={estados}
+                            keyMap={item => item.id}
+                            valueMap={item => item.nome}
+                        />
+                        <SelectInput
+                            name="cidade"
+                            value={cidade}
+                            default="Cidade"
+                            handleChange={(e) => {
+                                setCidade(e.target.value);
+                            }}
+                            items={cidades}
+                            keyMap={item => item.id}
+                            valueMap={item => item.nome}
+                        />
+                        <AsyncAutocomplete
+                            getOptions={listarInstituicoes}
+                            value={instituicao}
+                            onChange={(_event, newValue) => {
+                                if (newValue) {
+                                    setInstituicao(newValue);
+                                    formik.setValues({ ...formik.values, id_hospital: newValue.id });
+                                }
+                            }}
+                            getOptionLabel={(option) => option?.nome || ''}
+                            getOptionSelected={(option, value) => option?.nome === value?.nome}
+                            placeholder="Instituição"
+                        />
+                        <Typography color="textSecondary"
+                            variant="caption" className={classes.textoColuna}
+                        >
+                            A instituição que você trabalhou ainda não esta cadastrada no sistema? <a href="#">clique aqui.</a>
+                        </Typography>
+                    </div>
+                    <div className={classes.colunaCampos}>
+                        <Typography color="textPrimary" variant="subtitle1"
+                            className={classes.tituloColunaCampos}
+                        >
+                            Meu Plantão
+                        </Typography>
                         <SelectInput
                             name="id_subcategoria"
                             value={tipo}
@@ -251,19 +388,6 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
                             placeholder="Data do Plantão"
                             data
                         />
-                    </div>
-                    <div className="linha">
-                        <SelectInput
-                            value={estado}
-                            default="Estado"
-                            handleChange={(e) => {
-                                setEstado(e.target.value);
-                                setCidade('');
-                            }}
-                            items={estados}
-                            keyMap={item => item.id}
-                            valueMap={item => item.nome}
-                        />
                         <CurrencyInput
                             placeholder="Remuneração"
                             decimalScale={2}
@@ -283,19 +407,6 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
                                 });
                             }}
                         />
-                    </div>
-                    <div className="linha">
-                        <SelectInput
-                            name="cidade"
-                            value={cidade}
-                            default="Cidade"
-                            handleChange={(e) => {
-                                setCidade(e.target.value);
-                            }}
-                            items={cidades}
-                            keyMap={item => item.id}
-                            valueMap={item => item.nome}
-                        />
                         <SelectInput
                             name="avaliacao.id_horas"
                             value={tempoPlantao}
@@ -310,87 +421,91 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
                             valueMap={item => item.horas}
                         />
                     </div>
-                    <div className="linha">
-                        <AsyncAutocomplete
-                            getOptions={listarInstituicoes}
-                            value={instituicao}
-                            onChange={(_event, newValue) => {
-                                if (newValue) {
-                                    setInstituicao(newValue);
-                                    formik.setValues({ ...formik.values, id_hospital: newValue.id });
-                                }
-                            }}
-                            getOptionLabel={(option) => option?.nome || ''}
-                            getOptionSelected={(option, value) => option?.nome === value?.nome}
-                            placeholder="Instituição"
-                        />
-                        <p>A instituição que você trabalhou ainda não esta cadastrada no sistema? <a href="#">clique aqui.</a></p>
-                    </div>
                 </div>
-                <hr/>
-                <div className="avaliacao">
-                    <ReviewInput
-                        name="avaliacaoFixa.infraestrutura"
-                        titulo="Infraestrutura"
-                        descricao="Salas, consultórios, conforto médico, UTI, centro cirurgico, etc."
-                        nota={formik.values.avaliacaoFixa.infraestrutura}
-                        handleChange={formik.handleChange}
-
-                    />
-                    <ReviewInput
-                        name="avaliacaoFixa.equipamento"
-                        titulo="Equipamentos"
-                        descricao="Insumos, materiais, maquinas em funcionamento, usg, etc."
-                        nota={formik.values.avaliacaoFixa.equipamento}
-                        handleChange={formik.handleChange}
-                    />
-                    <ReviewInput
-                        name="avaliacaoFixa.equipe"
-                        titulo="Equipe de Saúde"
-                        descricao="Responsabilidade, empatia, organização, capacidade técnica."
-                        nota={formik.values.avaliacaoFixa.equipe}
-                        handleChange={formik.handleChange}
-                    />
-                    <ReviewInput
-                        name="avaliacaoFixa.seguranca"
-                        titulo="Segurança do Médico"
-                        descricao="Sobrecarga de pacientes, exposição a riscos e complicações."
-                        nota={formik.values.avaliacaoFixa.seguranca}
-                        handleChange={formik.handleChange}
-                    />
-                    <ReviewInput
-                        name="avaliacaoFixa.pagamento"
-                        titulo="Pagamento"
-                        descricao="Considera o valor justo pelo trabalho executado?"
-                        nota={formik.values.avaliacaoFixa.pagamento}
-                        handleChange={formik.handleChange}
-                        pergunta
-                        textoPergunta="Pagamento dentro do prazo?"
-                        valorPergunta={!formik.values.avaliacaoFixa.atrasado}
-                        handleChangePergunta={(_, value) => {
-                            formik.setValues({
-                                ...formik.values,
-                                avaliacaoFixa: {
-                                    ...formik.values.avaliacaoFixa,
-                                    atrasado: value !== 'true'
-                                }
-                            });
-                        }}
-                    />
+                <div className={classes.observacoes}>
+                    <Typography color="textPrimary" variant="subtitle1"
+                        className={classes.tituloColunaCampos}
+                    >
+                        Observações pessoais
+                    </Typography>
                     <TextAreaInput
-                        titulo="Comentários"
                         descricao="250 caracteres"
                         name="avaliacaoFixa.comentario"
                         onChange={formik.handleChange}
                         value={formik.values.avaliacaoFixa.comentario}
                     />
-                    <Button
-                        background="#7BB2ED"
-                        texto="Submeter avaliação"
-                        type="submit"
-                    />
                 </div>
+                <div className={classes.observacoes}>
+                    <Typography color="textPrimary" variant="subtitle1"
+                        className={classes.tituloColunaCampos}
+                    >
+                        Avaliação
+                    </Typography>
+                    <div className={classes.avaliacoes}>
+                        <ReviewInput
+                            name="avaliacaoFixa.infraestrutura"
+                            titulo="Infraestrutura"
+                            descricao="Salas, consultórios, conforto médico, UTI, centro cirurgico, etc."
+                            nota={formik.values.avaliacaoFixa.infraestrutura}
+                            handleChange={formik.handleChange}
+
+                        />
+                        <ReviewInput
+                            name="avaliacaoFixa.equipamento"
+                            titulo="Equipamentos"
+                            descricao="Insumos, materiais, maquinas em funcionamento, usg, etc."
+                            nota={formik.values.avaliacaoFixa.equipamento}
+                            handleChange={formik.handleChange}
+                        />
+                        <ReviewInput
+                            name="avaliacaoFixa.equipe"
+                            titulo="Equipe de Saúde"
+                            descricao="Responsabilidade, empatia, organização, capacidade técnica."
+                            nota={formik.values.avaliacaoFixa.equipe}
+                            handleChange={formik.handleChange}
+                        />
+                        <ReviewInput
+                            name="avaliacaoFixa.seguranca"
+                            titulo="Segurança do Médico"
+                            descricao="Sobrecarga de pacientes, exposição a riscos e complicações."
+                            nota={formik.values.avaliacaoFixa.seguranca}
+                            handleChange={formik.handleChange}
+                        />
+                        <ReviewInput
+                            name="avaliacaoFixa.pagamento"
+                            titulo="Pagamento"
+                            descricao="Considera o valor justo pelo trabalho executado?"
+                            nota={formik.values.avaliacaoFixa.pagamento}
+                            handleChange={formik.handleChange}
+                            pergunta
+                            textoPergunta="Pagamento dentro do prazo?"
+                            valorPergunta={!formik.values.avaliacaoFixa.atrasado}
+                            handleChangePergunta={(_, value) => {
+                                formik.setValues({
+                                    ...formik.values,
+                                    avaliacaoFixa: {
+                                        ...formik.values.avaliacaoFixa,
+                                        atrasado: value !== 'true'
+                                    }
+                                });
+                            }}
+                        />
+                    </div>
+                </div>
+                <Button
+                    background="#7BB2ED"
+                    texto={jaAvaliado ? 'Submeter plantão' : 'Submeter avaliação'}
+                    type="submit"
+                />
             </form>
+            <div className={classes.closeButtonContainer}>
+                <IconButton aria-label="fechar"
+                    className={classes.closeButton}
+                    onClick={props.onClose}
+                >
+                    <CloseIcon/>
+                </IconButton>
+            </div>
         </div>
     );
 }

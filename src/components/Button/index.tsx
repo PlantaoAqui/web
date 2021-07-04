@@ -12,8 +12,8 @@ const useStyles = makeStyles(() =>
             border: 'none',
             height: '4rem',
             cursor: 'pointer',
-            textTransform: 'none',
-            font: '400 1.4rem SFProText',
+            // textTransform: 'none',
+            // font: '400 1.4rem SFProText',
             color: 'var(--cor-texto-escuro)'
         }
     })

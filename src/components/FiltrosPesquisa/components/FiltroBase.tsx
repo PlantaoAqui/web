@@ -162,7 +162,7 @@ function FiltroBase () {
     return (
         <div className={classes.root}>
             <div className={classes.selectBox}>
-                <Typography color="textPrimary" variant="h6">
+                <Typography color="textPrimary" variant="body1">
                     Ordenar por
                 </Typography>
                 <SelectInputSlim
@@ -179,7 +179,7 @@ function FiltroBase () {
                 />
             </div>
             <div className={classes.selectBox}>
-                <Typography color="textPrimary" variant="h6">
+                <Typography color="textPrimary" variant="body1">
                     Estado
                 </Typography>
                 <SelectInputSlim
@@ -199,7 +199,7 @@ function FiltroBase () {
                 />
             </div>
             <div className={classes.selectBox}>
-                <Typography color="textPrimary" variant="h6">
+                <Typography color="textPrimary" variant="body1">
                     Cidade
                 </Typography>
                 <SelectInputSlim
@@ -218,7 +218,7 @@ function FiltroBase () {
                 />
             </div>
             <div className={classes.avaliacao}>
-                <Typography color="textPrimary" variant="h6" gutterBottom>
+                <Typography color="textPrimary" variant="body1" gutterBottom>
                     Nota da instituição
                 </Typography>
                 <StarRating
@@ -229,7 +229,7 @@ function FiltroBase () {
                 />
             </div>
             <div className={classes.remuneracao}>
-                <Typography color="textPrimary" variant="h6" gutterBottom>
+                <Typography color="textPrimary" variant="body1" gutterBottom>
                     Remuneração/ Hora
                 </Typography>
                 <IOSSlider
@@ -238,10 +238,10 @@ function FiltroBase () {
                     valueLabelDisplay="off" max={3000}
                 />
                 <div className={classes.faixaPreco}>
-                    <Typography color="textSecondary" variant="h6">
+                    <Typography color="textSecondary" variant="body1">
                         R$ {search.dados.intervaloRemuneracao[0]}
                     </Typography>
-                    <Typography color="textSecondary" variant="h6">
+                    <Typography color="textSecondary" variant="body1">
                         R$ {search.dados.intervaloRemuneracao[1]}
                     </Typography>
                 </div>

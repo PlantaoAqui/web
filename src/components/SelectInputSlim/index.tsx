@@ -13,7 +13,7 @@ interface SelectInputSlimProps<T> {
     valueMap: (record: T) => string;
 }
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
     createStyles({
         fullWidth: {
             width: '100%'
@@ -21,13 +21,12 @@ const useStyles = makeStyles(() =>
         select: {
             outline: 'none',
             background: 'transparent',
-            color: 'var(--cor-texto-escuro)',
-            font: '400 1.2rem SFProText',
+            fontFamily: theme.typography.fontFamily,
+            fontWeight: theme.typography.body1.fontWeight,
+            fontSize: theme.typography.body1.fontSize,
+            color: theme.palette.text.secondary,
             cursor: 'pointer',
-            border: 'none',
-            '&:after': {
-                color: 'red'
-            }
+            border: 'none'
         }
     })
 );

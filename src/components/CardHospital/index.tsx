@@ -4,7 +4,6 @@ import './styles.css';
 
 import { Dialog } from '@material-ui/core';
 import ModalInfoPlantao from '../ModalInfoPlantao';
-import theme from '../../assets/styles/theme';
 import { Plantao } from '../../pages/plantoes/plantoes';
 import Typography from '@material-ui/core/Typography';
 import StarRating from '../StarRating';
@@ -14,7 +13,7 @@ export interface InterfaceCardPlantao {
     blurBackground: (e: boolean) => void;
 }
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
     createStyles({
         root: {
             width: '250px',
@@ -24,7 +23,7 @@ const useStyles = makeStyles(() =>
             justifyContent: 'space-between',
             background: 'var(--cor-fundo-card)',
             borderRadius: '12px',
-            padding: '12px',
+            padding: theme.spacing(3),
             transition: '0.4s',
             cursor: 'pointer',
             border: 'none',
@@ -34,18 +33,18 @@ const useStyles = makeStyles(() =>
         },
         sumario: {
             width: '100%',
-            height: '6rem',
+            height: '4.8rem',
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'flex-start',
             '& img': {
                 height: '100%',
                 width: 'auto',
-                marginRight: '1.2rem'
+                marginRight: theme.spacing(5)
             }
         },
         descricao: {
-            marginTop: '2.4rem',
+            marginTop: theme.spacing(4),
             width: '100%',
             display: 'flex',
             flexDirection: 'row',
@@ -124,7 +123,7 @@ function CardHospital ({ plantao, blurBackground }: InterfaceCardPlantao) {
                     <img src={plantao.icone} alt={plantao.nome}/>
                     <div>
                         <Typography
-                            variant="h5"
+                            variant="body2" color="textPrimary"
                             align="left" className={classes.titulo}
                         >
                             {plantao.nome}
@@ -134,7 +133,7 @@ function CardHospital ({ plantao, blurBackground }: InterfaceCardPlantao) {
                 <div className={classes.descricao}>
                     <div className={classes.item}>
                         <Typography
-                            variant="body1" gutterBottom
+                            variant="body1" color="textSecondary" gutterBottom
                         >
                             Nota
                         </Typography>
@@ -142,7 +141,7 @@ function CardHospital ({ plantao, blurBackground }: InterfaceCardPlantao) {
                     </div>
                     <div className={classes.item}>
                         <Typography
-                            variant="body1" gutterBottom
+                            variant="body1" color="textSecondary" gutterBottom
                         >
                             Média Salarial
                         </Typography>
@@ -167,7 +166,7 @@ function CardHospital ({ plantao, blurBackground }: InterfaceCardPlantao) {
             >
                 <ModalInfoPlantao
                     plantao={plantao}
-                    blurBackground={blurBackground}
+                    onClose={() => setModalInfoCardAberto(false)}
                 />
             </Dialog>
         </>

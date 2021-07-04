@@ -1,3 +1,4 @@
+import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import SearchContextProvider from '../../contexts/SearchContextProvider';
 import Plantoes from './plantoes';
@@ -7,7 +8,9 @@ function PlantoesContextsProvider () {
         <SearchContextProvider
             intervaloRemuneracaoDefault={[300, 2500]}
         >
-            <Plantoes/>
+            <SnackbarProvider maxSnack={3}>
+                <Plantoes/>
+            </SnackbarProvider>
         </SearchContextProvider>
     );
 }

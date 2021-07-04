@@ -8,6 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import BotaoCurtida from './BotaoCurtida';
 import IconeCurtida from '../../../assets/images/icones/curtida.svg';
 import api from '../../../services/api';
+import theme from '../../../assets/styles/theme';
 
 interface ComentarioProps {
     comentario: comentario;
@@ -21,7 +22,7 @@ const useStyles = makeStyles(() =>
             flexDirection: 'column',
             alignItems: 'stretch',
             background: 'transparent',
-            border: '1px solid var(--cor-borda-campos)',
+            border: `1px solid ${theme.palette.divider}`,
             borderRadius: '0.8rem'
         },
         sumario: {
@@ -49,8 +50,8 @@ const useStyles = makeStyles(() =>
             justifyContent: 'space-between'
         },
         texto: {
-            marginTop: '2.4rem',
-            marginLeft: '4.4rem'
+            marginTop: theme.spacing(5),
+            marginLeft: '4.2rem'
         },
         interacaoComentario: {
             marginTop: '1.2rem',
@@ -157,12 +158,12 @@ function Comentario ({ comentario }: ComentarioProps) {
                     </Avatar>
                     <div className={classes.nomeUsuario}>
                         <Typography
-                            variant="h6"
+                            variant="body1" color="textPrimary"
                         >
                             {comentario.nomeUsuario}
                         </Typography>
                         <Typography
-                            variant="body1"
+                            variant="caption" color="textSecondary"
                         >
                             {formatarData(comentario.data)}
                         </Typography>
@@ -193,7 +194,7 @@ function Comentario ({ comentario }: ComentarioProps) {
                     {numeroCurtidas > 0 && (
                         <>
                             <Typography
-                                variant="subtitle1"
+                                variant="body1"
                                 className={classes.numeroCurtidas}
                             >
                                 {numeroCurtidas}

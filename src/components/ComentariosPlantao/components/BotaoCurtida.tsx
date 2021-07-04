@@ -10,7 +10,7 @@ interface BotaoCurtidaProps {
 const useStyles = makeStyles((theme) =>
     createStyles({
         botaoCurtida: {
-            marginRight: '1.2rem',
+            marginRight: theme.spacing(3),
             background: 'transparent',
             border: 'none',
             cursor: 'pointer'
@@ -33,7 +33,7 @@ function BotaoCurtida (props: BotaoCurtidaProps) {
             onClick={props.handleCurtida}
         >
             <Typography
-                variant="subtitle1"
+                variant="body1"
                 className={props.curtida ? classes.textoCurtida : classes.texto}
             >
                 Curtir

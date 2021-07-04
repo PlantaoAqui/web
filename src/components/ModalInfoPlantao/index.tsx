@@ -5,7 +5,6 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import './styles.css';
 
 import Dialog from '@material-ui/core/Dialog';
-import { InterfaceCardPlantao } from '../CardHospital';
 import api from '../../services/api';
 
 import ModalAvaliacaoPlantao from '../ModalAvaliacaoPlantao';
@@ -16,6 +15,14 @@ import { IconButton, Tooltip } from '@material-ui/core';
 
 import MapIcon from '@material-ui/icons/Map';
 import Button from '../Button';
+import LinhaReview from './components/LinhaReview';
+import CloseIcon from '@material-ui/icons/Close';
+import { Plantao } from '../../pages/plantoes/plantoes';
+
+type ModalInfoPlantaoProps = {
+    plantao: Plantao;
+    onClose: () => void;
+};
 
 type DetalhesPlantao = {
     idPlantao: number;
@@ -57,11 +64,12 @@ type ConfiguracaoGraficos = {
     }
 };
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
     createStyles({
         root: {
             height: '80vh',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            position: 'relative'
         },
         cardInfo: {
             background: 'var(--cor-fundo-card)',
@@ -81,19 +89,19 @@ const useStyles = makeStyles(() =>
             flexDirection: 'row',
             alignContent: 'flex-start',
             justifyContent: 'space-between',
-            marginBottom: '2.8rem'
+            marginBottom: theme.spacing(6)
         },
         infoHospitalContainer: {
             width: '100%',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: 'auto'
+            justifyContent: 'space-between'
         },
         iconePlantao: {
             width: '4.8rem',
-            height: 'auto'
+            height: 'auto',
+            marginLeft: theme.spacing(4)
         },
         sumarioTooltip: {
             width: '100%',
@@ -103,7 +111,7 @@ const useStyles = makeStyles(() =>
         },
         infoHospital: {
             alignSelf: 'flex-start',
-            marginBottom: '1.2rem'
+            marginBottom: theme.spacing(3)
         },
         infoHospitalDupla: {
             width: '100%',
@@ -111,14 +119,28 @@ const useStyles = makeStyles(() =>
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignContent: 'flex-start',
-            marginBottom: '1.2rem'
+            marginBottom: theme.spacing(3)
         },
         infoHospitalDuplaItem: {
             width: '50%',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'space-between',
             alignContent: 'flex-start'
+        },
+        notaAvaliacao: {
+            borderTop: `1px solid ${theme.palette.divider}`,
+            paddingTop: theme.spacing(5),
+            width: '100%'
+        },
+        rodapeAvaliacao: {
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'flex-end',
+            justifyContent: 'space-between'
+        },
+        grafico: {
+            width: '100%',
+            marginBottom: theme.spacing(3)
         },
         tiposPlantao: {
             width: '100%',
@@ -130,11 +152,24 @@ const useStyles = makeStyles(() =>
                 height: 'auto',
                 display: 'cover'
             }
+        },
+        closeButtonContainer: {
+            position: 'absolute',
+            top: -theme.spacing(4),
+            left: -theme.spacing(3),
+            width: '2.8rem',
+            height: '2.8rem',
+            borderRadius: '50%',
+            background: theme.palette.grey[400]
+        },
+        closeButton: {
+            width: '100%',
+            height: '100%'
         }
     })
 );
 
-function ModalInfoPlantao ({ plantao }: InterfaceCardPlantao) {
+function ModalInfoPlantao ({ plantao, onClose }: ModalInfoPlantaoProps) {
     const classes = useStyles();
     const [modalAvaliacaoPlantaoAberto, setModalAvaliacaoPlantaoAberto] = useState(false);
     const [idPlantao, setIdPlantao] = useState(plantao.idPlantao);
@@ -315,7 +350,7 @@ function ModalInfoPlantao ({ plantao }: InterfaceCardPlantao) {
                     <div className={classes.cardInfo}>
                         <div className={classes.sumarioPlantao}>
                             <Typography color="textPrimary"
-                                variant="h5" gutterBottom
+                                variant="subtitle1" style={{ lineHeight: 1.25 }}
                             >
                                 {plantao.nome}
                             </Typography>
@@ -326,12 +361,12 @@ function ModalInfoPlantao ({ plantao }: InterfaceCardPlantao) {
                         <div className={classes.infoHospitalContainer}>
                             <div className={classes.infoHospital}>
                                 <Typography color="textPrimary"
-                                    variant="h6"
+                                    variant="body1" gutterBottom
                                 >
                                     Tipo de plantão
                                 </Typography>
                                 <Typography color="textSecondary"
-                                    variant="h6" gutterBottom
+                                    variant="body1" gutterBottom
                                 >
                                     {informacoes.subcategoria}
                                 </Typography>
@@ -339,7 +374,7 @@ function ModalInfoPlantao ({ plantao }: InterfaceCardPlantao) {
                             <div className={classes.infoHospital}>
                                 <div className={classes.sumarioTooltip}>
                                     <Typography color="textPrimary"
-                                        variant="h6"
+                                        variant="body1"
                                         style={{ marginRight: '0.6rem' }}
                                     >
                                         Endereço
@@ -347,7 +382,7 @@ function ModalInfoPlantao ({ plantao }: InterfaceCardPlantao) {
                                     <Tooltip arrow
                                         title={
                                             <Typography
-                                                variant="subtitle1"
+                                                variant="subtitle2"
                                             >
                                                 Abrir no maps
                                             </Typography>
@@ -363,7 +398,7 @@ function ModalInfoPlantao ({ plantao }: InterfaceCardPlantao) {
                                     </Tooltip>
                                 </div>
                                 <Typography color="textSecondary"
-                                    variant="h6" gutterBottom
+                                    variant="body1" gutterBottom
                                 >
                                     {informacoes.endereco}, {informacoes.numero}
                                 </Typography>
@@ -371,158 +406,203 @@ function ModalInfoPlantao ({ plantao }: InterfaceCardPlantao) {
                             <div className={classes.infoHospitalDupla}>
                                 <div className={classes.infoHospitalDuplaItem}>
                                     <Typography color="textPrimary"
-                                        variant="h6"
+                                        variant="body1" gutterBottom
                                     >
                                         CNPJ
                                     </Typography>
                                     <Typography color="textSecondary"
-                                        variant="h6" gutterBottom
+                                        variant="body1"
                                     >
                                         {parseInt(informacoes.cnpj) === 0 ? '-' : informacoes.cnpj}
                                     </Typography>
                                 </div>
                                 <div className={classes.infoHospitalDuplaItem}>
                                     <Typography color="textPrimary"
-                                        variant="h6"
+                                        variant="body1" gutterBottom
                                     >
                                         Bairro
                                     </Typography>
                                     <Typography color="textSecondary"
-                                        variant="h6" gutterBottom
+                                        variant="body1"
                                     >
                                         {informacoes.bairro}
                                     </Typography>
                                 </div>
                             </div>
-                            {informacoes.tambem.length > 0 && (
-                                <div className={classes.infoHospital}>
-                                    <Typography color="textPrimary"
-                                        variant="h6" gutterBottom
-                                    >
-                                        Também desse hospital
-                                    </Typography>
-                                    <div className={classes.tiposPlantao}>
-                                        {informacoes.tambem.map(plantaoOferecido => {
-                                            return (
-                                                <Tooltip arrow
-                                                    key={plantaoOferecido.idPlantao}
-                                                    title={
-                                                        <Typography
-                                                            variant="subtitle1"
-                                                        >
-                                                            {plantaoOferecido.nome}
-                                                        </Typography>
-                                                    }
-                                                >
-                                                    <IconButton
-                                                        onClick={() => {
-                                                            setIdPlantao(plantaoOferecido.idPlantao);
-                                                            setIconePlantao(plantaoOferecido.icone);
-                                                            setsubcategoriaPlantao(plantaoOferecido.idSubcategoria);
-                                                        }}
-                                                        aria-label="plantao"
-                                                        style={{ padding: 0 }}
+                            {informacoes.tambem.length > 0
+                                ? (
+                                    <div className={classes.infoHospital}>
+                                        <Typography color="textPrimary"
+                                            variant="body1" gutterBottom
+                                        >
+                                            Também desse hospital
+                                        </Typography>
+                                        <div className={classes.tiposPlantao}>
+                                            {informacoes.tambem.map(plantaoOferecido => {
+                                                return (
+                                                    <Tooltip arrow
+                                                        key={plantaoOferecido.idPlantao}
+                                                        title={
+                                                            <Typography
+                                                                variant="subtitle2"
+                                                            >
+                                                                {plantaoOferecido.nome}
+                                                            </Typography>
+                                                        }
                                                     >
-                                                        <img
-                                                            src={plantaoOferecido.icone}
-                                                            alt="Plantao"
-                                                        />
-                                                    </IconButton>
-                                                </Tooltip>
-                                            );
-                                        })}
+                                                        <IconButton
+                                                            onClick={() => {
+                                                                setIdPlantao(plantaoOferecido.idPlantao);
+                                                                setIconePlantao(plantaoOferecido.icone);
+                                                                setsubcategoriaPlantao(plantaoOferecido.idSubcategoria);
+                                                            }}
+                                                            aria-label="plantao"
+                                                            style={{ padding: 0 }}
+                                                        >
+                                                            <img
+                                                                src={plantaoOferecido.icone}
+                                                                alt="Plantao"
+                                                            />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                );
+                                            })}
+                                        </div>
                                     </div>
-                                </div>
-                            )}
+                                )
+                                : (
+                                    <div style={{ height: '5rem' }} />
+                                )}
                         </div>
                         <Button
                             texto="Nova Avaliação"
                             type="submit"
+                            background="#7BB2ED"
                             onClick={() => setModalAvaliacaoPlantaoAberto(true)}
                         />
                     </div>
-                    <div className="sobre">
-                        <div className="sumario">
-                            <p>Avaliações</p>
-                            <div className="numeroavaliacoes">
+                    <div className={classes.cardInfo}>
+                        <div className={classes.sumarioPlantao}
+                            style={{ alignItems: 'center' }}
+                        >
+                            <Typography color="textPrimary"
+                                variant="h6"
+                            >
+                                Avaliações
+                            </Typography>
+                            <Typography color="textSecondary"
+                                variant="body1"
+                            >
                                 {informacoes.numeroAvaliacoes === 0
                                     ? 'Nenhuma avaliação'
                                     : informacoes.numeroAvaliacoes === 1
                                         ? '1 avaliação'
                                         : `${informacoes.numeroAvaliacoes} avaliações`}
+                            </Typography>
+                        </div>
+                        <div className={classes.infoHospitalContainer}>
+                            <LinhaReview
+                                legenda="Infraestrutura"
+                                nota={informacoes.infraestrutura || 0}
+                            />
+                            <LinhaReview
+                                legenda="Equipamento"
+                                nota={informacoes.equipamento || 0}
+                            />
+                            <LinhaReview
+                                legenda="Equipe de saúde"
+                                nota={informacoes.equipe || 0}
+                            />
+                            <LinhaReview
+                                legenda="Segurança"
+                                nota={informacoes.seguranca || 0}
+                            />
+                            <LinhaReview
+                                legenda="Pagamento"
+                                nota={informacoes.pagamento || 0}
+                            />
+                            <div className={classes.infoHospitalDupla}>
+                                <Typography color="textPrimary"
+                                    variant="body1"
+                                >
+                                    Pagamento em dia
+                                </Typography>
+                                <Typography color="textPrimary"
+                                    variant="body1"
+                                >
+                                    {(1 - informacoes.atrasado) * 100}% Sim
+                                </Typography>
                             </div>
                         </div>
-                        <div className="itens">
-                            <div className="item">
-                                <div className="rotulo">Infraestrutura</div>
-                                <div className="avaliacao">
-                                    {informacoes.infraestrutura?.toFixed(1)}
-                                    <StarRating value={informacoes.infraestrutura} readonly/>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="rotulo">Equipamento</div>
-                                <div className="avaliacao">
-                                    {informacoes.equipamento?.toFixed(1)}
-                                    <StarRating value={informacoes.equipamento} readonly/>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="rotulo">Equipe de Saúde</div>
-                                <div className="avaliacao">
-                                    {informacoes.equipe?.toFixed(1)}
-                                    <StarRating value={informacoes.equipe} readonly/>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="rotulo">Segurança</div>
-                                <div className="avaliacao">
-                                    {informacoes.seguranca?.toFixed(1)}
-                                    <StarRating value={informacoes.seguranca} readonly/>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="rotulo">Pagamento</div>
-                                <div className="avaliacao">
-                                    {informacoes.pagamento?.toFixed(1)}
-                                    <StarRating value={informacoes.pagamento} readonly/>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="rotulo">Pagamento em dia</div>
-                                <div className="avaliacao">
-                                    {(1 - informacoes.atrasado) * 100}%
-                                    <StarRating value={(1 - informacoes.atrasado) * 5} readonly/>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="rotulo">Média Salarial</div>
-                                <div className="avaliacao">R$ {plantao.media_salarial}/12H</div>
-                            </div>
-                        </div>
-                        <hr/>
-                        <div className="avaliacao-plantao">
-                            <div className="rotulo">Avaliação</div>
-                            <div className="classificacao">
-                                <div className="nota">
-                                    <div className="valor">{plantao.nota}</div>
-                                    <div className="rodape">/5</div>
+                        <div className={classes.notaAvaliacao}>
+                            <Typography color="textPrimary"
+                                variant="body1" gutterBottom
+                            >
+                                Avaliação final:
+                            </Typography>
+                            <div className={classes.rodapeAvaliacao}>
+                                <div className={classes.rodapeAvaliacao}>
+                                    <Typography color="textPrimary"
+                                        variant="h3"
+                                    >
+                                        {plantao.nota.toFixed(1)}
+                                    </Typography>
+                                    <Typography color="textPrimary"
+                                        variant="body1"
+                                    >
+                                        /5
+                                    </Typography>
                                 </div>
                                 <StarRating value={plantao.nota} readonly size='large'/>
                             </div>
                         </div>
                     </div>
-                    <div className="analise-salarial">
-                        <div className="sumario">Análise salarial</div>
-                        <div className="media">
-                            <div className="rotulo">Média Salarial</div>
-                            <div className="avaliacao">R$ {plantao.media_salarial}/12H</div>
+                    <div className={classes.cardInfo}>
+                        <div className={classes.sumarioPlantao}
+                            style={{ marginBottom: 0 }}
+                        >
+                            <Typography color="textPrimary"
+                                variant="h6"
+                            >
+                                Análise salarial
+                            </Typography>
                         </div>
-                        <div className="salario-mes">
-                            <Line data={dados.salarioMes.data} options={dados.salarioMes.options} />
+                        <div className={classes.grafico}>
+                            <Line
+                                data={dados.salarioMes.data}
+                                options={dados.salarioMes.options}
+                                width={230}
+                                height={130}
+                            />
                         </div>
-                        <div className="salario-dia-semana">
-                            <Bar data={dados.salarioDiaSemana.data} options={dados.salarioDiaSemana.options} />
+                        <div className={classes.grafico}>
+                            <Bar
+                                data={dados.salarioDiaSemana.data}
+                                options={dados.salarioDiaSemana.options}
+                                width={230}
+                                height={150}
+                            />
+                        </div>
+                        <div className={classes.notaAvaliacao}>
+                            <Typography color="textPrimary"
+                                variant="body1" gutterBottom
+                            >
+                                Média salarial:
+                            </Typography>
+                            <div className={classes.rodapeAvaliacao}>
+                                <div className={classes.rodapeAvaliacao}>
+                                    <Typography color="textPrimary"
+                                        variant="h3"
+                                    >
+                                        R$ {plantao.media_salarial.toFixed(2).replace('.', ',')}
+                                    </Typography>
+                                    <Typography color="textPrimary"
+                                        variant="body1"
+                                    >
+                                        /12H
+                                    </Typography>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -545,8 +625,9 @@ function ModalInfoPlantao ({ plantao }: InterfaceCardPlantao) {
                         backgroundColor: 'transparent',
                         maxWidth: '720px',
                         minWidth: '500px',
-                        width: '35vw',
-                        outline: '0'
+                        width: '45vw',
+                        outline: '0',
+                        overflow: 'unset'
                     }
                 }}
             >
@@ -555,9 +636,19 @@ function ModalInfoPlantao ({ plantao }: InterfaceCardPlantao) {
                     idPlantao={plantao.idPlantao}
                     idHospital={informacoes?.idHospital}
                     nomeHospital={plantao.nome}
-                    onClose={setModalAvaliacaoPlantaoAberto}
+                    onClose={() => setModalAvaliacaoPlantaoAberto(false)}
                 />
             </Dialog>
+            {informacoes && (
+                <div className={classes.closeButtonContainer}>
+                    <IconButton aria-label="fechar"
+                        className={classes.closeButton}
+                        onClick={onClose}
+                    >
+                        <CloseIcon/>
+                    </IconButton>
+                </div>
+            )}
         </div>
     );
 }

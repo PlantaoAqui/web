@@ -13,26 +13,26 @@ interface TextFormProps {
     onSubmit: (text: string) => void;
 }
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
     createStyles({
         root: {
             background: 'transparent',
             // border: '1px solid var(--cor-borda-campos)',
             borderRadius: '0.8rem',
-            padding: '1.2rem 1.3rem',
+            padding: theme.spacing(2, 3),
             width: '100%',
             outline: 'none',
             overflow: 'hidden',
-            font: '400 1.7rem SFProText',
-            color: 'var(--cor-texto-claro)',
-            '& textarea': {
-                outline: 'none',
-                width: '100%',
-                resize: 'none',
-                font: '400 1.2rem SFProText',
-                background: 'transparent',
-                border: 'none'
-            }
+            color: 'var(--cor-texto-claro)'
+        },
+        input: {
+            outline: 'none',
+            width: '100%',
+            resize: 'none',
+            font: '400 1.25rem SFProText',
+            background: 'transparent',
+            border: 'none'
+
         },
         sendButton: {
             margin: '-1rem',
@@ -77,6 +77,9 @@ function TextForm (props: TextFormProps) {
                     name="comentario"
                     value={formik.values.comentario}
                     onChange={formik.handleChange}
+                    inputProps={{
+                        className: classes.input
+                    }}
                     multiline
                     fullWidth
                     placeholder={props.placeholder}

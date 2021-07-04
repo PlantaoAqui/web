@@ -9,7 +9,6 @@ const useStyles = makeStyles(() =>
             background: 'transparent',
             border: '1px solid var(--cor-borda-campos)',
             borderRadius: '0.8rem',
-            marginBottom: '1.3rem',
             padding: '0.6rem 1.3rem',
             width: '100%',
             outline: 'none',
@@ -43,7 +42,7 @@ function TextAreaInput (props: TextAreaInputProps) {
         <div className={classes.root} style={props.style}>
             {props.titulo && (
                 <Typography
-                    variant="h4" color="textPrimary" gutterBottom
+                    variant="subtitle1" color="textPrimary" gutterBottom
                 >
                     {props.titulo}
                 </Typography>
@@ -51,7 +50,7 @@ function TextAreaInput (props: TextAreaInputProps) {
             <TextareaAutosize
                 name={props.name}
                 aria-label={props.titulo}
-                rowsMin={2}
+                rowsMin={3}
                 placeholder={props.descricao}
                 value={props.value}
                 onChange={props.onChange}

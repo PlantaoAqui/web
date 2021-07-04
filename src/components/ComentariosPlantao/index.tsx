@@ -95,12 +95,12 @@ function ComentariosPlantao ({ id_hospital_avaliado, comentarios, reload }: Come
         <div className={classes.root}>
             <div className={classes.sumario}>
                 <Typography
-                    variant="h4" gutterBottom
+                    variant="h6" gutterBottom
                 >
                     Comentários
                 </Typography>
                 <Typography
-                    variant="h5" gutterBottom
+                    variant="body1" gutterBottom
                 >
                     {comentarios.length === 0
                         ? 'Nenhum comentário'
