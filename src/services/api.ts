@@ -3,7 +3,7 @@ import qs from 'qs';
 import history from '../services/history';
 
 const api = axios.create({
-    baseURL: 'http://localhost:3333',
+    baseURL: 'https://api.plantaofacil.com',
     paramsSerializer: params => {
         return qs.stringify(params, { arrayFormat: 'repeat' });
     }
