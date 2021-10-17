@@ -29,6 +29,7 @@ const validationSchema = [
             dataDeNascimento: Yup.string().required(mensagemCampoObrigatorio)
         })
     }),
+    Yup.object(),
     Yup.object({
         arquivo: Yup.string().required('O arquivo com o documento é obrigatório.')
     })
@@ -76,24 +77,22 @@ function Cadastro () {
 
     const submitForm = useAsyncCallback(
         async () => {
-            if (arquivoFotoDocumento) {
-                const formData = new FormData();
-                formData.append('confirmacaoCadastro', arquivoFotoDocumento);
-                formData.append('dados', JSON.stringify(formik.values));
-                await api.post('/usuarios', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
+            const formData = new FormData();
+            arquivoFotoDocumento && formData.append('confirmacaoCadastro', arquivoFotoDocumento);
+            formData.append('dados', JSON.stringify(formik.values));
+            await api.post('/usuarios', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then((response) => {
+                    for (const [key, value] of Object.entries(response.data)) {
+                        sessionStorage.setItem(key, String(value));
                     }
-                })
-                    .then((response) => {
-                        for (const [key, value] of Object.entries(response.data)) {
-                            sessionStorage.setItem(key, String(value));
-                        }
-                        history.push('/plantoes');
-                    }).catch(error => {
-                        console.log(error);
-                    });
-            }
+                    history.push('/plantoes');
+                }).catch(error => {
+                    console.log(error);
+                });
         }
     );
 
