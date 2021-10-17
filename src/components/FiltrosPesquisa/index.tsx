@@ -106,9 +106,11 @@ function FiltrosPesquisa ({ resultados, count }: PlantoesPesquisadosProps) {
                 <Typography variant="body1"
                     color="textPrimary"
                 >
-                    {resultados === 0
-                        ? 0
-                        : resultados} plantões
+                    {(resultados || 0) === 0
+                        ? 'Nenhum plantão'
+                        : resultados === 1
+                            ? '1 plantão'
+                            : resultados + ' plantões'}
                 </Typography>
             </div>
             <Typography variant="subtitle1" gutterBottom

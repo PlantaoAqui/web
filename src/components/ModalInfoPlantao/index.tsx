@@ -17,7 +17,7 @@ import MapIcon from '@material-ui/icons/Map';
 import Button from '../Button';
 import LinhaReview from './components/LinhaReview';
 import CloseIcon from '@material-ui/icons/Close';
-import { Plantao } from '../../pages/plantoes/plantoes';
+import { Plantao } from '../../pages/plantoes';
 
 type ModalInfoPlantaoProps = {
     plantao: Plantao;
@@ -201,20 +201,7 @@ function ModalInfoPlantao ({ plantao, onClose }: ModalInfoPlantaoProps) {
     const dados: ConfiguracaoGraficos = {
         salarioMes: {
             data: {
-                labels: [
-                    'Janeiro',
-                    'Fevereiro',
-                    'Março',
-                    'Abril',
-                    'Maio',
-                    'Junho',
-                    'Julho',
-                    'Agosto',
-                    'Setembro',
-                    'Outubro',
-                    'Novembro',
-                    'Dezembro'
-                ],
+                labels: getMonthsArray(),
                 datasets: [
                     {
                         label: 'Salário/Mês',
@@ -654,3 +641,23 @@ function ModalInfoPlantao ({ plantao, onClose }: ModalInfoPlantaoProps) {
 }
 
 export default ModalInfoPlantao;
+
+function getMonthsArray () {
+    const n = new Date().getMonth();
+    const months = [
+        'Janeiro',
+        'Fevereiro',
+        'Março',
+        'Abril',
+        'Maio',
+        'Junho',
+        'Julho',
+        'Agosto',
+        'Setembro',
+        'Outubro',
+        'Novembro',
+        'Dezembro'
+    ];
+
+    return [...months.slice(n + 1), ...months.slice(0, n + 1)];
+}

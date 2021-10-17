@@ -130,7 +130,7 @@ function Cadastro () {
                     resetCidade={ResetCidade}
                 />
             );
-        case 2:
+        case 5:
             return (
                 <FormCadastro
                     titulo="Confirmação dos documentos"
@@ -146,11 +146,11 @@ function Cadastro () {
                     setArquivoDocumento={setArquivoFotoDocumento}
                 />
             );
-        case 5:
+        case 2:
             return (
                 <FormCadastro
                     titulo="Termos e Políticas Todeplantão.com"
-                    etapa={etapaAtual}
+                    etapa={5}
                     termos="1. Os serviços fornecidosNossa missão é proporcionar às pessoas o poder de criar "
                     textoBotao="Concordar e Prosseguir"
                     values={formik.values}

@@ -116,7 +116,11 @@ function Filtro ({ tipo, expanded, resultados, handleChange }: FiltroProps) {
                                 {tipo.nome}
                             </Typography>
                             <Typography variant="body1" color="textSecondary" gutterBottom>
-                                {resultados?.count || 0} plantões encontrados
+                                {(resultados?.count || 0) === 0
+                                    ? 'Nenhum plantão encontrado'
+                                    : resultados?.count === 1
+                                        ? '1 plantão encontrado'
+                                        : resultados?.count + 'plantões encontrados'}
                             </Typography>
                         </div>
                     </div>

@@ -7,6 +7,7 @@ interface TextInputProps {
     name?: string;
     placeholder?: string;
     value: string;
+    disabled?: boolean;
     data?: boolean;
     error?: boolean;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -42,6 +43,7 @@ function TextInput (props: TextInputProps) {
                     e.target.type = 'date';
                 }
             }}
+            disabled={props.disabled}
             name={props.name}
             placeholder={props.placeholder}
             value={props.value}

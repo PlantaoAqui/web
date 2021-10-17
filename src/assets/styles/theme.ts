@@ -37,6 +37,7 @@ const theme = createMuiTheme({
         }
     },
     palette: {
+        divider: '#B7B8BA',
         text: {
             primary: '#000000',
             secondary: '#3E3E3E',

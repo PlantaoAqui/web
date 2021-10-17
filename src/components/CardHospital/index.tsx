@@ -4,7 +4,7 @@ import './styles.css';
 
 import { Dialog } from '@material-ui/core';
 import ModalInfoPlantao from '../ModalInfoPlantao';
-import { Plantao } from '../../pages/plantoes/plantoes';
+import { Plantao } from '../../pages/plantoes';
 import Typography from '@material-ui/core/Typography';
 import StarRating from '../StarRating';
 

@@ -6,14 +6,9 @@ const useStyles = makeStyles(() =>
     createStyles({
         botao: {
             width: '100%',
-            background: 'var(--cor-fundo-card-hover)',
+            // background: 'var(--cor-fundo-card-hover)',
             outline: 'none',
             borderRadius: '0.8rem',
-            border: 'none',
-            height: '4rem',
-            cursor: 'pointer',
-            // textTransform: 'none',
-            // font: '400 1.4rem SFProText',
             color: 'var(--cor-texto-escuro)'
         }
     })
@@ -23,26 +18,50 @@ interface ButtonProps {
     background?: string;
     texto: string;
     tamanhoTexto?: 'default' | 'big';
+    variant?: 'outlined' | 'contained';
+    size?: 'default' | 'small';
+    textTransform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase';
+    dark?: boolean;
     onClick?: () => void;
     type: 'button' | 'reset' | 'submit'
 }
 
 function Button (props: ButtonProps) {
     const classes = useStyles();
-    const { background = '#DDDDDD', onClick, texto, type } = props;
+    const {
+        variant = 'contained',
+        background = variant === 'contained' ? '#DDDDDD' : '',
+        dark = false,
+        textTransform = 'uppercase',
+        size = 'default',
+        onClick,
+        texto,
+        type
+    } = props;
+
     const fontSize = props.tamanhoTexto === 'big'
         ? '2.4rem'
         : '1.4rem';
+
+    const height = size === 'default'
+        ? '4rem'
+        : '3.2rem';
+
+    const color = dark ? 'var(--cor-fundo-campos)' : 'var(--cor-texto-escuro)';
+
     return (
         <ButtonMaterialUI
             type={type}
-            variant='contained'
+            variant={variant}
             className={classes.botao}
             onClick={onClick}
             disableElevation
             style={{
+                textTransform,
                 background,
-                fontSize
+                fontSize,
+                color,
+                height
             }}
         >
             {texto}
