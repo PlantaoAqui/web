@@ -31,7 +31,6 @@ interface LinksNavbar {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         appBar: {
-            background: 'white',
             [theme.breakpoints.down('md')]: {
                 zIndex: theme.zIndex.modal + 1
             }
@@ -61,14 +60,15 @@ const useStyles = makeStyles((theme: Theme) =>
         logoLinksLanding: {
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'center',
+            alignItems: 'end',
             justifyContent: 'space-between',
             '& img': {
-                height: '3.2rem'
+                height: '3.2rem',
+                marginRight: theme.spacing(12)
             },
             '& a:not(:first-child)': {
                 cursor: 'pointer',
-                marginLeft: theme.spacing(6)
+                marginRight: theme.spacing(6)
 
             }
         },
@@ -165,6 +165,9 @@ function NavBar ({ tipoLinks }: LinksNavbar) {
     const classes = useStyles();
     const history = useHistory();
     const search = useSearch();
+    const elevation = tipoLinks === 'landing' ? 0 : 4;
+    const toolbarVariant = tipoLinks === 'landing' ? 'regular' : 'dense';
+    const toolbarPosition = tipoLinks === 'landing' ? 'absolute' : 'fixed';
     const [searchText, setSearchText] = useState('');
     const [mobileOpen, setMobileOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -248,14 +251,14 @@ function NavBar ({ tipoLinks }: LinksNavbar) {
                         size="small"
                         onClick={() => history.push('login')}
                     />
-                    <Button
+                    {/* <Button
                         type="button"
                         texto="Faça parte"
                         background="#A1E09E"
                         textTransform="none"
                         size="small"
                         onClick={() => history.push('cadastro')}
-                    />
+                    /> */}
                 </div>
             </div>
         ),
@@ -336,12 +339,14 @@ function NavBar ({ tipoLinks }: LinksNavbar) {
     };
 
     return (
-        <AppBar className={classes.appBar} elevation={4}>
-            <Toolbar disableGutters variant="dense">
-                <Hidden mdDown>
+        <AppBar className={classes.appBar} elevation={elevation} position={toolbarPosition}
+            style={tipoLinks === 'landing' ? { background: 'transparent' } : { background: 'white' }}
+        >
+            <Toolbar disableGutters variant={toolbarVariant}>
+                <Hidden smDown>
                     {toolbars[tipoLinks]}
                 </Hidden>
-                <Hidden lgUp>
+                <Hidden mdUp>
                     <div className={classes.logo}>
                         <img src={LogoPlantaoFacil} alt="PlantaoFacil"/>
                     </div>
@@ -350,7 +355,7 @@ function NavBar ({ tipoLinks }: LinksNavbar) {
                     </IconButton>
                 </Hidden>
             </Toolbar>
-            <Hidden lgUp>
+            <Hidden mdUp>
                 <DrawerMobile
                     open={mobileOpen}
                     tipoLinks={tipoLinks}

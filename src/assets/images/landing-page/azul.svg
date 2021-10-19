@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.4.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1280.5 1280.5" style="enable-background:new 0 0 1280.5 1280.5;" xml:space="preserve">
+<style type="text/css">
+	.st0{opacity:0.578;}
+	.st1{fill:url(#Ellipse_31_00000112607823166700924350000007971087247213661867_);}
+	.st2{fill:url(#Ellipse_30_00000139980120873483554240000003783852211408494736_);}
+	.st3{fill:url(#Ellipse_29_00000048474982749166528450000002193780640764660910_);}
+	.st4{fill:url(#Ellipse_28_00000101809415897447125990000008880125021180140420_);}
+	.st5{fill:#7BB2ED;}
+</style>
+<g id="Group_285_00000182500358124109445660000008719736551664784795_" transform="translate(67.449 178.901)" class="st0">
+	
+		<radialGradient id="Ellipse_31_00000078007239277851472860000000359594146952122297_" cx="319.0079" cy="718.881" r="0.2724" gradientTransform="matrix(-2359 0 0 2359 753112.625 -1695379.5)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#7DB3EB"/>
+		<stop  offset="0.236" style="stop-color:#9CC5F0"/>
+		<stop  offset="0.384" style="stop-color:#BBD7F5"/>
+		<stop  offset="1" style="stop-color:#FFFFFF"/>
+	</radialGradient>
+	
+		<circle id="Ellipse_31_00000153702462180268147120000009401296744298163373_" style="fill:url(#Ellipse_31_00000078007239277851472860000000359594146952122297_);" cx="572.98" cy="460.85" r="642.47"/>
+	
+		<radialGradient id="Ellipse_30_00000165194280584831152210000001758636396039164095_" cx="319.1903" cy="719.1471" r="0.2724" gradientTransform="matrix(-1876 0 0 1876 599373.6875 -1348658.875)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#7DB3EB"/>
+		<stop  offset="0.236" style="stop-color:#9CC5F0"/>
+		<stop  offset="0.384" style="stop-color:#BBD7F5"/>
+		<stop  offset="1" style="stop-color:#FFFFFF"/>
+	</radialGradient>
+	
+		<circle id="Ellipse_30_00000156574802064162433940000015542135153392813188_" style="fill:url(#Ellipse_30_00000165194280584831152210000001758636396039164095_);" cx="572.71" cy="461.12" r="510.93"/>
+	
+		<radialGradient id="Ellipse_29_00000093885787688572981030000003758023925834181803_" cx="319.4423" cy="719.515" r="0.2724" gradientTransform="matrix(-1462 0 0 1462 467596.8125 -1051469.125)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#7DB3EB"/>
+		<stop  offset="0.236" style="stop-color:#9CC5F0"/>
+		<stop  offset="0.384" style="stop-color:#BBD7F5"/>
+		<stop  offset="1" style="stop-color:#FFFFFF"/>
+	</radialGradient>
+	
+		<circle id="Ellipse_29_00000144320678734079094600000000238162926712909953_" style="fill:url(#Ellipse_29_00000093885787688572981030000003758023925834181803_);" cx="572.17" cy="461.67" r="398.18"/>
+	
+		<radialGradient id="Ellipse_28_00000147934684552870926530000016604250220600924302_" cx="319.8645" cy="720.1306" r="0.2724" gradientTransform="matrix(-1068 0 0 1068 342187.9688 -768638.375)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#7DB3EB"/>
+		<stop  offset="0.236" style="stop-color:#9CC5F0"/>
+		<stop  offset="0.384" style="stop-color:#BBD7F5"/>
+		<stop  offset="1" style="stop-color:#FFFFFF"/>
+	</radialGradient>
+	
+		<circle id="Ellipse_28_00000142894543628808927030000014308592170515994301_" style="fill:url(#Ellipse_28_00000147934684552870926530000016604250220600924302_);" cx="572.71" cy="461.12" r="290.87"/>
+	<circle id="Ellipse_27_00000065059765252430757660000016467451188078901159_" class="st5" cx="572.44" cy="461.4" r="190.92"/>
+</g>
+</svg>

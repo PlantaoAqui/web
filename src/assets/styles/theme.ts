@@ -3,17 +3,27 @@ import { createTheme } from '@material-ui/core';
 const theme = createTheme({
     typography: {
         fontFamily: "'SFProText', sans-serif",
+        h1: {
+            lineHeight: '6.2rem',
+            letterSpacing: '-2px'
+        },
         h3: {
             fontSize: '3.6rem'
         },
         h4: {
-            fontSize: '2.8rem'
+            fontSize: '2.8rem',
+            lineHeight: '3.2rem'
+        },
+        h5: {
+            fontSize: '1.85rem'
         },
         h6: {
-            fontSize: '1.85rem'
+            fontSize: '1.85rem',
+            lineHeight: '2rem'
         },
         subtitle1: {
             fontSize: '1.6rem',
+            lineHeight: '1.8rem',
             letterSpacing: '0.15px'
         },
         subtitle2: {

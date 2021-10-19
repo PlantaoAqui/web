@@ -34,36 +34,38 @@ function Footer ({ landing }: TipoFooter) {
     ];
 
     return (
-        <div className="barra-footer">
-            <div className="footer">
-                <div className="logo">
-                    <img src={LogoPlantaoFacil} alt="PlantaoFacil"/>
-                    <p>© Plantão Fácil 2021, Todos os direitos reservados.</p>
-                </div>
-                <div className="conteudo-footer">
-                    <div className="links">
-                        {landing && links[0]}
+        <footer>
+            <div className="barra-footer">
+                <div className="footer">
+                    <div className="logo">
+                        <img src={LogoPlantaoFacil} alt="PlantaoFacil"/>
+                        <p>© Plantão Fácil 2021, Todos os direitos reservados.</p>
                     </div>
-                    <div className="redes-sociais">
-                        <Link
-                            href="https://www.facebook.com/plantaofacil"
-                        >
-                            <img src={LogoFacebook} alt="Facebook" />
-                        </Link>
-                        <Link
-                            href="https://twitter.com/plantaofacil"
-                        >
-                            <img src={LogoTwitter} alt="Twitter" />
-                        </Link>
-                        <Link
-                            href="https://www.instagram.com/plantao.facil"
-                        >
-                            <img src={LogoInsta} alt="Instagram" />
-                        </Link>
+                    <div className="conteudo-footer">
+                        <div className="links">
+                            {landing && links[0]}
+                        </div>
+                        <div className="redes-sociais">
+                            <Link
+                                href="https://www.facebook.com/plantaofacil"
+                            >
+                                <img src={LogoFacebook} alt="Facebook" />
+                            </Link>
+                            <Link
+                                href="https://twitter.com/plantaofacil"
+                            >
+                                <img src={LogoTwitter} alt="Twitter" />
+                            </Link>
+                            <Link
+                                href="https://www.instagram.com/plantao.facil"
+                            >
+                                <img src={LogoInsta} alt="Instagram" />
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </footer>
     );
 }
 
