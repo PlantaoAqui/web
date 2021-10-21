@@ -1,8 +1,9 @@
 import React, { createRef, useState } from 'react';
 import { useFormik } from 'formik';
 import NavBar from '../../components/NavBar';
-// import api from '../../services/api';
+import api from '../../services/api';
 import * as Yup from 'yup';
+import { Link as LinkScroll } from 'react-scroll';
 
 import ImagemPc from '../../assets/images/landing-page/pc.png';
 import ImagemMobile from '../../assets/images/landing-page/phone.png';
@@ -48,9 +49,10 @@ const useStyles = makeStyles(theme =>
         },
         secaoOverflow: {
             height: '80vh',
+            maxHeight: '60rem',
             position: 'relative',
             '& h1': {
-                maxWidth: '44rem'
+                maxWidth: '40rem'
             },
             '& h6': {
                 marginBottom: theme.spacing(4)
@@ -128,7 +130,7 @@ const useStyles = makeStyles(theme =>
         botaoInteresse: {
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'stretch',
+            alignItems: 'center',
             padding: '1.2rem',
             cursor: 'pointer',
             '& img': {
@@ -243,8 +245,7 @@ function Landing () {
 
     async function handleSubmit () {
         try {
-            // await api.post('/acesso-antecipado', formik.values);
-            console.log(formik.values);
+            await api.post('/acesso-antecipado', formik.values);
             setEmailEnviado(true);
             formik.resetForm();
             setStatusEnvio(1);
@@ -262,7 +263,7 @@ function Landing () {
         <div className={classes.root}>
             <NavBar tipoLinks="landing"/>
             <div className={classes.content}>
-                <div className={classes.secao + ' ' + classes.secaoOverflow}>
+                <div id="cadastro" ref={refDiv} className={classes.secao + ' ' + classes.secaoOverflow}>
                     <div className={classes.conteudoSecao} style={{ width: '40%' }}>
                         <Typography
                             variant="h1" color="textPrimary"
@@ -343,14 +344,18 @@ function Landing () {
                                 Ficou interessado no que oferecemos?
                             </Typography>
                             <div className={classes.interesses}>
-                                <div className={classes.botaoInteresse}>
+                                <LinkScroll className={classes.botaoInteresse}
+                                    activeClass="active" to="cadastro"
+                                    spy={true} smooth={true}
+                                    offset={-70} duration={500}
+                                >
                                     <img src={IconeHospital} alt="Médico" />
                                     <Typography
                                         variant="h6" color="textPrimary"
                                     >
                                         Sou médico e quero me cadastrar
                                     </Typography>
-                                </div>
+                                </LinkScroll>
                                 <div className={classes.botaoInteresse}>
                                     <img src={IconeFicha} alt="Médico" />
                                     <Typography
