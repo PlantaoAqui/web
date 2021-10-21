@@ -1,11 +1,11 @@
-import { makeStyles, createStyles } from '@material-ui/core';
 import React from 'react';
-import './styles.css';
+import { makeStyles, createStyles } from '@material-ui/core';
 
 interface TextInputProps {
     type?: string;
     name?: string;
     placeholder?: string;
+    gutterBottom?: boolean;
     value: string;
     disabled?: boolean;
     data?: boolean;
@@ -16,6 +16,15 @@ interface TextInputProps {
 
 const useStyles = makeStyles(() =>
     createStyles({
+        root: {
+            background: 'transparent',
+            borderRadius: '0.8rem',
+            paddingLeft: '1.3rem',
+            height: '4rem',
+            outline: 'none',
+            font: '400 1.7rem SFProText',
+            width: '100%'
+        },
         erro: {
             color: 'var(--cor-vermelha-warning)',
             border: '1px solid var(--cor-vermelha-warning)',
@@ -35,21 +44,25 @@ const useStyles = makeStyles(() =>
 
 function TextInput (props: TextInputProps) {
     const classes = useStyles();
+    const marginBottom = props.gutterBottom ? '1.2rem' : '0';
     return (
         <input
+            className={`${classes.root} ${props.error ? classes.erro : classes.normal}`}
             type={props.type || 'text'}
-            onFocus={(e) => {
-                if (props.data) {
-                    e.target.type = 'date';
-                }
-            }}
             disabled={props.disabled}
             name={props.name}
             placeholder={props.placeholder}
             value={props.value}
             onChange={props.handleChange}
             onBlur={props.handleBlur}
-            className={props.error ? classes.erro : classes.normal}
+            onFocus={(e) => {
+                if (props.data) {
+                    e.target.type = 'date';
+                }
+            }}
+            style={{
+                marginBottom
+            }}
         />
     );
 }
