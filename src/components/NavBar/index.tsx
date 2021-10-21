@@ -31,6 +31,7 @@ interface LinksNavbar {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         appBar: {
+            paddingRight: 0,
             [theme.breakpoints.down('md')]: {
                 zIndex: theme.zIndex.modal + 1
             }

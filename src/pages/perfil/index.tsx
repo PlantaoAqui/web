@@ -6,7 +6,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 import Button from '../../components/Button';
 import CardTitulo from '../../components/CardTitulo';
 import ItemLista from '../../components/ItemLista';
-import { Dialog, Grid, ListItemText } from '@material-ui/core';
+import { Grid, ListItemText } from '@material-ui/core';
 import Collapse from '@material-ui/core/Collapse';
 import api from '../../services/api';
 import { useAsync } from 'react-async-hook';
@@ -466,26 +466,10 @@ function Perfil () {
                         )}
                 </div>
             </div>
-            <Dialog
+            <ModalAvaliacaoPlantao
                 open={modalAvaliacaoHospitalAberto}
                 onClose={() => { setModalAvaliacaoHospitalAberto(false); }}
-                scroll="body"
-                aria-labelledby="scroll-dialog-title"
-                aria-describedby="scroll-dialog-description"
-                PaperProps={{
-                    style: {
-                        backgroundColor: 'transparent',
-                        maxWidth: '720px',
-                        minWidth: '500px',
-                        width: '35vw',
-                        outline: '0'
-                    }
-                }}
-            >
-                <ModalAvaliacaoPlantao
-                    onClose={() => { setModalAvaliacaoHospitalAberto(false); }}
-                />
-            </Dialog>
+            />
         </div>
     );
 }

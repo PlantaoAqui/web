@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
@@ -13,10 +13,11 @@ import api from '../../services/api';
 import AsyncAutocomplete from '../AsyncAutocomplete';
 import Typography from '@material-ui/core/Typography';
 import { useSnackbar } from 'notistack';
-import { IconButton } from '@material-ui/core';
+import { Dialog, IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 interface ModalAvaliacaoPlantaoProps {
+    open: boolean;
     subcategoria?: number;
     idPlantao?: number;
     idHospital?: number;
@@ -104,6 +105,7 @@ const useStyles = makeStyles(theme =>
 
 function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
     const classes = useStyles();
+    const didMount = useRef(false);
     const { enqueueSnackbar } = useSnackbar();
     const formik = useFormik({
         initialValues: {
@@ -293,220 +295,250 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
         listarCidades();
     }, [estado]);
 
-    return (
-        <div className={classes.root}>
-            <Typography color="textPrimary" variant="h4"
-                className={classes.titulo}
-            >
-                {jaAvaliado ? 'Inserir Novo Plantão' : 'Inserir Nova Avalição'}
-            </Typography>
-            <form onSubmit={formik.handleSubmit}>
-                <div className={classes.plantao}>
-                    <div className={classes.colunaCampos}>
-                        <Typography color="textPrimary" variant="subtitle1"
-                            className={classes.tituloColunaCampos}
-                        >
-                            Instituição avaliada
-                        </Typography>
-                        <SelectInput
-                            value={estado}
-                            default="Estado"
-                            handleChange={(e) => {
-                                setEstado(e.target.value);
-                                setCidade('');
-                            }}
-                            items={estados}
-                            keyMap={item => item.id}
-                            valueMap={item => item.nome}
-                        />
-                        <SelectInput
-                            name="cidade"
-                            value={cidade}
-                            default="Cidade"
-                            handleChange={(e) => {
-                                setCidade(e.target.value);
-                            }}
-                            items={cidades}
-                            keyMap={item => item.id}
-                            valueMap={item => item.nome}
-                        />
-                        <AsyncAutocomplete
-                            getOptions={listarInstituicoes}
-                            value={instituicao}
-                            onChange={(_event, newValue) => {
-                                if (newValue) {
-                                    setInstituicao(newValue);
-                                    formik.setValues({ ...formik.values, id_hospital: newValue.id });
-                                }
-                            }}
-                            getOptionLabel={(option) => option?.nome || ''}
-                            getOptionSelected={(option, value) => option?.nome === value?.nome}
-                            placeholder="Instituição"
-                        />
-                        <Typography color="textSecondary"
-                            variant="caption" className={classes.textoColuna}
-                        >
-                            A instituição que você trabalhou ainda não esta cadastrada no sistema? <a href="#">clique aqui.</a>
-                        </Typography>
-                    </div>
-                    <div className={classes.colunaCampos}>
-                        <Typography color="textPrimary" variant="subtitle1"
-                            className={classes.tituloColunaCampos}
-                        >
-                            Meu Plantão
-                        </Typography>
-                        <SelectInput
-                            name="id_subcategoria"
-                            value={tipo}
-                            group
-                            default="Tipo de Plantão"
-                            handleChange={(e) => {
-                                setTipo(e.target.value);
-                                e.target.value = tiposPlantao?.find(group =>
-                                    group.subcategorias.find(sub =>
-                                        sub.nome === e.target.value
-                                    )
-                                )?.subcategorias.find(sub =>
-                                    sub.nome === e.target.value
-                                )?.id.toString() || '';
-                                formik.handleChange(e);
-                            }}
-                            items={tiposPlantao}
-                            keyMap={item => item.id}
-                            valueMap={item => item.nome}
-                            elementsGroupMap={item => item.subcategorias.map(sub => {
-                                return ({ id: sub.id, value: sub.nome });
-                            })}
-                        />
-                        <TextInput
-                            name="avaliacao.data_realizado"
-                            value={dataPlantao}
-                            handleChange={(e) => {
-                                setDataPlantao(e.target.value);
-                                formik.handleChange(e);
-                            }}
-                            placeholder="Data do Plantão"
-                            data
-                        />
-                        <CurrencyInput
-                            placeholder="Remuneração"
-                            decimalScale={2}
-                            prefix="R$"
-                            style={{
-                                border: '1px solid var(--cor-borda-campos)'
-                            }}
-                            value={remuneracao}
-                            onValueChange={(value) => {
-                                setRemuneracao(value || '');
-                                formik.setValues({
-                                    ...formik.values,
-                                    avaliacao: {
-                                        ...formik.values.avaliacao,
-                                        valor_recebido: parseFloat(value?.replace('R$', '').replace('.', '').replace(',', '.') || '0')
-                                    }
-                                });
-                            }}
-                        />
-                        <SelectInput
-                            name="avaliacao.id_horas"
-                            value={tempoPlantao}
-                            default="Tempo de Plantão"
-                            handleChange={(e) => {
-                                setTempoPlantao(e.target.value);
-                                e.target.value = horasPlantao?.find(plantao => plantao.horas === e.target.value)?.id.toString() || '';
-                                formik.handleChange(e);
-                            }}
-                            items={horasPlantao}
-                            keyMap={item => item.id}
-                            valueMap={item => item.horas}
-                        />
-                    </div>
-                </div>
-                <div className={classes.observacoes}>
-                    <Typography color="textPrimary" variant="subtitle1"
-                        className={classes.tituloColunaCampos}
-                    >
-                        Observações pessoais
-                    </Typography>
-                    <TextAreaInput
-                        descricao="250 caracteres"
-                        name="avaliacaoFixa.comentario"
-                        onChange={formik.handleChange}
-                        value={formik.values.avaliacaoFixa.comentario}
-                    />
-                </div>
-                <div className={classes.observacoes}>
-                    <Typography color="textPrimary" variant="subtitle1"
-                        className={classes.tituloColunaCampos}
-                    >
-                        Avaliação
-                    </Typography>
-                    <div className={classes.avaliacoes}>
-                        <ReviewInput
-                            name="avaliacaoFixa.infraestrutura"
-                            titulo="Infraestrutura"
-                            descricao="Salas, consultórios, conforto médico, UTI, centro cirurgico, etc."
-                            nota={formik.values.avaliacaoFixa.infraestrutura}
-                            handleChange={formik.handleChange}
+    useEffect(() => {
+        didMount.current
+            ? (
+                document.getElementById('root')?.style.setProperty(
+                    'filter',
+                    props.open ? 'blur(3px)' : 'blur(0px)')
+            )
+            : (
+                didMount.current = true
+            );
+    }, [props.open]);
 
-                        />
-                        <ReviewInput
-                            name="avaliacaoFixa.equipamento"
-                            titulo="Equipamentos"
-                            descricao="Insumos, materiais, maquinas em funcionamento, usg, etc."
-                            nota={formik.values.avaliacaoFixa.equipamento}
-                            handleChange={formik.handleChange}
-                        />
-                        <ReviewInput
-                            name="avaliacaoFixa.equipe"
-                            titulo="Equipe de Saúde"
-                            descricao="Responsabilidade, empatia, organização, capacidade técnica."
-                            nota={formik.values.avaliacaoFixa.equipe}
-                            handleChange={formik.handleChange}
-                        />
-                        <ReviewInput
-                            name="avaliacaoFixa.seguranca"
-                            titulo="Segurança do Médico"
-                            descricao="Sobrecarga de pacientes, exposição a riscos e complicações."
-                            nota={formik.values.avaliacaoFixa.seguranca}
-                            handleChange={formik.handleChange}
-                        />
-                        <ReviewInput
-                            name="avaliacaoFixa.pagamento"
-                            titulo="Pagamento"
-                            descricao="Considera o valor justo pelo trabalho executado?"
-                            nota={formik.values.avaliacaoFixa.pagamento}
-                            handleChange={formik.handleChange}
-                            pergunta
-                            textoPergunta="Pagamento dentro do prazo?"
-                            valorPergunta={!formik.values.avaliacaoFixa.atrasado}
-                            handleChangePergunta={(_, value) => {
-                                formik.setValues({
-                                    ...formik.values,
-                                    avaliacaoFixa: {
-                                        ...formik.values.avaliacaoFixa,
-                                        atrasado: value !== 'true'
+    return (
+        <Dialog
+            open={props.open}
+            onClose={props.onClose}
+            scroll="body"
+            aria-labelledby="scroll-dialog-title"
+            aria-describedby="scroll-dialog-description"
+            PaperProps={{
+                style: {
+                    backgroundColor: 'transparent',
+                    maxWidth: '720px',
+                    minWidth: '500px',
+                    width: '45vw',
+                    outline: '0',
+                    overflow: 'unset'
+                }
+            }}
+        >
+            <div className={classes.root}>
+                <Typography color="textPrimary" variant="h4"
+                    className={classes.titulo}
+                >
+                    {jaAvaliado ? 'Inserir Novo Plantão' : 'Inserir Nova Avalição'}
+                </Typography>
+                <form onSubmit={formik.handleSubmit}>
+                    <div className={classes.plantao}>
+                        <div className={classes.colunaCampos}>
+                            <Typography color="textPrimary" variant="subtitle1"
+                                className={classes.tituloColunaCampos}
+                            >
+                                Instituição avaliada
+                            </Typography>
+                            <SelectInput
+                                value={estado}
+                                default="Estado"
+                                handleChange={(e) => {
+                                    setEstado(e.target.value);
+                                    setCidade('');
+                                }}
+                                items={estados}
+                                keyMap={item => item.id}
+                                valueMap={item => item.nome}
+                            />
+                            <SelectInput
+                                name="cidade"
+                                value={cidade}
+                                default="Cidade"
+                                handleChange={(e) => {
+                                    setCidade(e.target.value);
+                                }}
+                                items={cidades}
+                                keyMap={item => item.id}
+                                valueMap={item => item.nome}
+                            />
+                            <AsyncAutocomplete
+                                getOptions={listarInstituicoes}
+                                value={instituicao}
+                                onChange={(_event, newValue) => {
+                                    if (newValue) {
+                                        setInstituicao(newValue);
+                                        formik.setValues({ ...formik.values, id_hospital: newValue.id });
                                     }
-                                });
-                            }}
+                                }}
+                                getOptionLabel={(option) => option?.nome || ''}
+                                getOptionSelected={(option, value) => option?.nome === value?.nome}
+                                placeholder="Instituição"
+                            />
+                            <Typography color="textSecondary"
+                                variant="caption" className={classes.textoColuna}
+                            >
+                                A instituição que você trabalhou ainda não esta cadastrada no sistema? <a href="#">clique aqui.</a>
+                            </Typography>
+                        </div>
+                        <div className={classes.colunaCampos}>
+                            <Typography color="textPrimary" variant="subtitle1"
+                                className={classes.tituloColunaCampos}
+                            >
+                                Meu Plantão
+                            </Typography>
+                            <SelectInput
+                                name="id_subcategoria"
+                                value={tipo}
+                                group
+                                default="Tipo de Plantão"
+                                handleChange={(e) => {
+                                    setTipo(e.target.value);
+                                    e.target.value = tiposPlantao?.find(group =>
+                                        group.subcategorias.find(sub =>
+                                            sub.nome === e.target.value
+                                        )
+                                    )?.subcategorias.find(sub =>
+                                        sub.nome === e.target.value
+                                    )?.id.toString() || '';
+                                    formik.handleChange(e);
+                                }}
+                                items={tiposPlantao}
+                                keyMap={item => item.id}
+                                valueMap={item => item.nome}
+                                elementsGroupMap={item => item.subcategorias.map(sub => {
+                                    return ({ id: sub.id, value: sub.nome });
+                                })}
+                            />
+                            <TextInput
+                                name="avaliacao.data_realizado"
+                                value={dataPlantao}
+                                handleChange={(e) => {
+                                    setDataPlantao(e.target.value);
+                                    formik.handleChange(e);
+                                }}
+                                placeholder="Data do Plantão"
+                                data
+                            />
+                            <CurrencyInput
+                                placeholder="Remuneração"
+                                decimalScale={2}
+                                prefix="R$"
+                                style={{
+                                    border: '1px solid var(--cor-borda-campos)'
+                                }}
+                                value={remuneracao}
+                                onValueChange={(value) => {
+                                    setRemuneracao(value || '');
+                                    formik.setValues({
+                                        ...formik.values,
+                                        avaliacao: {
+                                            ...formik.values.avaliacao,
+                                            valor_recebido: parseFloat(value?.replace('R$', '').replace('.', '').replace(',', '.') || '0')
+                                        }
+                                    });
+                                }}
+                            />
+                            <SelectInput
+                                name="avaliacao.id_horas"
+                                value={tempoPlantao}
+                                default="Tempo de Plantão"
+                                handleChange={(e) => {
+                                    setTempoPlantao(e.target.value);
+                                    e.target.value = horasPlantao?.find(plantao => plantao.horas === e.target.value)?.id.toString() || '';
+                                    formik.handleChange(e);
+                                }}
+                                items={horasPlantao}
+                                keyMap={item => item.id}
+                                valueMap={item => item.horas}
+                            />
+                        </div>
+                    </div>
+                    <div className={classes.observacoes}>
+                        <Typography color="textPrimary" variant="subtitle1"
+                            className={classes.tituloColunaCampos}
+                        >
+                            Observações pessoais
+                        </Typography>
+                        <TextAreaInput
+                            descricao="250 caracteres"
+                            name="avaliacaoFixa.comentario"
+                            onChange={formik.handleChange}
+                            value={formik.values.avaliacaoFixa.comentario}
                         />
                     </div>
+                    <div className={classes.observacoes}>
+                        <Typography color="textPrimary" variant="subtitle1"
+                            className={classes.tituloColunaCampos}
+                        >
+                            Avaliação
+                        </Typography>
+                        <div className={classes.avaliacoes}>
+                            <ReviewInput
+                                name="avaliacaoFixa.infraestrutura"
+                                titulo="Infraestrutura"
+                                descricao="Salas, consultórios, conforto médico, UTI, centro cirurgico, etc."
+                                nota={formik.values.avaliacaoFixa.infraestrutura}
+                                handleChange={formik.handleChange}
+
+                            />
+                            <ReviewInput
+                                name="avaliacaoFixa.equipamento"
+                                titulo="Equipamentos"
+                                descricao="Insumos, materiais, maquinas em funcionamento, usg, etc."
+                                nota={formik.values.avaliacaoFixa.equipamento}
+                                handleChange={formik.handleChange}
+                            />
+                            <ReviewInput
+                                name="avaliacaoFixa.equipe"
+                                titulo="Equipe de Saúde"
+                                descricao="Responsabilidade, empatia, organização, capacidade técnica."
+                                nota={formik.values.avaliacaoFixa.equipe}
+                                handleChange={formik.handleChange}
+                            />
+                            <ReviewInput
+                                name="avaliacaoFixa.seguranca"
+                                titulo="Segurança do Médico"
+                                descricao="Sobrecarga de pacientes, exposição a riscos e complicações."
+                                nota={formik.values.avaliacaoFixa.seguranca}
+                                handleChange={formik.handleChange}
+                            />
+                            <ReviewInput
+                                name="avaliacaoFixa.pagamento"
+                                titulo="Pagamento"
+                                descricao="Considera o valor justo pelo trabalho executado?"
+                                nota={formik.values.avaliacaoFixa.pagamento}
+                                handleChange={formik.handleChange}
+                                pergunta
+                                textoPergunta="Pagamento dentro do prazo?"
+                                valorPergunta={!formik.values.avaliacaoFixa.atrasado}
+                                handleChangePergunta={(_, value) => {
+                                    formik.setValues({
+                                        ...formik.values,
+                                        avaliacaoFixa: {
+                                            ...formik.values.avaliacaoFixa,
+                                            atrasado: value !== 'true'
+                                        }
+                                    });
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <Button
+                        background="#7BB2ED"
+                        texto={jaAvaliado ? 'Submeter plantão' : 'Submeter avaliação'}
+                        type="submit"
+                    />
+                </form>
+                <div className={classes.closeButtonContainer}>
+                    <IconButton aria-label="fechar"
+                        className={classes.closeButton}
+                        onClick={props.onClose}
+                    >
+                        <CloseIcon/>
+                    </IconButton>
                 </div>
-                <Button
-                    background="#7BB2ED"
-                    texto={jaAvaliado ? 'Submeter plantão' : 'Submeter avaliação'}
-                    type="submit"
-                />
-            </form>
-            <div className={classes.closeButtonContainer}>
-                <IconButton aria-label="fechar"
-                    className={classes.closeButton}
-                    onClick={props.onClose}
-                >
-                    <CloseIcon/>
-                </IconButton>
             </div>
-        </div>
+        </Dialog>
     );
 }
 

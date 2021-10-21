@@ -8,7 +8,6 @@ import FiltroBase from './components/FiltroBase';
 import api from '../../services/api';
 import useSearch from '../../hooks/use-search';
 import Button from '../Button';
-import Dialog from '@material-ui/core/Dialog';
 import ModalAvaliacaoPlantao from '../ModalAvaliacaoPlantao';
 
 export interface PlantoesPesquisadosProps {
@@ -137,26 +136,10 @@ function FiltrosPesquisa ({ resultados, count }: PlantoesPesquisadosProps) {
                     />
                 );
             })}
-            <Dialog
+            <ModalAvaliacaoPlantao
                 open={modalAvaliacaoHospitalAberto}
                 onClose={() => { setModalAvaliacaoHospitalAberto(false); }}
-                scroll="body"
-                aria-labelledby="scroll-dialog-title"
-                aria-describedby="scroll-dialog-description"
-                PaperProps={{
-                    style: {
-                        backgroundColor: 'transparent',
-                        maxWidth: '720px',
-                        minWidth: '500px',
-                        width: '35vw',
-                        outline: '0'
-                    }
-                }}
-            >
-                <ModalAvaliacaoPlantao
-                    onClose={() => { setModalAvaliacaoHospitalAberto(false); }}
-                />
-            </Dialog>
+            />
         </div>
     );
 }

@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import './styles.css';
 
-import { Dialog } from '@material-ui/core';
 import ModalInfoPlantao from '../ModalInfoPlantao';
 import { Plantao } from '../../pages/plantoes';
 import Typography from '@material-ui/core/Typography';
@@ -10,7 +9,6 @@ import StarRating from '../StarRating';
 
 export interface InterfaceCardPlantao {
     plantao: Plantao;
-    blurBackground: (e: boolean) => void;
 }
 
 const useStyles = makeStyles(theme =>
@@ -27,6 +25,7 @@ const useStyles = makeStyles(theme =>
             transition: '0.4s',
             cursor: 'pointer',
             border: 'none',
+            outline: 'none',
             '&:hover': {
                 background: 'var(--cor-fundo-card-hover)'
             }
@@ -62,32 +61,11 @@ const useStyles = makeStyles(theme =>
             display: '-webkit-box',
             WebkitLineClamp: 3,
             WebkitBoxOrient: 'vertical'
-        },
-        container: {
-            [theme.breakpoints.down('lg')]: {
-                // height: 'unset'
-            }
-        },
-        dialogPaper: {
-            backgroundColor: 'transparent',
-            width: '80vw',
-            maxWidth: '930px',
-            minWidth: '720px',
-            marginTop: '11.2rem',
-            outline: '0',
-            boxShadow: 'none',
-            [theme.breakpoints.up('lg')]: {
-                width: 'calc(58.4vw - 1.2rem)',
-                margin: '11.2rem 21.6vw 0 calc(31.6vw + 1.2rem)'
-            },
-            [theme.breakpoints.up('xl')]: {
-                margin: '11.2rem 21.6vw 0 31.6vw'
-            }
         }
     })
 );
 
-function CardHospital ({ plantao, blurBackground }: InterfaceCardPlantao) {
+function CardHospital ({ plantao }: InterfaceCardPlantao) {
     const classes = useStyles();
     const [nomeHospitalCard, setNomeHospitalCard] = useState(plantao.nome);
     const [modalInfoCardAberto, setModalInfoCardAberto] = useState(false);
@@ -101,7 +79,6 @@ function CardHospital ({ plantao, blurBackground }: InterfaceCardPlantao) {
                 descriptionElement.focus();
             }
         }
-        blurBackground(modalInfoCardAberto);
     }, [modalInfoCardAberto]);
 
     useEffect(() => {
@@ -153,22 +130,11 @@ function CardHospital ({ plantao, blurBackground }: InterfaceCardPlantao) {
                     </div>
                 </div>
             </button>
-            <Dialog
+            <ModalInfoPlantao
+                plantao={plantao}
                 open={modalInfoCardAberto}
-                onClose={() => { setModalInfoCardAberto(false); }}
-                scroll="body"
-                aria-labelledby="scroll-dialog-title"
-                aria-describedby="scroll-dialog-description"
-                classes={{ container: classes.container }}
-                PaperProps={{
-                    className: classes.dialogPaper
-                }}
-            >
-                <ModalInfoPlantao
-                    plantao={plantao}
-                    onClose={() => setModalInfoCardAberto(false)}
-                />
-            </Dialog>
+                onClose={() => setModalInfoCardAberto(false)}
+            />
         </>
     );
 }

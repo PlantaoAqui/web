@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import CardHospital from '../../components/CardHospital';
 import FiltrosPesquisa from '../../components/FiltrosPesquisa';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
@@ -68,7 +68,6 @@ function Plantoes () {
     const search = useSearch();
     const classes = useStyles();
     const [debouncedSearch] = useDebounce(search.dados, 500);
-    const [blurBackground, setBlurBackground] = useState(false);
 
     const obterPlantoes = async () => {
         if (search.dados.uf !== 0 && search.dados.municipio !== 0) {
@@ -106,7 +105,7 @@ function Plantoes () {
     );
 
     return (
-        <div className="page-plantoes" style={blurBackground ? { filter: 'blur(3px)' } : {}}>
+        <div className="page-plantoes">
             <NavBar tipoLinks="default"/>
             <div className="pesquisaplantoes">
                 <FiltrosPesquisa
@@ -132,7 +131,6 @@ function Plantoes () {
                                         <li key={cardPlantao.idPlantao}>
                                             <CardHospital
                                                 plantao={cardPlantao}
-                                                blurBackground={setBlurBackground}
                                             />
                                         </li>
 

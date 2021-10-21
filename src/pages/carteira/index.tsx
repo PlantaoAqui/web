@@ -6,7 +6,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 import Button from '../../components/Button';
 import CardTitulo from '../../components/CardTitulo';
 import ItemLista from '../../components/ItemLista';
-import { Checkbox, Dialog, Divider, FormControlLabel, Grid, List, ListItemText, ListSubheader } from '@material-ui/core';
+import { Checkbox, Divider, FormControlLabel, Grid, List, ListItemText, ListSubheader } from '@material-ui/core';
 import StackedBarChart from '../../components/StackedBarChart';
 import { useAsync, useAsyncCallback } from 'react-async-hook';
 import api from '../../services/api';
@@ -611,26 +611,10 @@ function Carteira () {
                         )}
                 </div>
             </div>
-            <Dialog
+            <ModalAvaliacaoPlantao
                 open={modalAvaliacaoHospitalAberto}
                 onClose={() => { setModalAvaliacaoHospitalAberto(false); }}
-                scroll="body"
-                aria-labelledby="scroll-dialog-title"
-                aria-describedby="scroll-dialog-description"
-                PaperProps={{
-                    style: {
-                        backgroundColor: 'transparent',
-                        maxWidth: '720px',
-                        minWidth: '500px',
-                        width: '35vw',
-                        outline: '0'
-                    }
-                }}
-            >
-                <ModalAvaliacaoPlantao
-                    onClose={() => { setModalAvaliacaoHospitalAberto(false); }}
-                />
-            </Dialog>
+            />
         </div>
     );
 }
