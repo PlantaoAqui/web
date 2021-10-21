@@ -69,6 +69,15 @@ const useStyles = makeStyles(theme =>
         textoColuna: {
             padding: theme.spacing(2)
         },
+        currencyInput: {
+            background: 'transparent',
+            borderRadius: '0.8rem',
+            paddingLeft: '1.3rem',
+            height: '4rem',
+            outline: 'none',
+            font: '400 1.7rem SFProText',
+            width: '100%'
+        },
         observacoes: {
             width: '100%',
             display: 'flex',
@@ -426,6 +435,7 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
                                 style={{
                                     border: '1px solid var(--cor-borda-campos)'
                                 }}
+                                className={classes.currencyInput}
                                 value={remuneracao}
                                 onValueChange={(value) => {
                                     setRemuneracao(value || '');
