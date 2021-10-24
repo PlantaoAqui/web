@@ -114,6 +114,8 @@ const useStyles = makeStyles(theme =>
 
 function Perfil() {
     const classes = useStyles();
+    const nome = sessionStorage.getItem('nome');
+    const sobrenome = sessionStorage.getItem('sobrenome');
     const [alterandoDados, setAlterandoDados] = useState(false);
     const [showAlterarSenha, setShowAlterarSenha] = useState(false);
     const [modalAvaliacaoHospitalAberto, setModalAvaliacaoHospitalAberto] = useState(false);
@@ -151,7 +153,7 @@ function Perfil() {
                     >
                         {perfil && !getDadosPerfil.loading
                             ? (
-                                perfil.nome + ' ' + perfil.sobrenome
+                                nome + ' ' + sobrenome
                             )
                             : (
                                 <Skeleton

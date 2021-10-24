@@ -2,6 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import ListItemText from '@material-ui/core/ListItemText';
 import axios from 'axios';
 import { useFormik } from 'formik';
+import { useSnackbar } from 'notistack';
 import React, { useState, useEffect } from 'react';
 import { useAsyncCallback } from 'react-async-hook';
 import Button from '../../../components/Button';
@@ -36,6 +37,7 @@ export type DadosPerfil = {
 };
 
 function AlterarPerfil({ perfil, close, update }: AlterarPerfilProps) {
+    const { enqueueSnackbar } = useSnackbar();
     const [uf, setUF] = useState(perfil.uf.nomeUF);
     const [municipio, setMunicipio] = useState(perfil.municipio.nomeMunicipio);
     const [grauDeFormacao, setGrauDeFormacao] = useState(perfil.grauDeFormacao);
@@ -44,13 +46,17 @@ function AlterarPerfil({ perfil, close, update }: AlterarPerfilProps) {
     const [cidades, setCidades] = useState([{ id: 0, nome: perfil.municipio.nomeMunicipio }]);
 
     const submeterAlteracoes = useAsyncCallback(async () => {
-        try {
-            await api.patch('/usuarios', formikPerfil.values);
-            update();
-        } catch (error) {
-            // Criar snackbar
-            console.log(error);
-        }
+        await api.patch('/usuarios', formikPerfil.values)
+            .then(() => {
+                enqueueSnackbar('Perfil atualizado com sucesso',
+                    { variant: 'success' });
+                update();
+            })
+            .catch((error) => {
+                enqueueSnackbar('Ocorreu um erro ao atualizar o perfil',
+                    { variant: 'error' });
+                console.log(error);
+            });
     });
 
     const formikPerfil = useFormik({

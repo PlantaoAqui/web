@@ -163,7 +163,7 @@ function ModalAvaliacaoPlantao(props: ModalAvaliacaoPlantaoProps) {
                     props.onClose();
                 })
                 .catch((error) => {
-                    enqueueSnackbar('Ocorreu um erro ao registrar o palntão',
+                    enqueueSnackbar('Ocorreu um erro ao registrar o plantão',
                         { variant: 'error' });
                     console.log(error);
                 });
