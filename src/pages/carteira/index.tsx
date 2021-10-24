@@ -33,8 +33,6 @@ type ResponsePlantoes = {
 };
 
 type DadosCarteira = {
-    nome: string;
-    sobrenome: string;
     valorRecebido: number;
     valorAReceber: number;
     receitaTotal: number;
@@ -144,6 +142,8 @@ const useStyles = makeStyles(theme =>
 
 function Carteira() {
     const classes = useStyles();
+    const nome = sessionStorage.getItem('nome');
+    const sobrenome = sessionStorage.getItem('sobrenome');
     const [modalAvaliacaoHospitalAberto, setModalAvaliacaoHospitalAberto] = useState(false);
 
     const getDadosPlantoes = useAsync(
@@ -184,8 +184,12 @@ function Carteira() {
         return 'scale(' + width + ', 0.6)';
     }
 
-    function formatarValor(valor: number) {
-        return 'R$ ' + valor.toFixed(2).toString();
+    function formatarValor(valor?: number) {
+        if (valor) {
+            return 'R$ ' + valor.toFixed(2).toString();
+        } else {
+            return '--';
+        }
     }
 
     function juntarMeses(plantoes: DadosPlantao[]) {
@@ -232,7 +236,7 @@ function Carteira() {
                     >
                         {dadosCarteira && !getDadosCarteira.loading
                             ? (
-                                dadosCarteira.nome + ' ' + dadosCarteira.sobrenome
+                                nome + ' ' + sobrenome
                             )
                             : (
                                 <Skeleton
@@ -371,7 +375,7 @@ function Carteira() {
                                                             variant: 'body1',
                                                             color: 'textSecondary'
                                                         }}
-                                                        secondary={dadosCarteira.horasTrabalhadas === 0
+                                                        secondary={(dadosCarteira.horasTrabalhadas === 0 || dadosCarteira.horasTrabalhadas === null)
                                                             ? 'Nenhuma'
                                                             : dadosCarteira.horasTrabalhadas === 1
                                                                 ? '1 hora'
@@ -580,6 +584,13 @@ function Carteira() {
                                             </ul>
                                         </li>
                                     ))}
+                                    {dadosPlantoes.count === 0 && (
+                                        <Typography
+                                            variant="body1" color="textSecondary"
+                                        >
+                                            Nenhuma instituição
+                                        </Typography>
+                                    )}
                                 </List>
                             </CardTitulo>
                         )

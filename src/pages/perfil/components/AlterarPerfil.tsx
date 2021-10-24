@@ -67,7 +67,7 @@ function AlterarPerfil({ perfil, close, update }: AlterarPerfilProps) {
                 municipio: perfil.municipio.idMunicipio,
                 instituicaoDeEnsino: perfil.instituicaoDeEnsino,
                 dataDeNascimento: perfil.dataDeNascimento.split('T')[0],
-                telefone: '(11) 98374-8384'
+                telefone: ''
             }
         },
         onSubmit: () => submeterAlteracoes.execute()
