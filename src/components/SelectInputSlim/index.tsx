@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme =>
     })
 );
 
-function SelectInputSlim<T> (props: SelectInputSlimProps<T>) {
+function SelectInputSlim<T>(props: SelectInputSlimProps<T>) {
     const classes = useStyles();
     return (
         <select

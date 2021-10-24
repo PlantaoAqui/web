@@ -12,7 +12,7 @@ interface TipoFooter {
     landing?: boolean;
 }
 
-function Footer ({ landing }: TipoFooter) {
+function Footer({ landing }: TipoFooter) {
     const links = [
         <>
             <LinkScroll

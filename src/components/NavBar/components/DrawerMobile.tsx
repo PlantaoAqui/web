@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) =>
     })
 );
 
-function DrawerMobile ({ open, tipoLinks, handleDrawerToggle, abrirModalAvaliacao }: DrawerMobileProps) {
+function DrawerMobile({ open, tipoLinks, handleDrawerToggle, abrirModalAvaliacao }: DrawerMobileProps) {
     const classes = useStyles();
 
     const links: Record<'none' | 'landing' | 'default', JSX.Element> = {

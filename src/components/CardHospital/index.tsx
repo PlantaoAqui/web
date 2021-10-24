@@ -65,7 +65,7 @@ const useStyles = makeStyles(theme =>
     })
 );
 
-function CardHospital ({ plantao }: InterfaceCardPlantao) {
+function CardHospital({ plantao }: InterfaceCardPlantao) {
     const classes = useStyles();
     const [nomeHospitalCard, setNomeHospitalCard] = useState(plantao.nome);
     const [modalInfoCardAberto, setModalInfoCardAberto] = useState(false);

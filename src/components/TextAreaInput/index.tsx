@@ -36,7 +36,7 @@ interface TextAreaInputProps {
     onChange?: ChangeEventHandler<HTMLTextAreaElement>;
 }
 
-function TextAreaInput (props: TextAreaInputProps) {
+function TextAreaInput(props: TextAreaInputProps) {
     const classes = useStyles();
     return (
         <div className={classes.root} style={props.style}>

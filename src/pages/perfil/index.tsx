@@ -112,7 +112,7 @@ const useStyles = makeStyles(theme =>
     })
 );
 
-function Perfil () {
+function Perfil() {
     const classes = useStyles();
     const [alterandoDados, setAlterandoDados] = useState(false);
     const [showAlterarSenha, setShowAlterarSenha] = useState(false);
@@ -135,7 +135,7 @@ function Perfil () {
     const perfil : DadosPerfil = getDadosPerfil.result?.data;
     const dadosAvaliacoes : ResponseAvaliacoes = getDadosAvaliacoes.result?.data;
 
-    function randomWidth (min: number) {
+    function randomWidth(min: number) {
         const width = Math.random() * (1 - min) + min;
 
         return 'scale(' + width + ', 0.6)';

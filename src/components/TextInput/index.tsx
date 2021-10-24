@@ -14,35 +14,35 @@ interface TextInputProps {
     handleBlur?: (e: React.FocusEvent<unknown>) => void;
 }
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
     createStyles({
         root: {
             background: 'transparent',
-            borderRadius: '0.8rem',
-            paddingLeft: '1.3rem',
+            borderRadius: theme.shape.borderRadius,
+            paddingLeft: theme.spacing(3),
             height: '4rem',
             outline: 'none',
             font: '400 1.7rem SFProText',
             width: '100%'
         },
         erro: {
-            color: 'var(--cor-vermelha-warning)',
-            border: '1px solid var(--cor-vermelha-warning)',
+            color: theme.palette.error.main,
+            border: `1px solid ${theme.palette.error.main}`,
             '&::placeholder': {
-                color: 'var(--cor-vermelha-warning)'
+                color: theme.palette.error.main
             }
         },
         normal: {
-            color: 'var(--cor-texto-escuro)',
+            color: theme.palette.text.secondary,
             border: '1px solid var(--cor-borda-campos)',
             '&::placeholder': {
-                color: 'var(--cor-texto-claro)'
+                color: theme.palette.text.hint
             }
         }
     })
 );
 
-function TextInput (props: TextInputProps) {
+function TextInput(props: TextInputProps) {
     const classes = useStyles();
     const marginBottom = props.gutterBottom ? '1.2rem' : '0';
     return (

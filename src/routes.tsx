@@ -8,8 +8,8 @@ import history from './services/history';
 import Carteira from './pages/carteira';
 import Perfil from './pages/perfil';
 
-function Routes () {
-    function renderRestricted (component: JSX.Element) {
+function Routes() {
+    function renderRestricted(component: JSX.Element) {
         const token = sessionStorage.getItem('refreshToken');
 
         if (token) {

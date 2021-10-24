@@ -142,7 +142,7 @@ const useStyles = makeStyles(theme =>
     })
 );
 
-function Carteira () {
+function Carteira() {
     const classes = useStyles();
     const [modalAvaliacaoHospitalAberto, setModalAvaliacaoHospitalAberto] = useState(false);
 
@@ -178,17 +178,17 @@ function Carteira () {
     const dadosPlantoes : ResponsePlantoes = getDadosPlantoes.result?.data;
     const dadosCarteira : DadosCarteira = getDadosCarteira.result?.data;
 
-    function randomWidth (min: number) {
+    function randomWidth(min: number) {
         const width = Math.random() * (1 - min) + min;
 
         return 'scale(' + width + ', 0.6)';
     }
 
-    function formatarValor (valor: number) {
+    function formatarValor(valor: number) {
         return 'R$ ' + valor.toFixed(2).toString();
     }
 
-    function juntarMeses (plantoes: DadosPlantao[]) {
+    function juntarMeses(plantoes: DadosPlantao[]) {
         const grupos = plantoes.reduce(
             (resultado: Record<string, PlantoesAgrupados>, plantao) => {
                 const mes = plantao.data.split(('-'))[1];
@@ -207,12 +207,12 @@ function Carteira () {
                 return resultado;
             }, {});
 
-        return Object.keys(grupos).map(function (k) {
+        return Object.keys(grupos).map(function(k) {
             return grupos[k];
         });
     }
 
-    function getMonth (mes: string) {
+    function getMonth(mes: string) {
         const date = new Date();
         date.setDate(1);
         date.setMonth(parseInt(mes) - 1);

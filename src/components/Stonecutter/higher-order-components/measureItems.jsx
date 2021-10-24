@@ -12,7 +12,7 @@ export default (Grid, { measureImages, background } = {}) =>
         component: commonDefaultProps.component
     };
 
-    constructor (props) {
+    constructor(props) {
         super(props);
 
         this.rects = {};
@@ -24,16 +24,16 @@ export default (Grid, { measureImages, background } = {}) =>
         };
     }
 
-    componentDidMount () {
+    componentDidMount() {
         this.updateRectsDebounced = debounce(this.updateRects, 20);
         this.measureElements();
     }
 
-    componentDidUpdate () {
+    componentDidUpdate() {
         this.measureElements();
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
         Object.keys(this.retryTimeouts).forEach(key => {
             clearTimeout(this.retryTimeouts[key]);
         });
@@ -98,7 +98,7 @@ export default (Grid, { measureImages, background } = {}) =>
         });
     };
 
-    render () {
+    render() {
         // eslint-disable-next-line react/prop-types
         const { component, children, columnWidth } = this.props;
         const { rects } = this.state;

@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) =>
     })
 );
 
-function BotaoCurtida (props: BotaoCurtidaProps) {
+function BotaoCurtida(props: BotaoCurtidaProps) {
     const classes = useStyles();
     return (
         <button

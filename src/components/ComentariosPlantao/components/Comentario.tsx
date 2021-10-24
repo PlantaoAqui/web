@@ -91,13 +91,13 @@ const useStyles = makeStyles(() =>
     })
 );
 
-function Comentario ({ comentario }: ComentarioProps) {
+function Comentario({ comentario }: ComentarioProps) {
     const classes = useStyles();
     const [curtiu, setCurtiu] = useState(comentario.euCurti);
     const [numeroCurtidas, setNumeroCurtidas] = useState(comentario.curtidas);
     // const [abrir, setAbrir] = useState(false);
 
-    async function handleCurtida () {
+    async function handleCurtida() {
         try {
             await api.post('/comentarios/curtida', {
                 id_comentario: comentario.idComentario
@@ -120,7 +120,7 @@ function Comentario ({ comentario }: ComentarioProps) {
         }
     }
 
-    function formatarData (dateString: string) {
+    function formatarData(dateString: string) {
         const now = new Date();
         const date = new Date(dateString);
 

@@ -5,7 +5,7 @@ type FontSize = {
     size?: 'large' | 'small';
 };
 
-function IconeEstrela ({ size }: FontSize) {
+function IconeEstrela({ size }: FontSize) {
     return (
         <SvgIcon fontSize={size} viewBox="0 0 14 13">
             <path d="M3.50946 12.4121C3.63446 12.5059 3.77411 12.5391 3.92841 12.5117C4.0827

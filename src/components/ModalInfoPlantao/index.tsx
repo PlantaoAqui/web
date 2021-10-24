@@ -186,7 +186,7 @@ const useStyles = makeStyles(theme =>
     })
 );
 
-function ModalInfoPlantao ({ plantao, open, onClose }: ModalInfoPlantaoProps) {
+function ModalInfoPlantao({ plantao, open, onClose }: ModalInfoPlantaoProps) {
     const classes = useStyles();
     const didMount = useRef(false);
     const [modalAvaliacaoPlantaoAberto, setModalAvaliacaoPlantaoAberto] = useState(false);
@@ -195,7 +195,7 @@ function ModalInfoPlantao ({ plantao, open, onClose }: ModalInfoPlantaoProps) {
     const [iconePlantao, setIconePlantao] = useState(plantao.icone);
     const [informacoes, setInformacoes] = useState<DetalhesPlantao | null>(null);
 
-    async function loadInfo () {
+    async function loadInfo() {
         try {
             const response = await api.get(`plantoes/${idPlantao}`);
 
@@ -209,7 +209,7 @@ function ModalInfoPlantao ({ plantao, open, onClose }: ModalInfoPlantaoProps) {
         loadInfo();
     }, [idPlantao]);
 
-    function abrirGoogleMaps () {
+    function abrirGoogleMaps() {
         const url = 'https://www.google.com/maps/search/?api=1&query=';
         const endereco = informacoes?.endereco + ', ' + informacoes?.numero + ' ' + informacoes?.bairro;
         endereco.replace(' ', '+').replace(',', '%2C');
@@ -252,7 +252,7 @@ function ModalInfoPlantao ({ plantao, open, onClose }: ModalInfoPlantaoProps) {
                         },
                         offset: true,
                         ticks: {
-                            callback: function (value) {
+                            callback: function(value) {
                                 if (typeof (value) === 'string') {
                                     return value.charAt(0);
                                 }
@@ -267,7 +267,7 @@ function ModalInfoPlantao ({ plantao, open, onClose }: ModalInfoPlantaoProps) {
                             tickMarkLength: 5
                         },
                         ticks: {
-                            callback: function (value, index) {
+                            callback: function(value, index) {
                                 if ((index + 1) % 2) {
                                     return 'R$ ' + value;
                                 }
@@ -317,7 +317,7 @@ function ModalInfoPlantao ({ plantao, open, onClose }: ModalInfoPlantaoProps) {
                             display: false
                         },
                         ticks: {
-                            callback: function (value) {
+                            callback: function(value) {
                                 if (typeof (value) === 'string') {
                                     return value.charAt(0);
                                 }
@@ -331,7 +331,7 @@ function ModalInfoPlantao ({ plantao, open, onClose }: ModalInfoPlantaoProps) {
                             tickMarkLength: 5
                         },
                         ticks: {
-                            callback: function (value, index) {
+                            callback: function(value, index) {
                                 if ((index + 1) % 2) {
                                     return 'R$ ' + value;
                                 }
@@ -666,7 +666,7 @@ function ModalInfoPlantao ({ plantao, open, onClose }: ModalInfoPlantaoProps) {
 
 export default ModalInfoPlantao;
 
-function getMonthsArray () {
+function getMonthsArray() {
     const n = new Date().getMonth();
     const months = [
         'Janeiro',

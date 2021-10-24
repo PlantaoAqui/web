@@ -64,7 +64,7 @@ const useStyles = makeStyles(theme =>
     })
 );
 
-function Plantoes () {
+function Plantoes() {
     const search = useSearch();
     const classes = useStyles();
     const [debouncedSearch] = useDebounce(search.dados, 500);

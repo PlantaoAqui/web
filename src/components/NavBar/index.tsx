@@ -162,7 +162,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-function NavBar ({ tipoLinks }: LinksNavbar) {
+function NavBar({ tipoLinks }: LinksNavbar) {
     const classes = useStyles();
     const history = useHistory();
     const search = useSearch();
@@ -179,18 +179,18 @@ function NavBar ({ tipoLinks }: LinksNavbar) {
         setMobileOpen(!mobileOpen);
     };
 
-    function handleLogout () {
+    function handleLogout() {
         sessionStorage.clear();
         history.push('/');
     }
 
-    function isInPlantoes () {
+    function isInPlantoes() {
         const url = window.location.href.split('/');
 
         return url[url.length - 1] === 'plantoes';
     }
 
-    function handleSearch (e: React.FormEvent<HTMLFormElement>) {
+    function handleSearch(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         search.setDados.setLike(searchText);
 
@@ -199,7 +199,7 @@ function NavBar ({ tipoLinks }: LinksNavbar) {
         }
     }
 
-    function resetSearchText () {
+    function resetSearchText() {
         search.setDados.setLike('');
         setSearchText('');
     }

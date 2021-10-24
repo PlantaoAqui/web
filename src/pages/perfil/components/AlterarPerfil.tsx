@@ -35,7 +35,7 @@ export type DadosPerfil = {
     dataDeNascimento: string
 };
 
-function AlterarPerfil ({ perfil, close, update }: AlterarPerfilProps) {
+function AlterarPerfil({ perfil, close, update }: AlterarPerfilProps) {
     const [uf, setUF] = useState(perfil.uf.nomeUF);
     const [municipio, setMunicipio] = useState(perfil.municipio.nomeMunicipio);
     const [grauDeFormacao, setGrauDeFormacao] = useState(perfil.grauDeFormacao);
@@ -62,9 +62,9 @@ function AlterarPerfil ({ perfil, close, update }: AlterarPerfilProps) {
             },
             informacoesUsuario: {
                 crm: perfil.crm,
-                status: perfil.idGrauDeFormacao,
-                estado: perfil.uf.idUF,
-                cidade: perfil.municipio.idMunicipio,
+                grauDeFormacao: perfil.idGrauDeFormacao,
+                uf: perfil.uf.idUF,
+                municipio: perfil.municipio.idMunicipio,
                 instituicaoDeEnsino: perfil.instituicaoDeEnsino,
                 dataDeNascimento: perfil.dataDeNascimento.split('T')[0],
                 telefone: '(11) 98374-8384'
@@ -73,7 +73,7 @@ function AlterarPerfil ({ perfil, close, update }: AlterarPerfilProps) {
         onSubmit: () => submeterAlteracoes.execute()
     });
 
-    async function listarEstados () {
+    async function listarEstados() {
         try {
             const response = await axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome');
             setEstados(response.data);
@@ -82,7 +82,7 @@ function AlterarPerfil ({ perfil, close, update }: AlterarPerfilProps) {
         }
     }
 
-    async function listarGrauDeFormacao () {
+    async function listarGrauDeFormacao() {
         try {
             const response = await api.get('/tipos', {
                 params: { tipo: 'formacao' }
@@ -98,9 +98,9 @@ function AlterarPerfil ({ perfil, close, update }: AlterarPerfilProps) {
         listarGrauDeFormacao();
     }, []);
 
-    async function listarCidades () {
+    async function listarCidades() {
         try {
-            const response = await axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${formikPerfil.values.informacoesUsuario.estado}/municipios?orderBy=nome`);
+            const response = await axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${formikPerfil.values.informacoesUsuario.uf}/municipios?orderBy=nome`);
             setCidades(response.data);
         } catch (error) {
             console.log(error);
@@ -109,7 +109,7 @@ function AlterarPerfil ({ perfil, close, update }: AlterarPerfilProps) {
 
     useEffect(() => {
         listarCidades();
-    }, [formikPerfil.values.informacoesUsuario.estado]);
+    }, [formikPerfil.values.informacoesUsuario.uf]);
 
     return (
         <form onSubmit={formikPerfil.handleSubmit}>
@@ -272,9 +272,9 @@ function AlterarPerfil ({ perfil, close, update }: AlterarPerfilProps) {
                                     }}
                                     secondary={
                                         <SelectInput
-                                            name="informacoesUsuario.status"
+                                            name="informacoesUsuario.grauDeFormacao"
                                             value={grauDeFormacao}
-                                            error={!!formikPerfil.errors.informacoesUsuario?.status && !!formikPerfil.touched.informacoesUsuario?.status}
+                                            error={!!formikPerfil.errors.informacoesUsuario?.grauDeFormacao && !!formikPerfil.touched.informacoesUsuario?.grauDeFormacao}
                                             default="Grau de formação"
                                             handleChange={(e) => {
                                                 setGrauDeFormacao(e.target.value);
@@ -330,7 +330,7 @@ function AlterarPerfil ({ perfil, close, update }: AlterarPerfilProps) {
                                             name="informacoesUsuario.estado"
                                             default="Estado"
                                             value={uf}
-                                            error={!!formikPerfil.errors.informacoesUsuario?.estado && !!formikPerfil.touched.informacoesUsuario?.estado}
+                                            error={!!formikPerfil.errors.informacoesUsuario?.uf && !!formikPerfil.touched.informacoesUsuario?.uf}
                                             handleChange={(e) => {
                                                 setUF(e.target.value);
                                                 console.log(e.target.value);
@@ -362,7 +362,7 @@ function AlterarPerfil ({ perfil, close, update }: AlterarPerfilProps) {
                                         <SelectInput
                                             name="informacoesUsuario.cidade"
                                             value={municipio}
-                                            error={!!formikPerfil.errors.informacoesUsuario?.cidade && !!formikPerfil.touched.informacoesUsuario?.cidade}
+                                            error={!!formikPerfil.errors.informacoesUsuario?.municipio && !!formikPerfil.touched.informacoesUsuario?.municipio}
                                             default="Cidade"
                                             handleChange={(e) => {
                                                 setMunicipio(e.target.value);

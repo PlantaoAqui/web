@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) =>
     })
 );
 
-function SelectInput<T> (props: SelectInputProps<T>) {
+function SelectInput<T>(props: SelectInputProps<T>) {
     const classes = useStyles();
     return (
         <div className="select-input-styled">

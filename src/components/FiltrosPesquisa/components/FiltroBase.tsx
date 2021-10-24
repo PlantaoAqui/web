@@ -109,7 +109,7 @@ type selectItem = {
     nome: string;
 };
 
-function FiltroBase () {
+function FiltroBase() {
     const classes = useStyles();
     const search = useSearch();
     const [estado, setEstado] = useState('');
@@ -117,7 +117,7 @@ function FiltroBase () {
     const [estados, setEstados] = useState<selectItem[] | null>(null);
     const [cidades, setCidades] = useState<selectItem[] | null>(null);
 
-    async function listarEstados () {
+    async function listarEstados() {
         try {
             const response = await axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome');
             setEstados(response.data);
@@ -126,7 +126,7 @@ function FiltroBase () {
         }
     }
 
-    async function obterLocalidade () {
+    async function obterLocalidade() {
         try {
             const { data } = await api.get('/usuarios', { params: { filtro: 'localidade' } });
             setEstado(data.uf.nomeUF);
@@ -144,7 +144,7 @@ function FiltroBase () {
             .then(() => obterLocalidade());
     }, []);
 
-    async function listarCidades () {
+    async function listarCidades() {
         const idEstado = estados?.find(uf => uf.nome === estado)?.id;
 
         try {

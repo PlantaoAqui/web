@@ -91,11 +91,11 @@ const useStyles = makeStyles(theme =>
     })
 );
 
-function Filtro ({ tipo, expanded, resultados, handleChange }: FiltroProps) {
+function Filtro({ tipo, expanded, resultados, handleChange }: FiltroProps) {
     const classes = useStyles();
     const search = useSearch();
 
-    function handleChangeCheckbox (sub: number) {
+    function handleChangeCheckbox(sub: number) {
         if (search.dados.subcategoria.includes(sub)) {
             search.setDados.setSubcategoria(search.dados.subcategoria.filter((item) => {
                 return item !== sub;

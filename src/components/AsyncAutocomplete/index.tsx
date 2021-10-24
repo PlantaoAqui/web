@@ -62,7 +62,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-export default function AsyncAutocomplete<T> (props: AsyncAutocompleteProps<T>) {
+export default function AsyncAutocomplete<T>(props: AsyncAutocompleteProps<T>) {
     const classes = useStyles();
     const [inputValue, setInputValue] = useState('');
     const [debouncedInputValue] = useDebounce(inputValue, props.delay || 500);

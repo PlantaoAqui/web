@@ -6,7 +6,7 @@ interface SearchContextProviderProps {
     children: React.ReactNode;
 }
 
-function SearchContextProvider ({ intervaloRemuneracaoDefault, children }: SearchContextProviderProps) {
+function SearchContextProvider({ intervaloRemuneracaoDefault, children }: SearchContextProviderProps) {
     const [like, setLike] = useState('');
     const [tipo, setTipo] = useState<number>(0);
     const [subcategoria, setSubcategoria] = useState<number[]>([]);

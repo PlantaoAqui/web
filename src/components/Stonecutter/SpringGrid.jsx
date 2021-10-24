@@ -27,18 +27,18 @@ export default class extends Component {
       springConfig: { stiffness: 60, damping: 14, precision: 0.1 }
   };
 
-  constructor (props) {
+  constructor(props) {
       super(props);
       this.state = this.doLayout(props);
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
       if (!shallowEqual(nextProps, this.props)) {
           this.setState(this.doLayout(nextProps));
       }
   }
 
-  doLayout (props) {
+  doLayout(props) {
       const items = React.Children.toArray(props.children).map(element => {
           assertIsElement(element);
 
@@ -107,7 +107,7 @@ export default class extends Component {
       };
   };
 
-  render () {
+  render() {
       const {
           component: Parent,
           style,
@@ -191,7 +191,7 @@ export default class extends Component {
   }
 }
 
-function springify (style, springConfig) {
+function springify(style, springConfig) {
     return Object.keys(style).reduce((obj, key) => {
         obj[key] = spring(style[key], springConfig);
         return obj;

@@ -31,7 +31,7 @@ interface CardTituloProps {
     loading?: boolean;
 }
 
-function CardTitulo ({ titulo, transparent = false, children, loading = false }: CardTituloProps) {
+function CardTitulo({ titulo, transparent = false, children, loading = false }: CardTituloProps) {
     const classes = useStyles();
     return (
         <div className={`${classes.card} ${transparent && classes.transparentCard}`}>

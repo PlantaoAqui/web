@@ -22,16 +22,18 @@ interface ButtonProps {
     size?: 'default' | 'small';
     textTransform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase';
     dark?: boolean;
+    gutterBottom?: boolean;
     onClick?: () => void;
     type: 'button' | 'reset' | 'submit'
 }
 
-function Button (props: ButtonProps) {
+function Button(props: ButtonProps) {
     const classes = useStyles();
     const {
         variant = 'contained',
         background = variant === 'contained' ? '#DDDDDD' : '',
         dark = false,
+        gutterBottom = false,
         textTransform = 'uppercase',
         size = 'default',
         onClick,
@@ -49,6 +51,8 @@ function Button (props: ButtonProps) {
 
     const color = dark ? 'var(--cor-fundo-campos)' : 'var(--cor-texto-escuro)';
 
+    const marginBottom = gutterBottom ? '1.2rem' : 0;
+
     return (
         <ButtonMaterialUI
             type={type}
@@ -60,6 +64,7 @@ function Button (props: ButtonProps) {
                 textTransform,
                 background,
                 fontSize,
+                marginBottom,
                 color,
                 height
             }}

@@ -57,7 +57,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-function FiltrosPesquisa ({ resultados, count }: PlantoesPesquisadosProps) {
+function FiltrosPesquisa({ resultados, count }: PlantoesPesquisadosProps) {
     const classes = useStyles();
     const search = useSearch();
     const [tipoPlantao, setTipoPlantao] = useState<TipoPlantao[] | null>(null);
@@ -70,7 +70,7 @@ function FiltrosPesquisa ({ resultados, count }: PlantoesPesquisadosProps) {
         search.setDados.setSubcategoria([]);
     };
 
-    async function listarTiposPlantao () {
+    async function listarTiposPlantao() {
         try {
             const response = await api.get('tipos', {
                 params: {

@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme =>
     })
 );
 
-function AlterarSenha ({ close }: AlterarSenhaProps) {
+function AlterarSenha({ close }: AlterarSenhaProps) {
     const classes = useStyles();
     const [errorMessage, setErrorMessage] = useState('');
 

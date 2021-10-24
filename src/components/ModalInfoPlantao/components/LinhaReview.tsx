@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme =>
     })
 );
 
-function LinhaReview ({ legenda, nota }: LinhaReviewProps) {
+function LinhaReview({ legenda, nota }: LinhaReviewProps) {
     const classes = useStyles();
     return (
         <div className={classes.root}>

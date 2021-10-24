@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme =>
     })
 );
 
-function StackedBarChart () {
+function StackedBarChart() {
     const classes = useStyles();
 
     const data: ChartData = {
@@ -70,7 +70,7 @@ function StackedBarChart () {
                 },
                 stacked: true,
                 ticks: {
-                    callback: function (value) {
+                    callback: function(value) {
                         if (typeof (value) === 'string') {
                             return value.charAt(0);
                         }

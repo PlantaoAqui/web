@@ -77,10 +77,10 @@ const useStyles = makeStyles(() =>
     })
 );
 
-function ComentariosPlantao ({ id_hospital_avaliado, comentarios, reload }: ComentariosPlantaoProps) {
+function ComentariosPlantao({ id_hospital_avaliado, comentarios, reload }: ComentariosPlantaoProps) {
     const classes = useStyles();
 
-    async function postarComentario (comentario: string) {
+    async function postarComentario(comentario: string) {
         try {
             await api.post('/comentarios', {
                 id_hospital_avaliado,

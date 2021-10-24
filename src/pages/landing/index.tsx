@@ -12,8 +12,8 @@ import mobile2 from '../../assets/images/landing-page/mobile2.jpg';
 import mobile3 from '../../assets/images/landing-page/mobile3.jpg';
 import IconeHospital from '../../assets/images/icones/hospital.svg';
 import IconeFicha from '../../assets/images/icones/ficha.svg';
-import BolhaAzul from '../../assets/images/landing-page/azul.svg';
-import BolhaVerde from '../../assets/images/landing-page/verde.svg';
+import BolhaAzul from '../../assets/images/icones/azul.svg';
+import BolhaVerde from '../../assets/images/icones/verde.svg';
 
 import Footer from '../../components/Footer';
 import { createStyles, makeStyles, Typography } from '@material-ui/core';
@@ -217,7 +217,7 @@ const useStyles = makeStyles(theme =>
     })
 );
 
-function Landing () {
+function Landing() {
     const [emailEnviado, setEmailEnviado] = useState(false);
     const [statusEnvio, setStatusEnvio] = useState(0);
     const [imagemMobile, setImagemMobile] = useState(mobile1);
@@ -243,7 +243,7 @@ function Landing () {
         onSubmit: () => handleSubmit()
     });
 
-    async function handleSubmit () {
+    async function handleSubmit() {
         try {
             await api.post('/acesso-antecipado', formik.values);
             setEmailEnviado(true);

@@ -43,7 +43,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-function ReviewInput (props: ReviewInputProps) {
+function ReviewInput(props: ReviewInputProps) {
     const classes = useStyles();
     return (
         <div className={classes.root}>

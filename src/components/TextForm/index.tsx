@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme =>
     })
 );
 
-function TextForm (props: TextFormProps) {
+function TextForm(props: TextFormProps) {
     const classes = useStyles();
     const formik = useFormik({
         initialValues: {

@@ -14,7 +14,7 @@ interface StarRatingProps {
     size?: 'large' | 'small';
 }
 
-function StarRating (props: StarRatingProps) {
+function StarRating(props: StarRatingProps) {
     return (
         <div className="estrelas">
             <Rating

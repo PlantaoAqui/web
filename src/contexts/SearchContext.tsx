@@ -29,7 +29,7 @@ export type SearchContextProps = {
     }
 };
 
-function searchContextSemProvider () {
+function searchContextSemProvider() {
     throw new Error('Provider não foi atribuído');
 }
 

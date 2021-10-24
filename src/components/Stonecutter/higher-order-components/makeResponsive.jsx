@@ -11,11 +11,11 @@ export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4, widthCoef 
         gutterWidth: commonDefaultProps.gutterWidth
     };
 
-    setWidth (i) {
+    setWidth(i) {
         this.setState({ columns: i + 1 });
     }
 
-    componentDidMount () {
+    componentDidMount() {
         const { columnWidth, gutterWidth } = this.props;
 
         const breakpoints = [];
@@ -48,7 +48,7 @@ export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4, widthCoef 
             enquire.register(breakpoint, { match: handler }));
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
         this.breakpoints.forEach(({ breakpoint, handler }) =>
             enquire.unregister(breakpoint, handler));
     }
@@ -57,7 +57,7 @@ export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4, widthCoef 
         columns: defaultColumns
     };
 
-    render () {
+    render() {
         return <Grid {...this.props} {...this.state} />;
     }
     };

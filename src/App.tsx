@@ -7,7 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import SearchContextProvider from './contexts/SearchContextProvider';
 import { SnackbarProvider } from 'notistack';
 
-function App () {
+function App() {
     return (
         <ThemeProvider theme={theme}>
             <SearchContextProvider

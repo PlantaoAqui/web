@@ -40,13 +40,13 @@ interface ItemListaProps {
     isLast?: boolean;
 }
 
-function ItemLista ({
+function ItemLista({
     icone, horizontal = false, loading = false,
     q1, q2, q3, q4, isLast = false
 }: ItemListaProps) {
     const classes = useStyles();
 
-    function component (c: ReactNode) {
+    function component(c: ReactNode) {
         if (loading) {
             const width = Math.random() * (0.8 - 0.6) + 0.6;
             return (

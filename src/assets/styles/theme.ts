@@ -58,7 +58,10 @@ const theme = createTheme({
             paper: '#E9EAEA'
         }
     },
-    spacing: 4
+    spacing: 4,
+    shape: {
+        borderRadius: 8
+    }
 });
 
 // theme = responsiveFontSizes(theme);

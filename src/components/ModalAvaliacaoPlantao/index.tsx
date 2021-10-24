@@ -112,7 +112,7 @@ const useStyles = makeStyles(theme =>
     })
 );
 
-function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
+function ModalAvaliacaoPlantao(props: ModalAvaliacaoPlantaoProps) {
     const classes = useStyles();
     const didMount = useRef(false);
     const { enqueueSnackbar } = useSnackbar();
@@ -184,7 +184,7 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
     const [tiposPlantao, setTiposPlantao] = useState<groupSelect[] | null>(null);
     const [horasPlantao, setHorasPlantao] = useState([{ id: 0, horas: '' }]);
 
-    async function listarEstados () {
+    async function listarEstados() {
         try {
             const response = await axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome');
             setEstados(response.data);
@@ -193,7 +193,7 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
         }
     }
 
-    async function listarTiposPlantao () {
+    async function listarTiposPlantao() {
         try {
             await api.get('/tipos', {
                 params: { tipo: 'plantao' }
@@ -214,7 +214,7 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
         }
     }
 
-    async function listarHorasPlantao () {
+    async function listarHorasPlantao() {
         try {
             await api.get('/tipos', {
                 params: { tipo: 'horas' }
@@ -225,7 +225,7 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
         }
     }
 
-    async function listarInstituicoes (like: string) {
+    async function listarInstituicoes(like: string) {
         try {
             const response = await api.get('/hospitais', {
                 params: {
@@ -245,7 +245,7 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
         }
     }
 
-    async function obterLocalidade () {
+    async function obterLocalidade() {
         try {
             const { data } = await api.get('/usuarios', { params: { filtro: 'localidade' } });
             setEstado(data.uf.nomeUF);
@@ -259,7 +259,7 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
         }
     }
 
-    async function obterAvaliacao () {
+    async function obterAvaliacao() {
         try {
             const response = await api.get('/avaliacoes', {
                 params: {
@@ -288,7 +288,7 @@ function ModalAvaliacaoPlantao (props: ModalAvaliacaoPlantaoProps) {
         props.idPlantao && props.subcategoria && obterAvaliacao();
     }, []);
 
-    async function listarCidades () {
+    async function listarCidades() {
         const idEstado = estados?.find(estadoSelecionado => estadoSelecionado.nome === estado)?.id;
 
         try {
