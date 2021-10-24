@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-operators */
-export default function (items, props) {
+export default function(items, props) {
     const {
         columnWidth,
         itemHeight = 150,
