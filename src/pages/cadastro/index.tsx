@@ -14,6 +14,7 @@ import TextInput from '../../components/TextInput';
 import CheckIcon from '../../assets/images/icones/check.svg';
 import FormUsuario from './components/FormUsuario';
 import FormInfo from './components/FormInfo';
+import Termos from './components/Termos';
 
 const mensagemCampoObrigatorio = 'Preencha todos os campos';
 
@@ -76,51 +77,6 @@ const useStyles = makeStyles(theme =>
             },
             '& img': {
                 margin: '2rem auto'
-            }
-        },
-        termos: {
-            height: '40vh',
-            overflowX: 'hidden',
-            overflowY: 'scroll',
-            '&::-webkit-scrollbar': {
-                width: theme.spacing(1.5)
-            },
-            '&::-webkit-scrollbar-thumb': {
-                backgroundColor: theme.palette.grey[500],
-                borderRadius: theme.spacing(2),
-                '&:hover': {
-                    backgroundColor: theme.palette.grey[600]
-                }
-            },
-            marginBottom: theme.spacing(4),
-            '& h1': {
-                marginBottom: theme.spacing(4),
-                lineHeight: '2rem'
-            },
-            '& p': {
-                textAlign: 'justify',
-                padding: theme.spacing(2)
-            },
-            '& ol': {
-                counterReset: 'item'
-            },
-            '& li': {
-                display: 'block',
-                '& li': {
-                    padding: theme.spacing(2),
-                    '&:before': {
-                        content: 'counters(item, ".") ". "',
-                        counterIncrement: 'item'
-                    }
-                }
-            },
-            '& h2': {
-                marginTop: theme.spacing(2),
-                marginBottom: theme.spacing(1),
-                '&:before': {
-                    content: 'counters(item, ".") ". "',
-                    counterIncrement: 'item'
-                }
             }
         }
     })
@@ -283,56 +239,9 @@ function Cadastro() {
             );
         case 2:
             return (
-                <form onSubmit={formik.handleSubmit}>
-                    <div className={classes.termos}>
-                        <h1>Termos de uso <i>Plantão Fácil</i></h1>
-                        <p>É muito importante para o <i>Plantão Fácil</i> que os usuários entendam como funciona a plataforma antes que comecem a utilizá-la para as diversas aplicações disponíveis.
-                            Assim, estes Termos de Uso regem o acesso e utilização das plataformas <i>Plantão Fácil</i>, quais sejam, site, e-mails e aplicativos móveis.
-                            Caso esteja utilizando o <i>Plantão Fácil</i> em nome de uma pessoa jurídica, a expressão &quot;você&quot;  também significará essa empresa ou entidade legal.
-                            Os termos &quot;nós&quot; e &quot;nos&quot; se referem a: &quot;<i>Plantão Fácil</i>&quot;.
-                        </p>
-                        <ol type="1">
-                            <li>
-                                <h2><strong>Adesão</strong></h2>
-                                <ol>
-                                    <li>No momento do cadastro, você deverá ler, compreender e aceitar estes Termos de Uso, conforme opção específica que será fornecida. </li>
-                                    <li>Ao acessar e usar o “PlantãoFácil”, você concorda com a versão dos Termos de Uso publicada no momento do acesso.</li>
-                                    <li>Caso não concorde com os Termos de Uso, você deverá deixar de usar a plataforma e de realizar o seu cadastro. </li>
-                                    <li>Este documento tem natureza de contrato de adesão e passa por revisões periódicas, sem que seja necessária a sua notificação prévia. Por isso, é importante que você consulte, periodicamente, os Termos de Uso para se certificar de que continua em plena concordância com as condições de uso.</li>
-                                </ol>
-                            </li>
-                            <li>
-                                <h2><strong>Elegibilidade de uso do <i>“PlantãoFácil”</i></strong></h2>
-                                <ol>
-                                    <li>Para acessar ou usar o “PlantãoFácil” é necessário que a pessoa física tenha pelo menos 16 anos de idade ou a idade mínima de maioridade em sua jurisdição e esteja em pleno gozo de sua capacidade para praticar atos na vida civil;</li>
-                                    <li>As pessoas jurídicas e seus agentes autorizados podem usar a conta empresarial e quaisquer dados sobre a empresa fornecidos por meio dessa conta para fins de negócios internos da empresa. Exceto conforme definido acima ou aprovado por nós, o “PlantãoFácil” é para seu uso pessoal não comercial, a menos que você firme um contrato separado conosco para seu uso comercial. </li>
-                                    <li>Você não poderá usar o “PlantãoFácil” se tivermos encerrado ou banido sua conta.</li>
-                                </ol>
-                            </li>
-                            <li>
-                                <h2><strong>Sua conta do <i>“PlantãoFácil”</i></strong></h2>
-                                <ol>
-                                    <li>Para criar uma conta no ““PlantãoFácil”” é necessário fornecer um endereço de e mail válido e um número de cadastro ativo em um dos 27 Conselhos Regionais de Medicina das unidades federativas brasileiras.</li>
-                                    <li>Se não for possível o contato através do e-mail fornecido, o “PlantãoFácil” pode rejeitar o seu conteúdo e desativar a sua conta.</li>
-                                    <li>Outros requisitos de inscrição (como cliques em links em e mails de alerta de vagas do “PlantãoFácil” por usuários não inscritos que criam alertas de vagas ou para os indivíduos contribuírem com apenas uma avaliação de empresa, avaliação de entrevista e/ou detalhes de salário de um emprego atual ou antigo por ano) também podem se aplicar.</li>
-                                    <li>Ao se cadastrar no “PlantãoFácil” você registrará uma senha e reconhece, desde já, que a sua senha de acesso é de uso pessoal e intransferível, não podendo fornecê-la a terceiros sob nenhuma hipótese.</li>
-                                    <li>Você deverá adotar todas as providências necessárias para garantir a confidencialidade e sigilo de sua senha.</li>
-                                    <li>Você concorda em avisar o “PlantãoFácil” sempre que suspeitar de qualquer uso não autorizado da sua conta ou acesso indevido à sua senha. Você é exclusivamente responsável por todo e qualquer uso de sua conta.</li>
-                                    <li>Você também se compromete a responder integralmente por quaisquer consequências jurídicas decorrentes diretamente da perda ou extravio de sua senha, caso você haja com imprudência, negligência ou imperícia.</li>
-                                    <li>As senhas estão sujeitas ao cancelamento ou suspensão pelo “PlantãoFácil” a qualquer momento.</li>
-                                    <li>Ao configurar uma conta de usuário individual no ““PlantãoFácil””, será criado um perfil de membro (“Perfil”) que conterá todas as informações pessoais que você inseriu.</li>
-                                    <li>Atualizaremos o seu “Perfil” com as informações coletadas nos currículos carregados no ““PlantãoFácil””.</li>
-                                </ol>
-                            </li>
-                        </ol>
-                    </div>
-                    <Button
-                        background='#FF817C'
-                        type="submit"
-                        texto="Aceitar e finalizar o cadastro"
-                        textTransform="none"
-                    />
-                </form>
+                <Termos
+                    handleSubmit={formik.handleSubmit}
+                />
             );
         }
     }
