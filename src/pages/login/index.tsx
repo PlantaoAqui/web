@@ -73,7 +73,7 @@ function Login() {
         <FormOverlay
             voltar={() => history.push('/')}
         >
-            <div className={classes.conteudo}>
+            <form onSubmit={formik.handleSubmit} className={classes.conteudo}>
                 <Typography gutterBottom
                     variant="h4" color="textPrimary"
                 >
@@ -112,7 +112,7 @@ function Login() {
                     textTransform="none"
                     tamanhoTexto="big"
                 />
-            </div>
+            </form>
         </FormOverlay>
     );
 }
