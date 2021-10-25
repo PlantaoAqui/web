@@ -24,8 +24,8 @@ const useStyles = makeStyles(theme =>
             },
             marginBottom: theme.spacing(4),
             '& h1': {
-                marginBottom: theme.spacing(4),
-                lineHeight: '2rem'
+                marginBottom: theme.spacing(4)
+                // lineHeight: '2rem'
             },
             '& p': {
                 textAlign: 'justify',

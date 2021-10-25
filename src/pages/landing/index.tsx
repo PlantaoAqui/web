@@ -16,7 +16,7 @@ import BolhaAzul from '../../assets/images/icones/azul.svg';
 import BolhaVerde from '../../assets/images/icones/verde.svg';
 
 import Footer from '../../components/Footer';
-import { createStyles, makeStyles, Typography } from '@material-ui/core';
+import { createStyles, Hidden, makeStyles, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme =>
     createStyles({
@@ -37,14 +37,26 @@ const useStyles = makeStyles(theme =>
             marginBottom: '16rem',
             '& h1': {
                 fontWeight: 600,
-                marginBottom: theme.spacing(14)
+                marginBottom: theme.spacing(14),
+                [theme.breakpoints.down('md')]: {
+                    marginBottom: theme.spacing(4)
+                }
             },
             '& h5': {
-                marginBottom: theme.spacing(12)
+                marginBottom: theme.spacing(12),
+                [theme.breakpoints.down('md')]: {
+                    marginBottom: theme.spacing(6)
+                }
             },
             '& img': {
                 left: '40vw',
                 height: '100%'
+            },
+            [theme.breakpoints.down('md')]: {
+                marginBottom: '8rem'
+            },
+            [theme.breakpoints.down('sm')]: {
+                flexDirection: 'column'
             }
         },
         secaoOverflow: {
@@ -55,12 +67,22 @@ const useStyles = makeStyles(theme =>
                 maxWidth: '40rem'
             },
             '& h6': {
-                marginBottom: theme.spacing(4)
+                marginBottom: theme.spacing(4),
+                [theme.breakpoints.down('sm')]: {
+                    marginTop: theme.spacing(8)
+                }
             },
             '& img': {
                 position: 'absolute',
                 left: '40vw',
-                height: '100%'
+                height: '100%',
+                [theme.breakpoints.down('xs')]: {
+                    position: 'relative',
+                    left: 0,
+                    width: '100%',
+                    height: 'auto',
+                    marginTop: theme.spacing(8)
+                }
             },
             '& form': {
                 width: '100%'
@@ -70,7 +92,15 @@ const useStyles = makeStyles(theme =>
             width: '50%',
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'start'
+            alignItems: 'start',
+            [theme.breakpoints.down('sm')]: {
+                width: '100%'
+            }
+        },
+        conteudoSecaoOverflow: {
+            [theme.breakpoints.up('sm')]: {
+                width: '40%'
+            }
         },
         imagensCelular: {
             position: 'relative',
@@ -99,11 +129,14 @@ const useStyles = makeStyles(theme =>
             transition: theme.transitions.create(['background', 'border']),
             '& p:first-child': {
                 fontSize: '8rem',
-                width: '8rem'
+                width: '8rem',
+                [theme.breakpoints.down('md')]: {
+                    marginRight: theme.spacing(1.5)
+                }
             },
             '& p': {
                 fontSize: '3.2rem',
-                lineHeight: '3.6rem',
+                lineHeight: 1.06,
                 letterSpacing: '-1px',
                 maxWidth: '32rem',
                 fontWeight: 600
@@ -111,6 +144,9 @@ const useStyles = makeStyles(theme =>
             '&:hover': {
                 background: theme.palette.action.hover,
                 borderColor: 'var(--cor-fundo-card-hover)'
+            },
+            [theme.breakpoints.down('md')]: {
+                marginLeft: 0
             }
         },
         interesse: {
@@ -125,7 +161,13 @@ const useStyles = makeStyles(theme =>
             alignItems: 'stretch',
             justifyContent: 'space-between',
             marginTop: '2rem',
-            gap: '1.2rem'
+            gap: '1.2rem',
+            [theme.breakpoints.down('md')]: {
+                flexDirection: 'column',
+                '& h6': {
+                    maxWidth: '45%'
+                }
+            }
         },
         botaoInteresse: {
             display: 'flex',
@@ -154,6 +196,12 @@ const useStyles = makeStyles(theme =>
                 marginBottom: '1.2rem'
             },
             '& form': {
+                width: '100%'
+            },
+            [theme.breakpoints.down('md')]: {
+                width: '60%'
+            },
+            [theme.breakpoints.down('sm')]: {
                 width: '100%'
             }
         },
@@ -206,13 +254,21 @@ const useStyles = makeStyles(theme =>
             position: 'absolute',
             top: '-15rem',
             left: '-60rem',
-            width: '110vw'
+            width: '110vw',
+            [theme.breakpoints.down('sm')]: {
+                top: '-25vw',
+                left: '-50vw'
+            }
         },
         circuloAzul: {
             position: 'absolute',
             top: '110rem',
             right: '-70rem',
-            width: '110vw'
+            width: '110vw',
+            [theme.breakpoints.down('sm')]: {
+                top: '120rem',
+                right: '-20rem'
+            }
         }
     })
 );
@@ -264,7 +320,7 @@ function Landing() {
             <NavBar tipoLinks="landing"/>
             <div className={classes.content}>
                 <div id="cadastro" ref={refDiv} className={classes.secao + ' ' + classes.secaoOverflow}>
-                    <div className={classes.conteudoSecao} style={{ width: '40%' }}>
+                    <div className={`${classes.conteudoSecao} ${classes.conteudoSecaoOverflow}`}>
                         <Typography
                             variant="h1" color="textPrimary"
                         >
@@ -277,6 +333,7 @@ function Landing() {
                             de uma plataforma otimizada e desenvolvida por uma
                             comunidade de médicos.
                         </Typography>
+                        <img src={ImagemPc} alt="Plantão fácil" />
                         <Typography
                             variant="subtitle1" color="textPrimary"
                         >
@@ -303,13 +360,14 @@ function Landing() {
                             </div>
                         </form>
                     </div>
-                    <img src={ImagemPc} alt="Plantão fácil" />
                 </div>
                 <div id="sobrenos" ref={refDiv} className={classes.secao}>
-                    <div className={classes.imagensCelular}>
-                        <img src={imagemMobile} alt="Plantão fácil"/>
-                        <img src={ImagemMobile} alt="Celular"/>
-                    </div>
+                    <Hidden smDown>
+                        <div className={classes.imagensCelular}>
+                            <img src={imagemMobile} alt="Plantão fácil"/>
+                            <img src={ImagemMobile} alt="Celular"/>
+                        </div>
+                    </Hidden>
                     <div className={classes.conteudoSecao}>
                         <Typography
                             variant="h1" color="textPrimary"

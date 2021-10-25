@@ -1,10 +1,10 @@
-import { createTheme } from '@material-ui/core';
+import { createTheme, responsiveFontSizes } from '@material-ui/core';
 
-const theme = createTheme({
+const theme = responsiveFontSizes(createTheme({
     typography: {
         fontFamily: "'SFProText', sans-serif",
         h1: {
-            lineHeight: '6.2rem',
+            // lineHeight: '6.2rem',
             letterSpacing: '-2px'
         },
         h3: {
@@ -12,18 +12,18 @@ const theme = createTheme({
         },
         h4: {
             fontSize: '2.8rem',
-            lineHeight: '3.2rem'
+            lineHeight: 1.14
         },
         h5: {
             fontSize: '1.85rem'
         },
         h6: {
             fontSize: '1.85rem',
-            lineHeight: '2rem'
+            lineHeight: 1.81
         },
         subtitle1: {
             fontSize: '1.6rem',
-            lineHeight: '1.8rem',
+            lineHeight: 1.125,
             letterSpacing: '0.15px'
         },
         subtitle2: {
@@ -40,7 +40,7 @@ const theme = createTheme({
         body2: {
             fontSize: '1.25rem',
             letterSpacing: '0.5px',
-            lineHeight: '1.6rem'
+            lineHeight: 1.28
         },
         caption: {
             fontSize: '0.95rem'
@@ -62,8 +62,6 @@ const theme = createTheme({
     shape: {
         borderRadius: 8
     }
-});
-
-// theme = responsiveFontSizes(theme);
+}));
 
 export default theme;

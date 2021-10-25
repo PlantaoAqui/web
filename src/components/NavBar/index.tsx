@@ -73,6 +73,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
             }
         },
+        toolbarMobile: {
+            width: '90%',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            margin: 'auto'
+        },
         botoesAcesso: {
             display: 'flex',
             flexDirection: 'row',
@@ -348,12 +356,14 @@ function NavBar({ tipoLinks }: LinksNavbar) {
                     {toolbars[tipoLinks]}
                 </Hidden>
                 <Hidden mdUp>
-                    <div className={classes.logo}>
-                        <img src={LogoPlantaoFacil} alt="PlantaoFacil"/>
+                    <div className={classes.toolbarMobile}>
+                        <div className={classes.logo}>
+                            <img src={LogoPlantaoFacil} alt="PlantaoFacil"/>
+                        </div>
+                        <IconButton onClick={handleDrawerToggle}>
+                            <img src={IconeMenu} alt="Menu" />
+                        </IconButton>
                     </div>
-                    <IconButton onClick={handleDrawerToggle}>
-                        <img src={IconeMenu} alt="Menu" />
-                    </IconButton>
                 </Hidden>
             </Toolbar>
             <Hidden mdUp>

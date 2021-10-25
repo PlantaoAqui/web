@@ -18,11 +18,13 @@ interface DrawerMobileProps {
 
 const useStyles = makeStyles((theme) =>
     createStyles({
-        toolbar: theme.mixins.toolbar,
         drawerPaper: {
-            width: '60vw',
+            width: '75vw',
             maxWidth: '30rem',
-            background: '#A1E09E'
+            background: '#A1E09E',
+            marginTop: theme.mixins.toolbar.minHeight,
+            paddingBottom: theme.mixins.toolbar.minHeight,
+            padding: theme.spacing(2)
         },
         secao: {
             borderRadius: theme.spacing(2),
@@ -44,6 +46,12 @@ const useStyles = makeStyles((theme) =>
         },
         espaco: {
             flexGrow: 1
+        },
+        contato: {
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between'
         },
         redesSociais: {
             '& img': {
@@ -153,38 +161,39 @@ function DrawerMobile({ open, tipoLinks, handleDrawerToggle, abrirModalAvaliacao
                 }
             }}
         >
-            <div className={classes.toolbar} />
             {links[tipoLinks]}
             <div className={classes.espaco}/>
             <div className={classes.secao}>
-                <Typography
-                    variant="h3" gutterBottom
-                    className={classes.tituloSecao}
-                >
-                    Contato
-                </Typography>
+                <div className={classes.contato}>
+                    <Typography
+                        variant="h3" gutterBottom
+                        className={classes.tituloSecao}
+                    >
+                        Contato
+                    </Typography>
+                    <div className={classes.redesSociais}>
+                        <Link
+                            href="https://www.facebook.com/plantaofacil"
+                        >
+                            <img src={LogoFacebook} alt="Facebook" />
+                        </Link>
+                        <Link
+                            href="https://twitter.com/plantaofacil"
+                        >
+                            <img src={LogoTwitter} alt="Twitter" />
+                        </Link>
+                        <Link
+                            href="https://www.instagram.com/plantao.facil"
+                        >
+                            <img src={LogoInsta} alt="Instagram" />
+                        </Link>
+                    </div>
+                </div>
                 <a href="mailto:contato@plantaofacil.com" className={classes.linkSecao}>
                     <Typography variant="h4">
                         contato@plantaofacil.com
                     </Typography>
                 </a>
-                <div className={classes.redesSociais}>
-                    <Link
-                        href="https://www.facebook.com/plantaofacil"
-                    >
-                        <img src={LogoFacebook} alt="Facebook" />
-                    </Link>
-                    <Link
-                        href="https://twitter.com/plantaofacil"
-                    >
-                        <img src={LogoTwitter} alt="Twitter" />
-                    </Link>
-                    <Link
-                        href="https://www.instagram.com/plantao.facil"
-                    >
-                        <img src={LogoInsta} alt="Instagram" />
-                    </Link>
-                </div>
             </div>
             <div className={classes.logo}>
                 <img src={LogoPlantaoFacil} alt="PlantaoFacil"/>
