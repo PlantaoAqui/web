@@ -22,9 +22,13 @@ const useStyles = makeStyles((theme) =>
             width: '75vw',
             maxWidth: '30rem',
             background: '#A1E09E',
-            marginTop: theme.mixins.toolbar.minHeight,
-            paddingBottom: theme.mixins.toolbar.minHeight,
+            marginTop: '4.8rem',
+            paddingBottom: '4.8rem',
             padding: theme.spacing(2)
+        },
+        drawerLanding: {
+            marginTop: theme.mixins.toolbar.minHeight,
+            paddingBottom: theme.mixins.toolbar.minHeight
         },
         secao: {
             borderRadius: theme.spacing(2),
@@ -76,72 +80,79 @@ function DrawerMobile({ open, tipoLinks, handleDrawerToggle, abrirModalAvaliacao
 
     const links: Record<'none' | 'landing' | 'default', JSX.Element> = {
         none: <></>,
-        landing:
-    <div className={classes.secao}>
-        <Typography
-            variant="h3" gutterBottom
-            className={classes.tituloSecao}
-        >
-            MENU
-        </Typography>
-        <LinkScroll
-            activeClass="active" to="sobrenos" spy={true} smooth={true}
-            offset={-70} duration={500} className={classes.linkSecao}
-            onClick={handleDrawerToggle}
-        >
-            <Typography variant="h4" gutterBottom>
-                Sobre Nós
-            </Typography>
-        </LinkScroll>
-        <LinkScroll
-            activeClass="active" to="contato" spy={true} smooth={true}
-            offset={-70} duration={500} className={classes.linkSecao}
-            onClick={handleDrawerToggle}
-        >
-            <Typography variant="h4" gutterBottom>
-                Fale Conosco
-            </Typography>
-        </LinkScroll>
-    </div>,
-        default:
-    <div className={classes.secao}>
-        <Typography
-            variant="h3" gutterBottom
-            className={classes.tituloSecao}
-        >
-            MENU
-        </Typography>
-        <Link href="/plantoes" className={classes.linkSecao}>
-            <Typography variant="h4" gutterBottom>
-                Pesquisar
-            </Typography>
-        </Link>
-        <Link href="/plantoes" className={classes.linkSecao}>
-            <Typography variant="h4" gutterBottom>
-                Plantões
-            </Typography>
-        </Link>
-        <Link href="/plantoes" className={classes.linkSecao}>
-            <Typography variant="h4" gutterBottom>
-                Cursos
-            </Typography>
-        </Link>
-        <Link href="/plantoes" className={classes.linkSecao}>
-            <Typography variant="h4" gutterBottom>
-                Ofertas
-            </Typography>
-        </Link>
-        <Link onClick={abrirModalAvaliacao} className={classes.linkSecao}>
-            <Typography variant="h4" gutterBottom>
-                Nova Avaliação
-            </Typography>
-        </Link>
-        <Link href="/plantoes" className={classes.linkSecao}>
-            <Typography variant="h4" gutterBottom>
-                Minha conta
-            </Typography>
-        </Link>
-    </div>
+        landing: (
+            <div className={classes.secao}>
+                <Typography
+                    variant="h3" gutterBottom
+                    className={classes.tituloSecao}
+                >
+                    MENU
+                </Typography>
+                <LinkScroll
+                    activeClass="active" to="sobrenos" spy={true} smooth={true}
+                    offset={-70} duration={500} className={classes.linkSecao}
+                    onClick={handleDrawerToggle}
+                >
+                    <Typography variant="h4" gutterBottom>
+                        Sobre Nós
+                    </Typography>
+                </LinkScroll>
+                <LinkScroll
+                    activeClass="active" to="contato" spy={true} smooth={true}
+                    offset={-70} duration={500} className={classes.linkSecao}
+                    onClick={handleDrawerToggle}
+                >
+                    <Typography variant="h4" gutterBottom>
+                        Fale Conosco
+                    </Typography>
+                </LinkScroll>
+                <Link href="/login" className={classes.linkSecao}>
+                    <Typography variant="h4" gutterBottom>
+                        Login
+                    </Typography>
+                </Link>
+            </div>
+        ),
+        default: (
+            <div className={classes.secao}>
+                <Typography
+                    variant="h3" gutterBottom
+                    className={classes.tituloSecao}
+                >
+                    MENU
+                </Typography>
+                <Link href="/plantoes" className={classes.linkSecao}>
+                    <Typography variant="h4" gutterBottom>
+                        Pesquisar
+                    </Typography>
+                </Link>
+                <Link href="/plantoes" className={classes.linkSecao}>
+                    <Typography variant="h4" gutterBottom>
+                        Plantões
+                    </Typography>
+                </Link>
+                <Link href="/plantoes" className={classes.linkSecao}>
+                    <Typography variant="h4" gutterBottom>
+                        Cursos
+                    </Typography>
+                </Link>
+                <Link href="/plantoes" className={classes.linkSecao}>
+                    <Typography variant="h4" gutterBottom>
+                        Ofertas
+                    </Typography>
+                </Link>
+                <Link onClick={abrirModalAvaliacao} className={classes.linkSecao}>
+                    <Typography variant="h4" gutterBottom>
+                        Nova Avaliação
+                    </Typography>
+                </Link>
+                <Link href="/plantoes" className={classes.linkSecao}>
+                    <Typography variant="h4" gutterBottom>
+                        Minha conta
+                    </Typography>
+                </Link>
+            </div>
+        )
     };
 
     return (
@@ -152,7 +163,7 @@ function DrawerMobile({ open, tipoLinks, handleDrawerToggle, abrirModalAvaliacao
             open={open}
             onClose={handleDrawerToggle}
             classes={{
-                paper: classes.drawerPaper
+                paper: `${classes.drawerPaper} ${tipoLinks === 'landing' && classes.drawerLanding}`
             }}
             ModalProps={{
                 keepMounted: true,

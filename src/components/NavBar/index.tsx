@@ -39,7 +39,11 @@ const useStyles = makeStyles((theme: Theme) =>
         logo: {
             width: '30%',
             '& img': {
-                height: '3.2rem'
+                height: '3.2rem',
+                [theme.breakpoints.down('sm')]: {
+                    width: '40vw',
+                    height: 'auto'
+                }
             }
         },
         toolbarBlank: {
@@ -360,19 +364,23 @@ function NavBar({ tipoLinks }: LinksNavbar) {
                         <div className={classes.logo}>
                             <img src={LogoPlantaoFacil} alt="PlantaoFacil"/>
                         </div>
-                        <IconButton onClick={handleDrawerToggle}>
-                            <img src={IconeMenu} alt="Menu" />
-                        </IconButton>
+                        {tipoLinks !== 'none' && (
+                            <IconButton onClick={handleDrawerToggle}>
+                                <img src={IconeMenu} alt="Menu" />
+                            </IconButton>
+                        )}
                     </div>
                 </Hidden>
             </Toolbar>
             <Hidden mdUp>
-                <DrawerMobile
-                    open={mobileOpen}
-                    tipoLinks={tipoLinks}
-                    handleDrawerToggle={handleDrawerToggle}
-                    abrirModalAvaliacao={() => { console.log('dsfg'); }}
-                />
+                {tipoLinks !== 'none' && (
+                    <DrawerMobile
+                        open={mobileOpen}
+                        tipoLinks={tipoLinks}
+                        handleDrawerToggle={handleDrawerToggle}
+                        abrirModalAvaliacao={() => { console.log('dsfg'); }}
+                    />
+                )}
             </Hidden>
         </AppBar>
     );

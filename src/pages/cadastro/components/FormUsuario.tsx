@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '../../../components/Button';
 import Grid from '@material-ui/core/Grid';
 import TextInput from '../../../components/TextInput';
+import Hidden from '@material-ui/core/Hidden';
 
 interface FormUsuarioProps {
     values: {
@@ -92,7 +93,7 @@ function FormUsuario(props: FormUsuarioProps) {
                     </Typography>
                 )}
                 <Grid container spacing={3}>
-                    <Grid item xs={4}>
+                    <Grid item xs={6} sm={4}>
                         <TextInput
                             type="text"
                             name="usuario.nome"
@@ -103,7 +104,20 @@ function FormUsuario(props: FormUsuarioProps) {
                             handleBlur={props.handleBlur}
                         />
                     </Grid>
-                    <Grid item xs={8}>
+                    <Hidden smUp>
+                        <Grid item xs={6}>
+                            <TextInput
+                                type="text"
+                                name="usuario.telefone"
+                                placeholder="Telefone"
+                                value={props.values.telefone}
+                                error={!!props.errors?.telefone && !!props.touched?.telefone}
+                                handleChange={props.handleChange}
+                                handleBlur={props.handleBlur}
+                            />
+                        </Grid>
+                    </Hidden>
+                    <Grid item xs={12} sm={8}>
                         <TextInput
                             type="text"
                             name="usuario.sobrenome"
@@ -114,7 +128,7 @@ function FormUsuario(props: FormUsuarioProps) {
                             handleBlur={props.handleBlur}
                         />
                     </Grid>
-                    <Grid item xs={8}>
+                    <Grid item xs={12} sm={8}>
                         <TextInput
                             type="email"
                             name="usuario.email"
@@ -125,17 +139,19 @@ function FormUsuario(props: FormUsuarioProps) {
                             handleBlur={props.handleBlur}
                         />
                     </Grid>
-                    <Grid item xs={4}>
-                        <TextInput
-                            type="text"
-                            name="usuario.telefone"
-                            placeholder="Telefone"
-                            value={props.values.telefone}
-                            error={!!props.errors?.telefone && !!props.touched?.telefone}
-                            handleChange={props.handleChange}
-                            handleBlur={props.handleBlur}
-                        />
-                    </Grid>
+                    <Hidden mdDown>
+                        <Grid item xs={4}>
+                            <TextInput
+                                type="text"
+                                name="usuario.telefone"
+                                placeholder="Telefone"
+                                value={props.values.telefone}
+                                error={!!props.errors?.telefone && !!props.touched?.telefone}
+                                handleChange={props.handleChange}
+                                handleBlur={props.handleBlur}
+                            />
+                        </Grid>
+                    </Hidden>
                     <Grid item xs={6}>
                         <TextInput
                             type="password"

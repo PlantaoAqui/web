@@ -23,7 +23,10 @@ const useStyles = makeStyles(theme =>
             height: '4rem',
             outline: 'none',
             font: '400 1.7rem SFProText',
-            width: '100%'
+            width: '100%',
+            [theme.breakpoints.down('sm')]: {
+                paddingLeft: theme.spacing(2)
+            }
         },
         erro: {
             color: theme.palette.error.main,

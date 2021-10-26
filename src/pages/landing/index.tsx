@@ -60,8 +60,7 @@ const useStyles = makeStyles(theme =>
             }
         },
         secaoOverflow: {
-            height: '80vh',
-            maxHeight: '60rem',
+            maxHeight: '80vh',
             position: 'relative',
             '& h1': {
                 maxWidth: '40rem'
@@ -86,6 +85,9 @@ const useStyles = makeStyles(theme =>
             },
             '& form': {
                 width: '100%'
+            },
+            [theme.breakpoints.down('sm')]: {
+                maxHeight: 'unset'
             }
         },
         conteudoSecao: {
@@ -234,6 +236,16 @@ const useStyles = makeStyles(theme =>
                 transition: '0.2s'
             }
         },
+        campoEmailTranslucido: {
+            '& input': {
+                borderColor: '#7BB2ED',
+                background: 'white',
+                opacity: 0.6,
+                [theme.breakpoints.down('sm')]: {
+                    opacity: 1
+                }
+            }
+        },
         emailSubmetido: {
             '& input': {
                 width: 0,
@@ -340,16 +352,11 @@ function Landing() {
                             Insira seu email para ter acesso antecipado as nossas ferramentas.
                         </Typography>
                         <form onSubmit={formik.handleSubmit}>
-                            <div className={`${classes.campoEmail} ${emailEnviado && classes.emailSubmetido}`}>
+                            <div className={`${classes.campoEmail} ${classes.campoEmailTranslucido} ${emailEnviado && classes.emailSubmetido}`}>
                                 <input
                                     disabled={emailEnviado}
                                     value={formik.values.email}
                                     onChange={formik.handleChange}
-                                    style={{
-                                        borderColor: '#7BB2ED',
-                                        background: 'white',
-                                        opacity: 0.6
-                                    }}
                                     name="email" type="text" placeholder="Email"
                                 />
                                 <button type="submit"

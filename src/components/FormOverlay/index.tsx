@@ -32,7 +32,10 @@ const useStyles = makeStyles(theme =>
             height: 'fit-content',
             padding: theme.spacing(3),
             borderRadius: '8px',
-            margin: 'auto'
+            margin: 'auto',
+            [theme.breakpoints.down('sm')]: {
+                width: '90vw'
+            }
         },
         botaoVoltar: {
             position: 'absolute',
@@ -64,7 +67,10 @@ const useStyles = makeStyles(theme =>
             position: 'absolute',
             top: '-36vw',
             left: '-36vw',
-            width: '80vw'
+            width: '80vw',
+            [theme.breakpoints.down('md')]: {
+
+            }
         }
     })
 );
