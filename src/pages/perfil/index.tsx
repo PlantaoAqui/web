@@ -245,7 +245,7 @@ function Perfil() {
                                                                 variant: 'body1',
                                                                 color: 'textSecondary'
                                                             }}
-                                                            secondary="(11) 98374-8384"
+                                                            secondary={perfil.telefone}
                                                             secondaryTypographyProps={{
                                                                 variant: 'body1',
                                                                 color: 'textPrimary'

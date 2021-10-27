@@ -22,6 +22,7 @@ export type DadosPerfil = {
     sobrenome: string,
     email: string,
     crm: string,
+    telefone: string,
     municipio: {
         idMunicipio: number;
         nomeMunicipio: string;
@@ -73,7 +74,7 @@ function AlterarPerfil({ perfil, close, update }: AlterarPerfilProps) {
                 municipio: perfil.municipio.idMunicipio,
                 instituicaoDeEnsino: perfil.instituicaoDeEnsino,
                 dataDeNascimento: perfil.dataDeNascimento.split('T')[0],
-                telefone: ''
+                telefone: perfil.telefone
             }
         },
         onSubmit: () => submeterAlteracoes.execute()
