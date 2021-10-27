@@ -8,7 +8,8 @@ const theme = responsiveFontSizes(createTheme({
             letterSpacing: '-2px'
         },
         h3: {
-            fontSize: '3.6rem'
+            fontSize: '3.6rem',
+            letterSpacing: '0.3px'
         },
         h4: {
             fontSize: '2.8rem',
