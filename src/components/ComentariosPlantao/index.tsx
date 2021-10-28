@@ -1,11 +1,8 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import Comentario from './components/Comentario';
 
-import measureItems from '../../components/Stonecutter/higher-order-components/measureItems';
-import SpringGrid from '../../components/Stonecutter/SpringGrid';
-import { layout } from 'react-stonecutter';
 import TextForm from '../TextForm';
 import api from '../../services/api';
 
@@ -34,16 +31,14 @@ type resposta = {
     euCurti: boolean;
 };
 
-const Grid = measureItems(SpringGrid);
-
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
     createStyles({
         root: {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'stretch',
             background: 'var(--cor-fundo-card)',
-            borderRadius: '0.8rem',
+            borderRadius: theme.shape.borderRadius,
             padding: '1rem'
         },
         sumario: {
@@ -51,10 +46,10 @@ const useStyles = makeStyles(() =>
             flexDirection: 'row',
             alignItems: 'baseline',
             justifyContent: 'space-between',
-            marginBottom: '1.2rem'
+            marginBottom: theme.spacing(3)
         },
         gridComentarios: {
-            marginBottom: '1.2rem'
+            marginBottom: theme.spacing(3)
         },
         comentarios: {
             display: 'flex',
@@ -62,17 +57,13 @@ const useStyles = makeStyles(() =>
             flexWrap: 'wrap',
             justifyContent: 'space-between'
         },
-        comentario: {
-            width: 'calc(50% - 0.6rem)',
-            listStyle: 'none'
-        },
         botaoMais: {
             background: 'transparent',
             border: 'none',
             outline: 'none',
             font: '400 1.8rem SFProText',
             color: 'var(--cor-texto-claro)',
-            marginBottom: '1.2rem'
+            marginBottom: theme.spacing(3)
         }
     })
 );
@@ -109,23 +100,12 @@ function ComentariosPlantao({ id_hospital_avaliado, comentarios, reload }: Comen
                             : comentarios.length + ' comentários'}
                 </Typography>
             </div>
-            <Grid
-                className={classes.gridComentarios}
-                component="ul"
-                columns={2}
-                columnWidth={375}
-                gutterWidth={13}
-                gutterHeight={13}
-                layout={layout.pinterest}
-                springConfig={{ stiffness: 170, damping: 26 }}
-            >
-                {comentarios.map(comentario => {
+            <Grid container spacing={3} className={classes.gridComentarios}>
+                {comentarios.map((comentario, i) => {
                     return (
-                        <li key={comentario.idComentario}
-                            className={classes.comentario}
-                        >
+                        <Grid item xs={12} md={6} key={i}>
                             <Comentario comentario={comentario}/>
-                        </li>
+                        </Grid>
                     );
                 })}
             </Grid>

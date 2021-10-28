@@ -17,13 +17,14 @@ interface ComentarioProps {
 const useStyles = makeStyles(() =>
     createStyles({
         root: {
-            padding: '1rem',
+            padding: theme.spacing(3),
             display: 'flex',
+            height: '100%',
             flexDirection: 'column',
             alignItems: 'stretch',
             background: 'transparent',
             border: `1px solid ${theme.palette.divider}`,
-            borderRadius: '0.8rem'
+            borderRadius: theme.shape.borderRadius
         },
         sumario: {
             display: 'flex',
