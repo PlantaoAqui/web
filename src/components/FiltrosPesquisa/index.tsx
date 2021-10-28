@@ -80,7 +80,7 @@ const useStyles = makeStyles(theme =>
             }
         },
         accordionSummaryMobile: {
-            marginLeft: theme.spacing(2)
+            margin: theme.spacing(0, 2)
         },
         accordionSummarContentMobile: {
             width: '100%',

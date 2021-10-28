@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) =>
     })
 );
 
-function DrawerMobile({ open, tipoLinks, handleDrawerToggle, abrirModalAvaliacao }: DrawerMobileProps) {
+function DrawerMobile({ open, tipoLinks, handleDrawerToggle }: DrawerMobileProps) {
     const classes = useStyles();
 
     const links: Record<'none' | 'landing' | 'default', JSX.Element> = {
@@ -121,32 +121,32 @@ function DrawerMobile({ open, tipoLinks, handleDrawerToggle, abrirModalAvaliacao
                 >
                     MENU
                 </Typography>
-                <Link href="/plantoes" className={classes.linkSecao}>
+                {/* <Link href="/plantoes" className={classes.linkSecao}>
                     <Typography variant="h4" gutterBottom>
                         Pesquisar
                     </Typography>
-                </Link>
+                </Link> */}
                 <Link href="/plantoes" className={classes.linkSecao}>
                     <Typography variant="h4" gutterBottom>
                         Plantões
                     </Typography>
                 </Link>
-                <Link href="/plantoes" className={classes.linkSecao}>
+                <Link href="/perfil" className={classes.linkSecao}>
                     <Typography variant="h4" gutterBottom>
-                        Cursos
+                        Avaliações
                     </Typography>
                 </Link>
-                <Link href="/plantoes" className={classes.linkSecao}>
+                <Link href="/carteira" className={classes.linkSecao}>
                     <Typography variant="h4" gutterBottom>
-                        Ofertas
+                        Minha carteira
                     </Typography>
                 </Link>
-                <Link onClick={abrirModalAvaliacao} className={classes.linkSecao}>
+                {/* <Link onClick={abrirModalAvaliacao} className={classes.linkSecao}>
                     <Typography variant="h4" gutterBottom>
                         Nova Avaliação
                     </Typography>
-                </Link>
-                <Link href="/plantoes" className={classes.linkSecao}>
+                </Link> */}
+                <Link href="/perfil" className={classes.linkSecao}>
                     <Typography variant="h4" gutterBottom>
                         Minha conta
                     </Typography>
