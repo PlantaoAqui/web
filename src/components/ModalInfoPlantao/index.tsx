@@ -80,8 +80,7 @@ const useStyles = makeStyles(theme =>
             [theme.breakpoints.down('md')]: {
                 width: '90vw',
                 minWidth: 'unset',
-                margin: 'auto',
-                marginTop: theme.spacing(20)
+                margin: theme.spacing(20, 'auto', 0)
             }
         },
         grid: {

@@ -38,6 +38,19 @@ type groupSelect = {
 
 const useStyles = makeStyles(theme =>
     createStyles({
+        dialogPaper: {
+            backgroundColor: 'transparent',
+            overflow: 'unset',
+            outline: '0',
+            maxWidth: '720px',
+            minWidth: '500px',
+            width: '45vw',
+            [theme.breakpoints.down('md')]: {
+                width: '90vw',
+                minWidth: 'unset',
+                margin: theme.spacing(20, 'auto', 10)
+            }
+        },
         root: {
             background: theme.palette.background.paper,
             borderRadius: theme.spacing(2),
@@ -324,14 +337,7 @@ function ModalAvaliacaoPlantao(props: ModalAvaliacaoPlantaoProps) {
             aria-labelledby="scroll-dialog-title"
             aria-describedby="scroll-dialog-description"
             PaperProps={{
-                style: {
-                    backgroundColor: 'transparent',
-                    maxWidth: '720px',
-                    minWidth: '500px',
-                    width: '45vw',
-                    outline: '0',
-                    overflow: 'unset'
-                }
+                className: classes.dialogPaper
             }}
         >
             <div className={classes.root}>
@@ -386,7 +392,8 @@ function ModalAvaliacaoPlantao(props: ModalAvaliacaoPlantaoProps) {
                             <Typography color="textSecondary"
                                 variant="caption" className={classes.textoColuna}
                             >
-                                A instituição que você trabalhou ainda não esta cadastrada no sistema? <a href="#">clique aqui.</a>
+                                A instituição que você trabalhou ainda não esta cadastrada no
+                                sistema? Entre em <a href="mailto:contato@plantaofacil.com?subject=Instituição%20não%20encontrada">contato</a>.
                             </Typography>
                         </div>
                         <div className={classes.colunaCampos}>
@@ -451,7 +458,7 @@ function ModalAvaliacaoPlantao(props: ModalAvaliacaoPlantaoProps) {
                             <SelectInput
                                 name="avaliacao.id_horas"
                                 value={tempoPlantao}
-                                default="Tempo de Plantão"
+                                default="Tempo de Plantão (h)"
                                 handleChange={(e) => {
                                     setTempoPlantao(e.target.value);
                                     e.target.value = horasPlantao?.find(plantao => plantao.horas === e.target.value)?.id.toString() || '';
@@ -537,6 +544,7 @@ function ModalAvaliacaoPlantao(props: ModalAvaliacaoPlantaoProps) {
                         background="#7BB2ED"
                         texto={jaAvaliado ? 'Submeter plantão' : 'Submeter avaliação'}
                         type="submit"
+                        textTransform="none"
                     />
                 </form>
                 <div className={classes.closeButtonContainer}>
