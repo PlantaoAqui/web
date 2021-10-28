@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import ReviewInput from '../ReviewInput';
 import TextInput from '../TextInput';
 import TextAreaInput from '../TextAreaInput';
@@ -62,10 +63,6 @@ const useStyles = makeStyles(theme =>
             marginBottom: theme.spacing(6)
         },
         plantao: {
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'flex-start',
-            gap: theme.spacing(3),
             marginBottom: theme.spacing(3)
         },
         colunaCampos: {
@@ -76,7 +73,6 @@ const useStyles = makeStyles(theme =>
             gap: theme.spacing(2)
         },
         tituloColunaCampos: {
-            marginBottom: '-0.6rem',
             fontWeight: 500
         },
         textoColuna: {
@@ -347,8 +343,8 @@ function ModalAvaliacaoPlantao(props: ModalAvaliacaoPlantaoProps) {
                     {jaAvaliado ? 'Inserir Novo Plantão' : 'Inserir Nova Avalição'}
                 </Typography>
                 <form onSubmit={formik.handleSubmit}>
-                    <div className={classes.plantao}>
-                        <div className={classes.colunaCampos}>
+                    <Grid container spacing={3} className={classes.plantao}>
+                        <Grid item xs={12} md={6} className={classes.colunaCampos}>
                             <Typography color="textPrimary" variant="subtitle1"
                                 className={classes.tituloColunaCampos}
                             >
@@ -395,8 +391,8 @@ function ModalAvaliacaoPlantao(props: ModalAvaliacaoPlantaoProps) {
                                 A instituição que você trabalhou ainda não esta cadastrada no
                                 sistema? Entre em <a href="mailto:contato@plantaofacil.com?subject=Instituição%20não%20encontrada">contato</a>.
                             </Typography>
-                        </div>
-                        <div className={classes.colunaCampos}>
+                        </Grid>
+                        <Grid item xs={12} md={6} className={classes.colunaCampos}>
                             <Typography color="textPrimary" variant="subtitle1"
                                 className={classes.tituloColunaCampos}
                             >
@@ -468,8 +464,8 @@ function ModalAvaliacaoPlantao(props: ModalAvaliacaoPlantaoProps) {
                                 keyMap={item => item.id}
                                 valueMap={item => item.horas}
                             />
-                        </div>
-                    </div>
+                        </Grid>
+                    </Grid>
                     <div className={classes.observacoes}>
                         <Typography color="textPrimary" variant="subtitle1"
                             className={classes.tituloColunaCampos}

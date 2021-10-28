@@ -20,7 +20,7 @@ interface ReviewInputProps {
     handleChangePergunta?: (event: React.ChangeEvent<unknown>, value: string) => void
 }
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
     createStyles({
         root: {
             width: '100%',
@@ -33,6 +33,21 @@ const useStyles = makeStyles(() =>
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between'
+        },
+        pergunta: {
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            [theme.breakpoints.down('sm')]: {
+                flexDirection: 'column'
+            }
+        },
+        textoPergunta: {
+            width: '100%',
+            fontWeight: 500,
+            marginTop: theme.spacing(2)
         },
         descricao: {
             display: 'flex',
@@ -68,9 +83,9 @@ function ReviewInput(props: ReviewInputProps) {
                 />
             </div>
             {props.pergunta && (
-                <div className={classes.review}>
+                <div className={classes.pergunta}>
                     <Typography color="textPrimary"
-                        variant="body1" style={{ fontWeight: 500 }}
+                        variant="body1" className={classes.textoPergunta}
                     >
                         {props.textoPergunta}
                     </Typography>
