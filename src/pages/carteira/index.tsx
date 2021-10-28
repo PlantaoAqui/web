@@ -6,8 +6,8 @@ import createStyles from '@material-ui/core/styles/createStyles';
 import Button from '../../components/Button';
 import CardTitulo from '../../components/CardTitulo';
 import ItemLista from '../../components/ItemLista';
-import { Checkbox, Divider, FormControlLabel, Grid, List, ListItemText, ListSubheader } from '@material-ui/core';
-import StackedBarChart from '../../components/StackedBarChart';
+import { Checkbox, Divider, Hidden, FormControlLabel, Grid, List, ListItemText, ListSubheader } from '@material-ui/core';
+// import StackedBarChart from '../../components/StackedBarChart';
 import { useAsync, useAsyncCallback } from 'react-async-hook';
 import api from '../../services/api';
 import { Skeleton } from '@material-ui/lab';
@@ -47,27 +47,39 @@ const useStyles = makeStyles(theme =>
     createStyles({
         root: {
             width: '80vw',
-            height: '90vh',
-            margin: '10vh auto 0',
+            height: '100vh',
+            margin: '0 auto',
             display: 'flex',
             flexDirection: 'column',
-            overflowY: 'hidden'
+            overflowY: 'hidden',
+            [theme.breakpoints.down('sm')]: {
+                width: '90vw',
+                overflowY: 'unset'
+            }
         },
         cabecalho: {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'baseline',
             justifyContent: 'space-between',
+            marginTop: theme.spacing(20),
             marginBottom: theme.spacing(4),
             '& button': {
                 width: '30%'
+            },
+            [theme.breakpoints.down('sm')]: {
+                marginBottom: theme.spacing(2)
             }
         },
         conteudo: {
             width: '100%',
             overflow: 'hidden',
             display: 'flex',
-            flexDirection: 'row'
+            flexDirection: 'row',
+            [theme.breakpoints.down('sm')]: {
+                flexDirection: 'column',
+                overflow: 'unset'
+            }
         },
         graficos: {
             width: '70%',
@@ -77,6 +89,10 @@ const useStyles = makeStyles(theme =>
             paddingBottom: theme.spacing(4),
             '&::-webkit-scrollbar': {
                 width: theme.spacing(0)
+            },
+            [theme.breakpoints.down('sm')]: {
+                width: '100%',
+                marginBottom: theme.spacing(2)
             }
         },
         financeiro: {
@@ -108,6 +124,7 @@ const useStyles = makeStyles(theme =>
             alignItems: 'stretch',
             overflowX: 'hidden',
             overflowY: 'scroll',
+            paddingBottom: theme.spacing(4),
             '&::-webkit-scrollbar': {
                 width: theme.spacing(1.5)
             },
@@ -118,6 +135,12 @@ const useStyles = makeStyles(theme =>
                     backgroundColor: theme.palette.grey[600]
                 }
             },
+            [theme.breakpoints.down('sm')]: {
+                width: '100%',
+                paddingTop: 0
+            }
+        },
+        botaoMobile: {
             marginBottom: theme.spacing(4)
         },
         cabecalhoHistorico: {
@@ -125,9 +148,9 @@ const useStyles = makeStyles(theme =>
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            background: theme.palette.background.paper,
-            marginBottom: theme.spacing(2),
-            padding: theme.spacing(2)
+            // background: theme.palette.background.paper,
+            marginBottom: theme.spacing(2)
+            // padding: theme.spacing(2)
         },
         divisorHistorico: {
             position: 'relative',
@@ -136,6 +159,9 @@ const useStyles = makeStyles(theme =>
         inputCheckbox: {
             padding: theme.spacing(1),
             left: 0
+        },
+        labelRecebimento: {
+            marginLeft: 0
         }
     })
 );
@@ -248,18 +274,20 @@ function Carteira() {
                             )
                         }
                     </Typography>
-                    <Typography
+                    {/* <Typography
                         variant="body1" color="textSecondary"
                     >
                         Filtrar por:  Mês | Ano | Semana
-                    </Typography>
+                    </Typography> */}
                 </div>
-                <Button
-                    texto="Adicionar Avaliação"
-                    type="button"
-                    background="#A1E09E"
-                    onClick={() => setModalAvaliacaoHospitalAberto(true)}
-                />
+                <Hidden smDown>
+                    <Button
+                        texto="Adicionar Avaliação"
+                        type="button"
+                        background="#A1E09E"
+                        onClick={() => setModalAvaliacaoHospitalAberto(true)}
+                    />
+                </Hidden>
             </div>
             <div className={classes.conteudo}>
                 <div className={classes.graficos}>
@@ -267,12 +295,12 @@ function Carteira() {
                         ? (
                             <Grid container spacing={3}>
                                 <Grid container item spacing={3}>
-                                    <Grid container xs={6} item>
+                                    <Grid container xs={12} md={6} item>
                                         <CardTitulo
                                             titulo="Financeiro"
                                         >
                                             <Grid container>
-                                                <Grid container item xs={6}>
+                                                <Grid container item xs={12} md={6}>
                                                     <ListItemText
                                                         primary="Valor recebido:"
                                                         primaryTypographyProps={{
@@ -298,7 +326,7 @@ function Carteira() {
                                                         }}
                                                     />
                                                 </Grid>
-                                                <Grid container item xs={6}>
+                                                <Grid container item xs={12} md={6}>
                                                     <ListItemText
                                                         primary="Valor a receber:"
                                                         primaryTypographyProps={{
@@ -327,12 +355,12 @@ function Carteira() {
                                             </Grid>
                                         </CardTitulo>
                                     </Grid>
-                                    <Grid container xs={6} item>
+                                    <Grid container xs={12} md={6} item>
                                         <CardTitulo
                                             titulo="Plantões"
                                         >
                                             <Grid container>
-                                                <Grid container item xs={6}>
+                                                <Grid container item xs={12} md={6}>
                                                     <ListItemText
                                                         primary="N° plantões:"
                                                         primaryTypographyProps={{
@@ -368,7 +396,7 @@ function Carteira() {
                                                         }}
                                                     />
                                                 </Grid>
-                                                <Grid container item xs={6}>
+                                                <Grid container item xs={12} md={6}>
                                                     <ListItemText
                                                         primary="Horas trabalhadas:"
                                                         primaryTypographyProps={{
@@ -408,7 +436,7 @@ function Carteira() {
                                         </CardTitulo>
                                     </Grid>
                                 </Grid>
-                                <Grid container item spacing={3}>
+                                {/* <Grid container item spacing={3}>
                                     <Grid item xs={6}>
                                         <StackedBarChart/>
                                     </Grid>
@@ -423,7 +451,7 @@ function Carteira() {
                                     <Grid item xs={6}>
                                         <StackedBarChart/>
                                     </Grid>
-                                </Grid>
+                                </Grid> */}
                             </Grid>
                         )
                         : (
@@ -512,19 +540,21 @@ function Carteira() {
                                         <Grid item xs={6}/>
                                     </Skeleton>
                                 </Grid>
-                                <Grid container item spacing={3}>
-                                    <Grid item xs={6}>
-                                        <StackedBarChart/>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <StackedBarChart/>
-                                    </Grid>
-                                </Grid>
                             </Grid>
                         )
                     }
                 </div>
                 <div className={classes.historico}>
+                    <Hidden smUp>
+                        <div className={classes.botaoMobile}>
+                            <Button
+                                texto="Adicionar Avaliação"
+                                type="button"
+                                background="#A1E09E"
+                                onClick={() => setModalAvaliacaoHospitalAberto(true)}
+                            />
+                        </div>
+                    </Hidden>
                     {dadosPlantoes && !getDadosPlantoes.loading
                         ? (
                             <CardTitulo
@@ -571,6 +601,7 @@ function Carteira() {
                                                                     }
                                                                     label="Já recebeu?"
                                                                     labelPlacement="start"
+                                                                    classes={{ labelPlacementStart: classes.labelRecebimento }}
                                                                 />
                                                             }
                                                             isLast={j === grupo.plantoes.length}

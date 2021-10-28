@@ -86,16 +86,16 @@ const useStyles = makeStyles(theme =>
             },
             [theme.breakpoints.down('sm')]: {
                 width: '100%',
-                marginBottom: theme.spacing(4)
+                marginBottom: theme.spacing(2)
             }
         },
         historico: {
             width: '30%',
-            overflowX: 'hidden',
-            overflowY: 'scroll',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'stretch',
+            overflowX: 'hidden',
+            overflowY: 'scroll',
             paddingBottom: theme.spacing(4),
             '&::-webkit-scrollbar': {
                 width: theme.spacing(1.5)
