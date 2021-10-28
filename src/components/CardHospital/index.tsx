@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
+import Hidden from '@material-ui/core/Hidden';
 import './styles.css';
 
 import ModalInfoPlantao from '../ModalInfoPlantao';
@@ -14,13 +15,13 @@ export interface InterfaceCardPlantao {
 const useStyles = makeStyles(theme =>
     createStyles({
         root: {
-            width: '250px',
+            width: '100%',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'space-between',
             background: 'var(--cor-fundo-card)',
-            borderRadius: '12px',
+            borderRadius: theme.shape.borderRadius,
             padding: theme.spacing(3),
             transition: '0.4s',
             cursor: 'pointer',
@@ -40,7 +41,19 @@ const useStyles = makeStyles(theme =>
                 height: '100%',
                 width: 'auto',
                 marginRight: theme.spacing(5)
+            },
+            [theme.breakpoints.down('sm')]: {
+                height: 'auto',
+                '& img': {
+                    marginRight: theme.spacing(3)
+                }
             }
+        },
+        detalhes: {
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch'
         },
         descricao: {
             marginTop: theme.spacing(4),
@@ -48,7 +61,10 @@ const useStyles = makeStyles(theme =>
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            [theme.breakpoints.down('sm')]: {
+                marginTop: theme.spacing(2)
+            }
         },
         item: {
             display: 'flex',
@@ -98,37 +114,63 @@ function CardHospital({ plantao }: InterfaceCardPlantao) {
             <button className={classes.root} onClick={() => setModalInfoCardAberto(true)}>
                 <div className={classes.sumario}>
                     <img src={plantao.icone} alt={plantao.nome}/>
-                    <div>
+                    <div className={classes.detalhes}>
                         <Typography
                             variant="body2" color="textPrimary"
                             align="left" className={classes.titulo}
                         >
                             {plantao.nome}
                         </Typography>
+                        <Hidden smUp>
+                            <div className={classes.descricao}>
+                                <div className={classes.item}>
+                                    <Typography
+                                        variant="body1" color="textSecondary" gutterBottom
+                                    >
+                                        Nota
+                                    </Typography>
+                                    <StarRating value={plantao.nota} readonly/>
+                                </div>
+                                <div className={classes.item}>
+                                    <Typography
+                                        variant="body1" color="textSecondary" gutterBottom
+                                    >
+                                        Média Salarial
+                                    </Typography>
+                                    <Typography
+                                        variant="body1" gutterBottom
+                                    >
+                                        R$ {plantao.media_salarial}/12H
+                                    </Typography>
+                                </div>
+                            </div>
+                        </Hidden>
                     </div>
                 </div>
-                <div className={classes.descricao}>
-                    <div className={classes.item}>
-                        <Typography
-                            variant="body1" color="textSecondary" gutterBottom
-                        >
-                            Nota
-                        </Typography>
-                        <StarRating value={plantao.nota} readonly/>
+                <Hidden smDown>
+                    <div className={classes.descricao}>
+                        <div className={classes.item}>
+                            <Typography
+                                variant="body1" color="textSecondary" gutterBottom
+                            >
+                                Nota
+                            </Typography>
+                            <StarRating value={plantao.nota} readonly/>
+                        </div>
+                        <div className={classes.item}>
+                            <Typography
+                                variant="body1" color="textSecondary" gutterBottom
+                            >
+                                Média Salarial
+                            </Typography>
+                            <Typography
+                                variant="body1" gutterBottom
+                            >
+                                R$ {plantao.media_salarial}/12H
+                            </Typography>
+                        </div>
                     </div>
-                    <div className={classes.item}>
-                        <Typography
-                            variant="body1" color="textSecondary" gutterBottom
-                        >
-                            Média Salarial
-                        </Typography>
-                        <Typography
-                            variant="body1" gutterBottom
-                        >
-                            R$ {plantao.media_salarial}/12H
-                        </Typography>
-                    </div>
-                </div>
+                </Hidden>
             </button>
             <ModalInfoPlantao
                 plantao={plantao}

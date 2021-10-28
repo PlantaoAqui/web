@@ -8,7 +8,7 @@ import Slider from '@material-ui/core/Slider';
 import api from '../../../services/api';
 import useSearch from '../../../hooks/use-search';
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
     createStyles({
         root: {
             width: '100%',
@@ -19,7 +19,11 @@ const useStyles = makeStyles(() =>
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            alignContent: 'stretch'
+            alignContent: 'stretch',
+            [theme.breakpoints.down('sm')]: {
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0
+            }
         },
         selectBox: {
             marginBottom: '1rem'

@@ -39,6 +39,18 @@ const useStyles = makeStyles(theme =>
             borderRadius: '8px',
             transition: '0.6s'
         },
+        summary: {
+            padding: 0,
+            '&.Mui-expanded': {
+                minHeight: 'unset'
+            }
+        },
+        summaryContent: {
+            margin: 0,
+            '&.Mui-expanded': {
+                margin: 0
+            }
+        },
         filtro: {
             display: 'flex',
             flexDirection: 'row',
@@ -107,20 +119,25 @@ function Filtro({ tipo, expanded, resultados, handleChange }: FiltroProps) {
 
     return (
         <div className={classes.root}>
-            <Accordion expanded={expanded} onChange={() => handleChange(1)}>
-                <AccordionSummary>
+            <Accordion elevation={0} expanded={expanded} onChange={() => handleChange(1)}>
+                <AccordionSummary className={classes.summary}
+                    classes={{
+                        content: classes.summaryContent,
+                        expanded: classes.summaryContent
+                    }}
+                >
                     <div className={classes.filtro}>
                         <img src={tipo.icone} alt={tipo.nome}/>
                         <div>
                             <Typography variant="body1" color="textPrimary" gutterBottom>
                                 {tipo.nome}
                             </Typography>
-                            <Typography variant="body1" color="textSecondary" gutterBottom>
+                            <Typography variant="body2" color="textSecondary" gutterBottom>
                                 {(resultados?.count || 0) === 0
                                     ? 'Nenhum plantão encontrado'
                                     : resultados?.count === 1
                                         ? '1 plantão encontrado'
-                                        : resultados?.count + 'plantões encontrados'}
+                                        : resultados?.count + ' plantões encontrados'}
                             </Typography>
                         </div>
                     </div>

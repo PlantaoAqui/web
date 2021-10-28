@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import './styles.css';
 
-import { Typography } from '@material-ui/core';
+import { Typography, Hidden, Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
 import Filtro, { resultados } from './components/Filtro';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import FiltroBase from './components/FiltroBase';
@@ -9,6 +8,8 @@ import api from '../../services/api';
 import useSearch from '../../hooks/use-search';
 import Button from '../Button';
 import ModalAvaliacaoPlantao from '../ModalAvaliacaoPlantao';
+
+import ExpandIcon from '@material-ui/icons/ExpandMore';
 
 export interface PlantoesPesquisadosProps {
     resultados?: number;
@@ -28,8 +29,15 @@ type Subcategoria = {
     nome: string;
 };
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
     createStyles({
+        root: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch',
+            overflow: 'hidden',
+            height: '100%'
+        },
         resultados: {
             width: '100%',
             padding: '0.7rem 1.3rem',
@@ -40,6 +48,53 @@ const useStyles = makeStyles(() =>
             flexDirection: 'column',
             justifyContent: 'space-between',
             alignContent: 'flex-start'
+        },
+        filtros: {
+            width: '100%',
+            // marginRight: theme.spacing(3),
+            overflowX: 'hidden',
+            overflowY: 'scroll',
+            paddingRight: theme.spacing(1),
+            '&::-webkit-scrollbar': {
+                width: theme.spacing(1.5)
+            },
+            '&::-webkit-scrollbar-thumb': {
+                backgroundColor: theme.palette.grey[500],
+                borderRadius: theme.spacing(2),
+                '&:hover': {
+                    backgroundColor: theme.palette.grey[600]
+                }
+            },
+            [theme.breakpoints.down('sm')]: {
+                padding: 0,
+                overflow: 'unset'
+            }
+        },
+        accordionMobile: {
+            marginBottom: theme.spacing(4),
+            '&:before': {
+                display: 'none'
+            },
+            '&:last-child': {
+                borderRadius: theme.shape.borderRadius
+            }
+        },
+        accordionSummaryMobile: {
+            marginLeft: theme.spacing(2)
+        },
+        accordionSummarContentMobile: {
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+        },
+        accordionSummaryIcon: {
+            fontSize: '2.5rem'
+        },
+        accordionDetailsMobile: {
+            background: theme.palette.background.default,
+            padding: 0
         },
         textoClaro: {
             color: 'var(--cor-texto-claro)',
@@ -63,6 +118,7 @@ function FiltrosPesquisa({ resultados, count }: PlantoesPesquisadosProps) {
     const [tipoPlantao, setTipoPlantao] = useState<TipoPlantao[] | null>(null);
     const [filtrosExpanded, setFiltrosExpanded] = useState<number | false>(false);
     const [modalAvaliacaoHospitalAberto, setModalAvaliacaoHospitalAberto] = useState(false);
+    const [filtrosMobileAberto, setFiltrosMobileAberto] = useState(false);
 
     const handleClickAccordionFiltros = (tipo: number) => {
         setFiltrosExpanded(filtrosExpanded === tipo ? false : tipo);
@@ -89,11 +145,12 @@ function FiltrosPesquisa({ resultados, count }: PlantoesPesquisadosProps) {
     }, []);
 
     return (
-        <div className="filtrospesquisa">
+        <div className={classes.root}>
             <Button
                 type="button"
                 background="#A1E09E"
                 texto="Nova Avaliação"
+                textTransform="none"
                 onClick={() => setModalAvaliacaoHospitalAberto(true)}
             />
             <div className={classes.resultados}>
@@ -112,30 +169,73 @@ function FiltrosPesquisa({ resultados, count }: PlantoesPesquisadosProps) {
                             : resultados + ' plantões'}
                 </Typography>
             </div>
-            <Typography variant="subtitle1" gutterBottom
-                className={classes.indices}
-            >
-                Filtros
-            </Typography>
-            <FiltroBase/>
-            <Typography variant="subtitle1" gutterBottom
-                className={classes.indices}
-            >
-                Filtrar por Categorias de Plantão
-            </Typography>
-            {tipoPlantao && tipoPlantao.length > 0 && tipoPlantao.map(tipo => {
-                return (
-                    <Filtro
-                        key={tipo.id}
-                        tipo={tipo}
-                        expanded={filtrosExpanded === tipo.id}
-                        resultados={count?.find(res => {
-                            return res.tipo === tipo.id;
-                        })}
-                        handleChange={() => handleClickAccordionFiltros(tipo.id)}
-                    />
-                );
-            })}
+            <Hidden smDown>
+                <Typography variant="subtitle1" gutterBottom
+                    className={classes.indices}
+                >
+                    Filtros
+                </Typography>
+                <div className={classes.filtros}>
+                    <FiltroBase/>
+                    <Typography variant="subtitle1" gutterBottom
+                        className={classes.indices}
+                    >
+                        Categorias
+                    </Typography>
+                    {tipoPlantao && tipoPlantao.length > 0 && tipoPlantao.map(tipo => {
+                        return (
+                            <Filtro
+                                key={tipo.id}
+                                tipo={tipo}
+                                expanded={filtrosExpanded === tipo.id}
+                                resultados={count?.find(res => {
+                                    return res.tipo === tipo.id;
+                                })}
+                                handleChange={() => handleClickAccordionFiltros(tipo.id)}
+                            />
+                        );
+                    })}
+                </div>
+            </Hidden>
+            <Hidden smUp>
+                <Accordion elevation={0} expanded={filtrosMobileAberto}
+                    className={classes.accordionMobile}
+                    onChange={() => setFiltrosMobileAberto(!filtrosMobileAberto)}
+                >
+                    <AccordionSummary
+                        className={classes.accordionSummaryMobile}
+                        classes={{ content: classes.accordionSummarContentMobile }}
+                    >
+                        <Typography variant="h3">
+                            Filtros
+                        </Typography>
+                        <ExpandIcon className={classes.accordionSummaryIcon}/>
+                    </AccordionSummary>
+                    <AccordionDetails className={classes.accordionDetailsMobile}>
+                        <div className={classes.filtros}>
+                            <FiltroBase/>
+                            <Typography variant="subtitle1" gutterBottom
+                                className={classes.indices}
+                            >
+                                Categorias
+                            </Typography>
+                            {tipoPlantao && tipoPlantao.length > 0 && tipoPlantao.map(tipo => {
+                                return (
+                                    <Filtro
+                                        key={tipo.id}
+                                        tipo={tipo}
+                                        expanded={filtrosExpanded === tipo.id}
+                                        resultados={count?.find(res => {
+                                            return res.tipo === tipo.id;
+                                        })}
+                                        handleChange={() => handleClickAccordionFiltros(tipo.id)}
+                                    />
+                                );
+                            })}
+                        </div>
+                    </AccordionDetails>
+                </Accordion>
+            </Hidden>
             <ModalAvaliacaoPlantao
                 open={modalAvaliacaoHospitalAberto}
                 onClose={() => { setModalAvaliacaoHospitalAberto(false); }}
