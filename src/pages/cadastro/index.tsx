@@ -72,6 +72,7 @@ const useStyles = makeStyles(theme =>
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            textAlign: 'center',
             '& h4': {
                 width: '100%'
             },
@@ -286,9 +287,15 @@ function Cadastro() {
                             <Typography gutterBottom
                                 variant="h4" color="textPrimary"
                             >
-                                Email enviado com sucesso!
+                                Pré-cadastro feito com sucesso!
                             </Typography>
                             <img src={CheckIcon} alt="Inscricao concluída" />
+                            <Typography gutterBottom
+                                variant="h5" color="textPrimary"
+                            >
+                                Enviamos um email com um link de cadastro
+                                para acessar quando tiver seu CRM
+                            </Typography>
                         </div>
                     )
                     : (
