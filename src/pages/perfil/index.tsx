@@ -6,7 +6,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 import Button from '../../components/Button';
 import CardTitulo from '../../components/CardTitulo';
 import ItemLista from '../../components/ItemLista';
-import { Grid, ListItemText } from '@material-ui/core';
+import { Grid, GridSize, Hidden, ListItemText } from '@material-ui/core';
 import Collapse from '@material-ui/core/Collapse';
 import api from '../../services/api';
 import { useAsync } from 'react-async-hook';
@@ -32,20 +32,28 @@ const useStyles = makeStyles(theme =>
     createStyles({
         root: {
             width: '80vw',
-            height: '90vh',
-            margin: '10vh auto 0',
+            height: '100vh',
+            margin: '0 auto',
             display: 'flex',
             flexDirection: 'column',
-            overflowY: 'hidden'
+            overflowY: 'hidden',
+            [theme.breakpoints.down('sm')]: {
+                width: '90vw',
+                overflowY: 'unset'
+            }
         },
         cabecalho: {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'baseline',
             justifyContent: 'space-between',
+            marginTop: theme.spacing(20),
             marginBottom: theme.spacing(4),
             '& button': {
                 width: '30%'
+            },
+            [theme.breakpoints.down('sm')]: {
+                marginBottom: theme.spacing(2)
             }
         },
         titulo: {
@@ -61,7 +69,11 @@ const useStyles = makeStyles(theme =>
             width: '100%',
             display: 'flex',
             overflow: 'hidden',
-            flexDirection: 'row'
+            flexDirection: 'row',
+            [theme.breakpoints.down('sm')]: {
+                flexDirection: 'column',
+                overflow: 'unset'
+            }
         },
         informacoes: {
             width: '70%',
@@ -71,15 +83,20 @@ const useStyles = makeStyles(theme =>
             paddingBottom: theme.spacing(4),
             '&::-webkit-scrollbar': {
                 width: theme.spacing(0)
+            },
+            [theme.breakpoints.down('sm')]: {
+                width: '100%',
+                marginBottom: theme.spacing(4)
             }
         },
         historico: {
             width: '30%',
+            overflowX: 'hidden',
+            overflowY: 'scroll',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'stretch',
-            overflowX: 'hidden',
-            overflowY: 'scroll',
+            paddingBottom: theme.spacing(4),
             '&::-webkit-scrollbar': {
                 width: theme.spacing(1.5)
             },
@@ -90,6 +107,12 @@ const useStyles = makeStyles(theme =>
                     backgroundColor: theme.palette.grey[600]
                 }
             },
+            [theme.breakpoints.down('sm')]: {
+                width: '100%',
+                paddingTop: 0
+            }
+        },
+        botaoMobile: {
             marginBottom: theme.spacing(4)
         },
         cabecalhoHistorico: {
@@ -166,12 +189,14 @@ function Perfil() {
                         }
                     </Typography>
                 </div>
-                <Button
-                    texto="Adicionar Avaliação"
-                    type="button"
-                    background="#A1E09E"
-                    onClick={() => setModalAvaliacaoHospitalAberto(true)}
-                />
+                <Hidden smDown>
+                    <Button
+                        texto="Adicionar Avaliação"
+                        type="button"
+                        background="#A1E09E"
+                        onClick={() => setModalAvaliacaoHospitalAberto(true)}
+                    />
+                </Hidden>
             </div>
             <div className={classes.conteudo}>
                 <div className={classes.informacoes}>
@@ -196,21 +221,7 @@ function Perfil() {
                                                 transparent
                                             >
                                                 <Grid container spacing={3}>
-                                                    <Grid item xs={3}>
-                                                        <ListItemText
-                                                            primary="Data de nascimento"
-                                                            primaryTypographyProps={{
-                                                                variant: 'body1',
-                                                                color: 'textSecondary'
-                                                            }}
-                                                            secondary={new Date(perfil.dataDeNascimento).toLocaleDateString()}
-                                                            secondaryTypographyProps={{
-                                                                variant: 'body1',
-                                                                color: 'textPrimary'
-                                                            }}
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={3}>
+                                                    <Grid item xs={6} md={5}>
                                                         <ListItemText
                                                             primary="Email"
                                                             primaryTypographyProps={{
@@ -224,21 +235,21 @@ function Perfil() {
                                                             }}
                                                         />
                                                     </Grid>
-                                                    <Grid item xs={3}>
+                                                    <Grid item xs={6} md={4}>
                                                         <ListItemText
-                                                            primary="Instituição de ensino"
+                                                            primary="Data de nascimento"
                                                             primaryTypographyProps={{
                                                                 variant: 'body1',
                                                                 color: 'textSecondary'
                                                             }}
-                                                            secondary={perfil.instituicaoDeEnsino}
+                                                            secondary={new Date(perfil.dataDeNascimento).toLocaleDateString()}
                                                             secondaryTypographyProps={{
                                                                 variant: 'body1',
                                                                 color: 'textPrimary'
                                                             }}
                                                         />
                                                     </Grid>
-                                                    <Grid item xs={3}>
+                                                    <Grid item xs={6} md={3}>
                                                         <ListItemText
                                                             primary="Telefone"
                                                             primaryTypographyProps={{
@@ -252,21 +263,21 @@ function Perfil() {
                                                             }}
                                                         />
                                                     </Grid>
-                                                    <Grid item xs={3}>
+                                                    <Grid item xs={6} md={5}>
                                                         <ListItemText
-                                                            primary="Grau de formação"
+                                                            primary="Instituição de ensino"
                                                             primaryTypographyProps={{
                                                                 variant: 'body1',
                                                                 color: 'textSecondary'
                                                             }}
-                                                            secondary={perfil.grauDeFormacao}
+                                                            secondary={perfil.instituicaoDeEnsino}
                                                             secondaryTypographyProps={{
                                                                 variant: 'body1',
                                                                 color: 'textPrimary'
                                                             }}
                                                         />
                                                     </Grid>
-                                                    <Grid item xs={3}>
+                                                    <Grid item xs={6} md={4}>
                                                         <ListItemText
                                                             primary="CRM"
                                                             primaryTypographyProps={{
@@ -280,7 +291,21 @@ function Perfil() {
                                                             }}
                                                         />
                                                     </Grid>
-                                                    <Grid item xs={3}>
+                                                    <Grid item xs={6} md={3}>
+                                                        <ListItemText
+                                                            primary="Grau de formação"
+                                                            primaryTypographyProps={{
+                                                                variant: 'body1',
+                                                                color: 'textSecondary'
+                                                            }}
+                                                            secondary={perfil.grauDeFormacao}
+                                                            secondaryTypographyProps={{
+                                                                variant: 'body1',
+                                                                color: 'textPrimary'
+                                                            }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6} md={5}>
                                                         <ListItemText
                                                             primary="Estado"
                                                             primaryTypographyProps={{
@@ -294,7 +319,7 @@ function Perfil() {
                                                             }}
                                                         />
                                                     </Grid>
-                                                    <Grid item xs={3}>
+                                                    <Grid item xs={6} md={4}>
                                                         <ListItemText
                                                             primary="Cidade"
                                                             primaryTypographyProps={{
@@ -350,7 +375,7 @@ function Perfil() {
                                     >
                                         <Grid container spacing={3}>
                                             {[...Array(8)].map((_, i) => (
-                                                <Grid item xs={3} key={i}>
+                                                <Grid item xs={6} md={[5, 4, 3][(i % 3)] as GridSize} key={i}>
                                                     <ListItemText
                                                         primary={
                                                             <Skeleton
@@ -404,6 +429,16 @@ function Perfil() {
                     }
                 </div>
                 <div className={classes.historico}>
+                    <Hidden smUp>
+                        <div className={classes.botaoMobile}>
+                            <Button
+                                texto="Adicionar Avaliação"
+                                type="button"
+                                background="#A1E09E"
+                                onClick={() => setModalAvaliacaoHospitalAberto(true)}
+                            />
+                        </div>
+                    </Hidden>
                     {dadosAvaliacoes && !getDadosAvaliacoes.loading
                         ? (
                             <CardTitulo

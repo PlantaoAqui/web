@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import ListItemText from '@material-ui/core/ListItemText';
+// import Hidden from '@material-ui/core/Hidden';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import { useSnackbar } from 'notistack';
@@ -176,7 +177,28 @@ function AlterarPerfil({ perfil, close, update }: AlterarPerfilProps) {
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={7} md={8}>
+                                <ListItemText
+                                    primary="Email"
+                                    primaryTypographyProps={{
+                                        variant: 'body1',
+                                        color: 'textSecondary'
+                                    }}
+                                    secondary={
+                                        <TextInput
+                                            type="text"
+                                            disabled
+                                            value={formikPerfil.values.usuario.email}
+                                            handleChange={formikPerfil.handleChange}
+                                        />
+                                    }
+                                    secondaryTypographyProps={{
+                                        variant: 'body1',
+                                        color: 'textPrimary'
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={5} md={4}>
                                 <ListItemText
                                     primary="Data de nascimento"
                                     primaryTypographyProps={{
@@ -201,28 +223,7 @@ function AlterarPerfil({ perfil, close, update }: AlterarPerfilProps) {
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={8}>
-                                <ListItemText
-                                    primary="Email"
-                                    primaryTypographyProps={{
-                                        variant: 'body1',
-                                        color: 'textSecondary'
-                                    }}
-                                    secondary={
-                                        <TextInput
-                                            type="text"
-                                            disabled
-                                            value={formikPerfil.values.usuario.email}
-                                            handleChange={formikPerfil.handleChange}
-                                        />
-                                    }
-                                    secondaryTypographyProps={{
-                                        variant: 'body1',
-                                        color: 'textPrimary'
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={7} md={4}>
                                 <ListItemText
                                     primary="Instituição de ensino"
                                     primaryTypographyProps={{
@@ -246,7 +247,7 @@ function AlterarPerfil({ perfil, close, update }: AlterarPerfilProps) {
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={5} md={4}>
                                 <ListItemText
                                     primary="Telefone"
                                     primaryTypographyProps={{
@@ -270,7 +271,7 @@ function AlterarPerfil({ perfil, close, update }: AlterarPerfilProps) {
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={6} md={4}>
                                 <ListItemText
                                     primary="Grau de formação"
                                     primaryTypographyProps={{
@@ -301,7 +302,7 @@ function AlterarPerfil({ perfil, close, update }: AlterarPerfilProps) {
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={6} md={4}>
                                 <ListItemText
                                     primary="CRM"
                                     primaryTypographyProps={{
@@ -325,7 +326,7 @@ function AlterarPerfil({ perfil, close, update }: AlterarPerfilProps) {
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={6} md={4}>
                                 <ListItemText
                                     primary="Estado"
                                     primaryTypographyProps={{
@@ -358,7 +359,7 @@ function AlterarPerfil({ perfil, close, update }: AlterarPerfilProps) {
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={6} md={4}>
                                 <ListItemText
                                     primary="Cidade"
                                     primaryTypographyProps={{

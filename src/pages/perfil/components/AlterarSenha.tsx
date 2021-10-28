@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import ListItemText from '@material-ui/core/ListItemText';
+import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -23,7 +24,10 @@ const useStyles = makeStyles(theme =>
             padding: theme.spacing(0, 3)
         },
         condicoesSenha: {
-            margin: theme.spacing(8)
+            margin: theme.spacing(8),
+            [theme.breakpoints.down('sm')]: {
+                margin: theme.spacing(2)
+            }
         },
         spacer: {
             height: theme.spacing(3)
@@ -81,7 +85,19 @@ function AlterarSenha({ close }: AlterarSenhaProps) {
                     transparent
                 >
                     <Grid container spacing={3}>
-                        <Grid container direction="column"xs={6} item>
+                        <Hidden mdUp>
+                            <Grid item xs={12} md={6}>
+                                <Typography variant="body1" color="textPrimary"
+                                    className={classes.condicoesSenha}
+                                >
+                                    Condições da nova senha: <br/> <br/>
+                                    • Mínimo de 6 caracteres <br/>
+                                    • Uso de letras e números <br /> <br/>
+                                    O uso de senhas fortes é importante para a segurança dos seus dados.
+                                </Typography>
+                            </Grid>
+                        </Hidden>
+                        <Grid container direction="column" xs={12} md={6} item>
                             <Grid item>
                                 <ListItemText
                                     primary="Senha atual"
@@ -174,22 +190,25 @@ function AlterarSenha({ close }: AlterarSenhaProps) {
                                 </Typography>
                             </Grid>
                         </Grid>
-                        <Grid item xs={6}>
-                            <Typography variant="body1" color="textPrimary"
-                                className={classes.condicoesSenha}
-                            >
-                                Condições da nova senha: <br/> <br/>
-                                • Mínimo de 6 caracteres <br/>
-                                • Uso de letras e números <br /> <br/>
-                                O uso de senhas fortes é importante para a segurança dos seus dados.
-                            </Typography>
-                        </Grid>
+                        <Hidden mdDown>
+                            <Grid item xs={12} md={6}>
+                                <Typography variant="body1" color="textPrimary"
+                                    className={classes.condicoesSenha}
+                                >
+                                    Condições da nova senha: <br/> <br/>
+                                    • Mínimo de 6 caracteres <br/>
+                                    • Uso de letras e números <br /> <br/>
+                                    O uso de senhas fortes é importante para a segurança dos seus dados.
+                                </Typography>
+                            </Grid>
+                        </Hidden>
                     </Grid>
                     <div className={classes.spacer}/>
                     <Button
                         texto="Atualizar senha"
                         type="submit"
                         background="#A1E09E"
+                        textTransform="none"
                     />
                 </CardTitulo>
             </Grid>

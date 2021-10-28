@@ -62,7 +62,7 @@ function ItemLista({
     }
 
     return (
-        <Grid container spacing={5} className={classes.root}
+        <Grid container spacing={5} className={classes.root} wrap="nowrap"
             style={!isLast ? { marginBottom: '1.2rem' } : {}}
         >
             <Grid item>
@@ -110,7 +110,7 @@ function ItemLista({
                                 </Typography>
                             </Grid>
                             <Grid item xs={6}>
-                                <Typography align="center"
+                                <Typography align="right"
                                     variant="body1" color="textSecondary"
                                 >
                                     {component(q4)}
